@@ -1,0 +1,54 @@
+{
+  "parsed": {
+    "id": "complete",
+    "edges": [
+      {
+        "src": "dns",
+        "dst": "cf",
+        "connection": "normal"
+      },
+      {
+        "src": "cf",
+        "dst": "elb",
+        "connection": "deep"
+      },
+      {
+        "src": "cf",
+        "dst": "edge",
+        "connection": "deep"
+      }
+    ],
+    "nodes": [
+      {
+        "provider": "aws",
+        "service": "route53",
+        "id": "dns",
+        "nodes": [],
+        "edges": []
+      },
+      {
+        "provider": "aws",
+        "service": "cloudfront",
+        "id": "cf",
+        "nodes": [
+          {
+            "provider": "aws",
+            "service": "lambda",
+            "id": "edge",
+            "nodes": [],
+            "edges": []
+          },
+          {
+            "provider": "aws",
+            "service": "ec2",
+            "id": "elb",
+            "nodes": [],
+            "edges": []
+          }
+        ],
+        "edges": []
+      }
+    ]
+  },
+  "errors": []
+}

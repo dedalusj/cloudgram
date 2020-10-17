@@ -1,0 +1,45 @@
+{
+  "parsed": {
+    "id": "invalid",
+    "nodes": [
+      {
+        "provider": "aws",
+        "service": "route53",
+        "id": "dns",
+        "nodes": [],
+        "edges": []
+      },
+      {
+        "provider": "aws",
+        "service": "cloudfront",
+        "id": "cf",
+        "nodes": [],
+        "edges": []
+      },
+      {
+        "provider": "aws",
+        "service": "alb",
+        "id": "lb",
+        "nodes": [],
+        "edges": []
+      }
+    ],
+    "edges": [
+      {
+        "src": "dns",
+        "dst": "cf",
+        "connection": "normal"
+      },
+      {
+        "src": "cf",
+        "dst": "lb",
+        "connection": "normal"
+      }
+    ]
+  },
+  "errors": [{
+    "message": "Expecting --> ';' <-- but found --> 'cf' <--",
+    "line": {"start": 7, "end":  7},
+    "column": {"start": 3, "end":  4}
+  }]
+}

@@ -1,25 +1,21 @@
-const srcDirs = ['events', 'frontend', 'lib', 'tasks']
-
-const browserScripts = ['arkose_verify', 'ark_sandbox', 'arkose_test_frontend']
-
 module.exports = {
     collectCoverage: true,
     collectCoverageFrom: [
-        `src/(${srcDirs.join('|')})/**/!(${browserScripts.join('|')}).js`,
-        '!src/frontend/lib/web_crypto/**', // Impossible to test in Jest
-        '!src/tasks/lib/fetch.js', // Will not cover
-        '!src/tasks/admin*/index.js', // Will cover admin tasks in future
+        `src/**/*.js`,
         '!**/(node_modules|dist|local)/**',
+        '!src/js/icons/**/*.js',
     ],
     coverageThreshold: {
         global: {
-            branches: 75, // Most branches amount to !PROD branches, which we don't care to test
+            branches: 90,
             functions: 90,
             lines: 80,
             statements: 90,
         },
     },
     coverageReporters: ['json-summary', 'text', 'lcov'],
-    extraGlobals: ['Math'],
-    setupFiles: ['jest-canvas-mock'],
+    transform: {
+        "^.+\\.js$": "babel-jest",
+        ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2|svg)$": "jest-transform-stub"
+    },
 }
