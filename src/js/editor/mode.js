@@ -2,14 +2,14 @@ import ace from 'ace-builds';
 
 import {HighlightRules} from './highlighting_rules';
 
-const oop = ace.require("ace/lib/oop");
-const TextMode = ace.require("ace/mode/text").Mode;
+const oop = ace.require('ace/lib/oop');
+const TextMode = ace.require('ace/mode/text').Mode;
 
-export const Mode = function() {
-    this.HighlightRules = HighlightRules;
+export const Mode = function () {
+  this.HighlightRules = HighlightRules;
 };
 oop.inherits(Mode, TextMode);
 
-(function() {
-    this.$id = "ace/mode/custom";
-}).call(Mode.prototype);
+(function () {
+  this.$id = 'ace/mode/custom';
+}.call(Mode.prototype));

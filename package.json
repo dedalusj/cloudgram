@@ -4,7 +4,6 @@
   "scripts": {
     "test": "NODE_ENV=test nyc jest",
     "lint": "node_modules/.bin/prettier --write \"{src,tests}/**/*.js\"",
-    "coverage-badges": "jest-coverage-badges --output \"./badges\" && git add -A badges",
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "assets": "scripts/assets.js"
@@ -12,7 +11,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "echo 'Pre-commit checks...' && exit 0",
-      "pre-commit": "pretty-quick --staged && npm test && npm run coverage-badges"
+      "pre-commit": "pretty-quick --staged && npm test"
     }
   },
   "dependencies": {

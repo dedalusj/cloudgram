@@ -6,25 +6,28 @@ import {render} from './graph';
 import {transform} from './transform';
 import {Mode} from './editor/mode';
 
-const editor = ace.edit('editor', {
+// exported to be mocked by tests
+export const editor = ace.edit('editor', {
   theme: 'ace/theme/twilight',
-  mode: new Mode,
+  mode: new Mode(),
 });
 
 const displayErrors = errors => {
   if (!errors || errors.length === 0) {
     editor.getSession().setAnnotations([]);
   } else {
-    editor.getSession().setAnnotations(errors.map(e => ({
-      row: e.line.start - 1,
-      column: e.column.start,
-      text: e.message,
-      type: "error"
-    })));
+    editor.getSession().setAnnotations(
+      errors.map(e => ({
+        row: e.line.start - 1,
+        column: e.column.start,
+        text: e.message,
+        type: 'error',
+      }))
+    );
   }
 };
 
-const refresh = _ => {
+export const refresh = _ => {
   const src = editor.getSession().getDocument().getValue();
   const {parsed, errors} = parse(src);
 
@@ -35,7 +38,7 @@ const refresh = _ => {
   render(diagram);
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   editor.getSession().on('change', refresh);
   refresh();
 });

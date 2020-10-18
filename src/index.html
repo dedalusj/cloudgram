@@ -1,22 +1,14 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Rollup Bundle</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div id="editor">diagram "complete" {
-      // creating the nodes
-      aws.route53 dns
-      aws.cloudfront cf
-      aws.lambda edge
-
-      // creating the edges
-      dns -> cf;
-      cf => edge;
-    }
+    <div id="editor">
+      diagram "complete" { // creating the nodes aws.route53 dns aws.cloudfront
+      cf aws.lambda edge // creating the edges dns -> cf; cf -> edge; }
     </div>
     <div id="cy"></div>
     <script src="js/index.js"></script>

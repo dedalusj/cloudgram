@@ -6,11 +6,16 @@ const pluckId = pluck('id');
 const pluckSrc = pluck('src');
 const pluckDst = pluck('dst');
 
+export const missingNode = {
+  provider: 'generic',
+  service: 'unknown',
+};
+
 const flattenNodes = ({nodes}, parent = undefined) =>
-    nodes.map(n => [{...n, parent}, ...flattenNodes(n, n)]).flat();
+  nodes.map(n => [{...n, parent}, ...flattenNodes(n, n)]).flat();
 const flattenEdges = ({edges, nodes}) =>
   [...edges, ...nodes.map(n => flattenEdges(n))].flat();
-export const flatten = ({edges, nodes, ...rest}) => ({
+const flatten = ({edges, nodes, ...rest}) => ({
   ...rest,
   edges: flattenEdges({edges, nodes}),
   nodes: flattenNodes({nodes}),
@@ -26,20 +31,28 @@ const replaceParentWithIds = ({parent, ...rest}) => ({
   ...rest,
   parent: parent ? pluckId(parent) : parent,
 });
-export const transformNodes = ({nodes, ...rest}) => ({
+const cleanNodes = ({nodes, ...rest}) => ({
   ...rest,
-  nodes: nodes.map(dropEdgesFromNode)
-      .map(renameSubNodesToChildren)
-      .map(replaceChildrenWithIds)
-      .map(replaceParentWithIds),
+  nodes: nodes
+    .map(dropEdgesFromNode)
+    .map(renameSubNodesToChildren)
+    .map(replaceChildrenWithIds)
+    .map(replaceParentWithIds),
 });
 
-export const dedupNodes = ({nodes, ...rest}) => ({
+const dedupNodes = nodes => uniqBy(nodes, 'id');
+const dedupEdges = edges =>
+  uniqBy(
+    edges.map(e => ({...e, id: `${e.src}-${e.dst}-${e.connection}`})),
+    'id'
+  ).map(drop('id'));
+const dedup = ({nodes, edges, ...rest}) => ({
   ...rest,
-  nodes: uniqBy(nodes, 'id'),
+  nodes: dedupNodes(nodes),
+  edges: dedupEdges(edges),
 });
 
-export const addMissingNodes = ({edges, nodes, ...rest}) => {
+const addMissingNodes = ({edges, nodes, ...rest}) => {
   const missingNodeIds = new Set([
     ...arrayDiff(edges.map(pluckSrc), nodes.map(pluckId)),
     ...arrayDiff(edges.map(pluckDst), nodes.map(pluckId)),
@@ -48,8 +61,8 @@ export const addMissingNodes = ({edges, nodes, ...rest}) => {
     id,
     provider: 'generic',
     service: 'unknown',
-    nodes: [],
-    edges: [],
+    parent: undefined,
+    children: [],
   }));
   return {
     ...rest,
@@ -58,7 +71,7 @@ export const addMissingNodes = ({edges, nodes, ...rest}) => {
   };
 };
 
-export const explodeEdges = ({edges, nodes, ...rest}) => {
+const explodeEdges = ({edges, nodes, ...rest}) => {
   const nodesMap = nodes.reduce((acc, n) => ({...acc, [n['id']]: n}), {});
   return {
     ...rest,
@@ -69,11 +82,11 @@ export const explodeEdges = ({edges, nodes, ...rest}) => {
         !nodesMap[dst] ||
         !nodesMap[dst]['children'].length
           ? {src, dst}
-          : nodesMap[dst]['children'].map(pluckId).map(id => ({src, dst: id})),
+          : nodesMap[dst]['children'].map(id => ({src, dst: id}))
       )
       .flat(),
   };
 };
 
 export const transform = parsed =>
-  explodeEdges(addMissingNodes(dedupNodes(transformNodes(flatten(parsed)))));
+  explodeEdges(dedup(addMissingNodes(cleanNodes(flatten(parsed)))));

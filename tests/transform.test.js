@@ -1,243 +1,518 @@
-import {
-  flatten,
-  transformNodes,
-  dedupNodes,
-  addMissingNodes,
-  explodeEdges,
-} from '../src/js/transform';
-import {deepLink} from '../src/js/parser';
+import {transform, missingNode} from '../src/js/transform';
+import {normalLink, deepLink} from '../src/js/parser';
 
-const randomString = () => Math.random().toString(36).substring(7);
+import {randomNode, randomString} from './utils';
 
-describe('flatten diagrams', () => {
-  const subSubNode1 = {id: randomString(), nodes: [], edges: []};
-  const subSubNode2 = {id: randomString(), nodes: [], edges: []};
-  const subNode1 = {
-    id: randomString(),
-    nodes: [subSubNode1, subSubNode2],
-    edges: [],
-  };
-  const subNode2 = {id: randomString(), nodes: [], edges: []};
-  const node1 = {id: randomString(), nodes: [subNode1], edges: []};
-  const node2 = {id: randomString(), nodes: [subNode2], edges: []};
-
-  const edge1 = {src: subSubNode1.id, dst: subSubNode2.id};
-  const edge2 = {src: subNode1.id, dst: subNode2.id};
-  const edge3 = {src: subNode2.id, dst: subSubNode1.id};
-  const edge4 = {src: node1.id, dst: node2.id};
-
-  subNode1.edges = [edge1];
-  node1.edges = [edge2];
-
-  const diagram = {
-    id: randomString(),
-    nodes: [node1, node2],
-    edges: [edge3, edge4],
-  };
-
-  test('full diagram', () => {
-    expect(flatten(diagram)).toEqual({
-      id: diagram.id,
-      nodes: [
-        {
-          id: node1.id,
-          nodes: [subNode1],
-          parent: undefined,
-          edges: [edge2],
-        },
-        {
-          id: subNode1.id,
-          nodes: [subSubNode1, subSubNode2],
-          parent: node1,
-          edges: [edge1],
-        },
-        {
-          id: subSubNode1.id,
-          nodes: [],
-          parent: subNode1,
-          edges: [],
-        },
-        {
-          id: subSubNode2.id,
-          nodes: [],
-          parent: subNode1,
-          edges: [],
-        },
-        {
-          id: node2.id,
-          nodes: [subNode2],
-          parent: undefined,
-          edges: [],
-        },
-        {
-          id: subNode2.id,
-          nodes: [],
-          parent: node2,
-          edges: [],
-        },
-      ],
-      edges: [edge3, edge4, edge2, edge1],
-    });
-  });
-});
-
-describe("transform nodes", () => {
-  const subSubNode1 = {id: randomString(), nodes: [], edges: []};
-  const subSubNode2 = {id: randomString(), nodes: [], edges: []};
-  const subNode1 = {
-    id: randomString(),
-    nodes: [subSubNode1, subSubNode2],
-    edges: [],
-  };
-  const subNode2 = {id: randomString(), nodes: [], edges: []};
-  const node1 = {id: randomString(), nodes: [subNode1], edges: []};
-  const node2 = {id: randomString(), nodes: [subNode2], edges: []};
-
-  subSubNode1.parent = subNode1;
-  subSubNode2.parent = subNode1;
-  subNode1.parent = node1;
-  subNode2.parent = node2;
-
-  const diagram = {
-    id: randomString(),
-    nodes: [node1, subNode1, subSubNode1, subSubNode2, node2, subNode2],
-    edges: [],
-  };
-
-  it("it transform nodes", () => {
-    expect(transformNodes(diagram)).toEqual({
-      id: diagram.id,
-      nodes: [
-        {
-          id: node1.id,
-          children: [subNode1.id],
-          parent: undefined,
-        },
-        {
-          id: subNode1.id,
-          children: [subSubNode1.id, subSubNode2.id],
-          parent: node1.id,
-        },
-        {
-          id: subSubNode1.id,
-          children: [],
-          parent: subNode1.id,
-        },
-        {
-          id: subSubNode2.id,
-          children: [],
-          parent: subNode1.id,
-        },
-        {
-          id: node2.id,
-          children: [subNode2.id],
-          parent: undefined,
-        },
-        {
-          id: subNode2.id,
-          children: [],
-          parent: node2.id,
-        },
-      ],
+describe('transform', () => {
+  const createNodes = () => {
+    const subSubNode1 = {...randomNode(), nodes: [], edges: []};
+    const subSubNode2 = {...randomNode(), nodes: [], edges: []};
+    const subNode1 = {
+      ...randomNode(),
+      nodes: [subSubNode1, subSubNode2],
       edges: [],
-    });
-  });
-});
+    };
+    const subNode2 = {...randomNode(), nodes: [], edges: []};
+    const node1 = {...randomNode(), nodes: [subNode1], edges: []};
+    const node2 = {...randomNode(), nodes: [subNode2], edges: []};
 
-describe('deduplicate nodes', () => {
-  test('it removes nodes with duplicate IDs by keeping the latest', () => {
-    const nodes = [
-      {id: 'a', nodes: [], edges: []},
-      {id: 'b', nodes: [{id: 'b1', nodes: [], edges: []}], edges: []},
-      {id: 'a', nodes: [{id: 'a1', nodes: [], edges: []}], edges: []},
+    return {subSubNode1, subSubNode2, subNode1, subNode2, node1, node2};
+  };
+
+  test('it transform and sanitise a parsed diagram', () => {
+    const {
+      subSubNode1,
+      subSubNode2,
+      subNode1,
+      subNode2,
+      node1,
+      node2,
+    } = createNodes();
+
+    const subSub1ToSubSub2 = {
+      src: subSubNode1.id,
+      dst: subSubNode2.id,
+      connection: normalLink,
+    };
+    const sub1ToSub2 = {
+      src: subNode1.id,
+      dst: subNode2.id,
+      connection: normalLink,
+    };
+    const sub2ToSubSub1 = {
+      src: subNode2.id,
+      dst: subSubNode1.id,
+      connection: normalLink,
+    };
+    const node1ToNode2 = {src: node1.id, dst: node2.id, connection: normalLink};
+    subNode1.edges = [subSub1ToSubSub2];
+    node1.edges = [sub1ToSub2];
+
+    const diagramNodes = [node1, node2];
+    const diagramEdges = [sub2ToSubSub1, node1ToNode2];
+
+    const input = {
+      id: randomString(),
+      nodes: diagramNodes,
+      edges: diagramEdges,
+    };
+
+    const expected = {
+      id: input.id,
+      nodes: [
+        {
+          id: node1.id,
+          provider: node1.provider,
+          service: node1.service,
+          parent: undefined,
+          children: [subNode1.id],
+        },
+        {
+          id: subNode1.id,
+          provider: subNode1.provider,
+          service: subNode1.service,
+          parent: node1.id,
+          children: [subSubNode1.id, subSubNode2.id],
+        },
+        {
+          id: subSubNode1.id,
+          provider: subSubNode1.provider,
+          service: subSubNode1.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: subSubNode2.id,
+          provider: subSubNode2.provider,
+          service: subSubNode2.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: node2.id,
+          provider: node2.provider,
+          service: node2.service,
+          parent: undefined,
+          children: [subNode2.id],
+        },
+        {
+          id: subNode2.id,
+          provider: subNode2.provider,
+          service: subNode2.service,
+          parent: node2.id,
+          children: [],
+        },
+      ],
+      edges: [
+        {src: sub2ToSubSub1.src, dst: sub2ToSubSub1.dst},
+        {src: node1ToNode2.src, dst: node1ToNode2.dst},
+        {src: sub1ToSub2.src, dst: sub1ToSub2.dst},
+        {src: subSub1ToSubSub2.src, dst: subSub1ToSubSub2.dst},
+      ],
+    };
+
+    const transformed = transform(input);
+    expect(transformed).toEqual(expected);
+  });
+
+  test('it explodes deep link edges to point to children', () => {
+    const {
+      subSubNode1,
+      subSubNode2,
+      subNode1,
+      subNode2,
+      node1,
+      node2,
+    } = createNodes();
+
+    // this will not be expanded
+    const sub1ToSub2 = {
+      src: subNode1.id,
+      dst: subNode2.id,
+      connection: normalLink,
+    };
+
+    // this will be expanded to subSub nodes
+    const sub2ToSub1 = {
+      src: subNode2.id,
+      dst: subNode1.id,
+      connection: deepLink,
+    };
+
+    // this will be expanded to the sub nodes but not subSub nodes
+    const node2ToNode1 = {src: node2.id, dst: node1.id, connection: deepLink};
+
+    const diagramNodes = [node1, node2];
+    const diagramEdges = [sub1ToSub2, sub2ToSub1, node2ToNode1];
+
+    const input = {
+      id: randomString(),
+      nodes: diagramNodes,
+      edges: diagramEdges,
+    };
+
+    const expected = {
+      id: input.id,
+      nodes: [
+        {
+          id: node1.id,
+          provider: node1.provider,
+          service: node1.service,
+          parent: undefined,
+          children: [subNode1.id],
+        },
+        {
+          id: subNode1.id,
+          provider: subNode1.provider,
+          service: subNode1.service,
+          parent: node1.id,
+          children: [subSubNode1.id, subSubNode2.id],
+        },
+        {
+          id: subSubNode1.id,
+          provider: subSubNode1.provider,
+          service: subSubNode1.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: subSubNode2.id,
+          provider: subSubNode2.provider,
+          service: subSubNode2.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: node2.id,
+          provider: node2.provider,
+          service: node2.service,
+          parent: undefined,
+          children: [subNode2.id],
+        },
+        {
+          id: subNode2.id,
+          provider: subNode2.provider,
+          service: subNode2.service,
+          parent: node2.id,
+          children: [],
+        },
+      ],
+      edges: [
+        {src: sub1ToSub2.src, dst: sub1ToSub2.dst}, // left untouched
+        {src: subNode2.id, dst: subSubNode1.id}, // expanded
+        {src: subNode2.id, dst: subSubNode2.id}, // expanded
+        {src: node2.id, dst: subNode1.id}, // expanded
+      ],
+    };
+
+    const transformed = transform(input);
+    expect(transformed).toEqual(expected);
+  });
+
+  test('it leaves deep links to nodes without children untouched', () => {
+    const {
+      subSubNode1,
+      subSubNode2,
+      subNode1,
+      subNode2,
+      node1,
+      node2,
+    } = createNodes();
+
+    const sub1ToSub2 = {
+      src: subNode1.id,
+      dst: subNode2.id,
+      connection: deepLink,
+    };
+
+    const diagramNodes = [node1, node2];
+    const diagramEdges = [sub1ToSub2];
+
+    const input = {
+      id: randomString(),
+      nodes: diagramNodes,
+      edges: diagramEdges,
+    };
+
+    const expected = {
+      id: input.id,
+      nodes: [
+        {
+          id: node1.id,
+          provider: node1.provider,
+          service: node1.service,
+          parent: undefined,
+          children: [subNode1.id],
+        },
+        {
+          id: subNode1.id,
+          provider: subNode1.provider,
+          service: subNode1.service,
+          parent: node1.id,
+          children: [subSubNode1.id, subSubNode2.id],
+        },
+        {
+          id: subSubNode1.id,
+          provider: subSubNode1.provider,
+          service: subSubNode1.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: subSubNode2.id,
+          provider: subSubNode2.provider,
+          service: subSubNode2.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: node2.id,
+          provider: node2.provider,
+          service: node2.service,
+          parent: undefined,
+          children: [subNode2.id],
+        },
+        {
+          id: subNode2.id,
+          provider: subNode2.provider,
+          service: subNode2.service,
+          parent: node2.id,
+          children: [],
+        },
+      ],
+      edges: [
+        {src: sub1ToSub2.src, dst: sub1ToSub2.dst}, // left untouched
+      ],
+    };
+
+    const transformed = transform(input);
+    expect(transformed).toEqual(expected);
+  });
+
+  test('it removes duplicate nodes and edges', () => {
+    const {
+      subSubNode1,
+      subSubNode2,
+      subNode1,
+      subNode2,
+      node1,
+      node2,
+    } = createNodes();
+
+    const subSub1ToSubSub2 = {
+      src: subSubNode1.id,
+      dst: subSubNode2.id,
+      connection: normalLink,
+    };
+    const sub1ToSub2 = {
+      src: subNode1.id,
+      dst: subNode2.id,
+      connection: normalLink,
+    };
+    const sub2ToSubSub1 = {
+      src: subNode2.id,
+      dst: subSubNode1.id,
+      connection: normalLink,
+    };
+    const node1ToNode2 = {src: node1.id, dst: node2.id, connection: normalLink};
+    subNode1.edges = [subSub1ToSubSub2];
+    node1.edges = [sub1ToSub2];
+
+    const diagramNodes = [node1, node2, node1]; // duplicate node1 and it's children should be removed
+    const diagramEdges = [sub2ToSubSub1, node1ToNode2];
+
+    const input = {
+      id: randomString(),
+      nodes: diagramNodes,
+      edges: diagramEdges,
+    };
+
+    const expected = {
+      id: input.id,
+      nodes: [
+        {
+          id: node1.id,
+          provider: node1.provider,
+          service: node1.service,
+          parent: undefined,
+          children: [subNode1.id],
+        },
+        {
+          id: subNode1.id,
+          provider: subNode1.provider,
+          service: subNode1.service,
+          parent: node1.id,
+          children: [subSubNode1.id, subSubNode2.id],
+        },
+        {
+          id: subSubNode1.id,
+          provider: subSubNode1.provider,
+          service: subSubNode1.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: subSubNode2.id,
+          provider: subSubNode2.provider,
+          service: subSubNode2.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: node2.id,
+          provider: node2.provider,
+          service: node2.service,
+          parent: undefined,
+          children: [subNode2.id],
+        },
+        {
+          id: subNode2.id,
+          provider: subNode2.provider,
+          service: subNode2.service,
+          parent: node2.id,
+          children: [],
+        },
+      ],
+      edges: [
+        {src: sub2ToSubSub1.src, dst: sub2ToSubSub1.dst},
+        {src: node1ToNode2.src, dst: node1ToNode2.dst},
+        {src: sub1ToSub2.src, dst: sub1ToSub2.dst},
+        {src: subSub1ToSubSub2.src, dst: subSub1ToSubSub2.dst},
+      ],
+    };
+
+    const transformed = transform(input);
+    expect(transformed).toEqual(expected);
+  });
+
+  test('it adds missing nodes for unknown edges', () => {
+    const {
+      subSubNode1,
+      subSubNode2,
+      subNode1,
+      subNode2,
+      node1,
+      node2,
+    } = createNodes();
+
+    const node1ToUnknown = {
+      src: node1.id,
+      dst: randomString(),
+      connection: normalLink,
+    };
+    const unknownToNode2 = {
+      src: randomString(),
+      dst: node2.id,
+      connection: normalLink,
+    };
+    const unknownToUnknown = {
+      src: randomString(),
+      dst: randomString(),
+      connection: normalLink,
+    };
+    const node2ToUnknownDup = {
+      src: node2.id,
+      dst: node1ToUnknown.dst,
+      connection: normalLink,
+    };
+
+    const diagramNodes = [node1, node2];
+    const diagramEdges = [
+      node1ToUnknown,
+      unknownToNode2,
+      unknownToUnknown,
+      node2ToUnknownDup,
     ];
 
-    expect(dedupNodes({id: 'd', nodes})).toEqual({
-      id: 'd',
-      nodes: [nodes[2], nodes[1]],
-    });
-  });
-});
+    const input = {
+      id: randomString(),
+      nodes: diagramNodes,
+      edges: diagramEdges,
+    };
 
-describe('add missing nodes', () => {
-  test('it adds generic nodes for each edge without a corresponding node', () => {
-    expect(
-      addMissingNodes({
-        id: 'd',
-        nodes: [{id: 'n', nodes: [], edges: []}],
-        edges: [
-          {src: 'm1', dst: 'n'},
-          {src: 'n', dst: 'm1'},
-          {src: 'm1', dst: 'm2'},
-        ],
-      }),
-    ).toEqual({
-      id: 'd',
+    const expected = {
+      id: input.id,
       nodes: [
-        {id: 'n', nodes: [], edges: []},
         {
-          id: 'm1',
-          provider: 'generic',
-          service: 'unknown',
-          nodes: [],
-          edges: [],
+          id: node1.id,
+          provider: node1.provider,
+          service: node1.service,
+          parent: undefined,
+          children: [subNode1.id],
         },
         {
-          id: 'm2',
-          provider: 'generic',
-          service: 'unknown',
-          nodes: [],
-          edges: [],
+          id: subNode1.id,
+          provider: subNode1.provider,
+          service: subNode1.service,
+          parent: node1.id,
+          children: [subSubNode1.id, subSubNode2.id],
+        },
+        {
+          id: subSubNode1.id,
+          provider: subSubNode1.provider,
+          service: subSubNode1.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: subSubNode2.id,
+          provider: subSubNode2.provider,
+          service: subSubNode2.service,
+          parent: subNode1.id,
+          children: [],
+        },
+        {
+          id: node2.id,
+          provider: node2.provider,
+          service: node2.service,
+          parent: undefined,
+          children: [subNode2.id],
+        },
+        {
+          id: subNode2.id,
+          provider: subNode2.provider,
+          service: subNode2.service,
+          parent: node2.id,
+          children: [],
+        },
+        {
+          id: unknownToNode2.src,
+          provider: missingNode.provider,
+          service: missingNode.service,
+          parent: undefined,
+          children: [],
+        },
+        {
+          id: unknownToUnknown.src,
+          provider: missingNode.provider,
+          service: missingNode.service,
+          parent: undefined,
+          children: [],
+        },
+        {
+          id: node1ToUnknown.dst,
+          provider: missingNode.provider,
+          service: missingNode.service,
+          parent: undefined,
+          children: [],
+        },
+        {
+          id: unknownToUnknown.dst,
+          provider: missingNode.provider,
+          service: missingNode.service,
+          parent: undefined,
+          children: [],
         },
       ],
       edges: [
-        {src: 'm1', dst: 'n'},
-        {src: 'n', dst: 'm1'},
-        {src: 'm1', dst: 'm2'},
+        {src: node1ToUnknown.src, dst: node1ToUnknown.dst},
+        {src: unknownToNode2.src, dst: unknownToNode2.dst},
+        {src: unknownToUnknown.src, dst: unknownToUnknown.dst},
+        {src: node2ToUnknownDup.src, dst: node2ToUnknownDup.dst},
       ],
-    });
-  });
-});
-
-describe('explode edges', () => {
-  const subNode1 = {id: randomString(), children: [], edges: []};
-  const subNode2 = {id: randomString(), children: [], edges: []};
-  const node1 = {id: randomString(), children: [], edges: []};
-  const node2 = {id: randomString(), children: [subNode1, subNode2], edges: []};
-
-  test('it creates edges to subnodes for deep link connections', () => {
-    const edge = {src: node1.id, dst: node2.id, connection: deepLink};
-
-    const diagram = {
-      id: randomString(),
-      nodes: [node1, node2, subNode1, subNode2],
-      edges: [edge],
     };
 
-    expect(explodeEdges(diagram)).toEqual({
-      id: diagram.id,
-      nodes: diagram.nodes,
-      edges: [
-        {src: node1.id, dst: subNode1.id},
-        {src: node1.id, dst: subNode2.id},
-      ],
-    });
-  });
-
-  test('it ignores deep link connections to nodes without subnodes', () => {
-    const node3 = {id: randomString(), children: [], edges: []};
-    const edge = {src: node1.id, dst: node3.id, connection: deepLink};
-
-    const diagram = {
-      id: randomString(),
-      nodes: [node1, node2, node3, subNode1, subNode2],
-      edges: [edge],
-    };
-
-    expect(explodeEdges(diagram)).toEqual({
-      id: diagram.id,
-      nodes: diagram.nodes,
-      edges: [{src: edge.src, dst: edge.dst}],
-    });
+    const transformed = transform(input);
+    expect(transformed).toEqual(expected);
   });
 });

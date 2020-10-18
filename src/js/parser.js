@@ -198,7 +198,10 @@ class DiagramInterpreter extends BaseCstVisitor {
 
 const interpreter = new DiagramInterpreter();
 
-const convertError = ({message, token: {startLine, endLine, startColumn, endColumn}}) => ({
+const convertError = ({
+  message,
+  token: {startLine, endLine, startColumn, endColumn},
+}) => ({
   message,
   line: {start: startLine, end: endLine},
   column: {start: startColumn, end: endColumn},

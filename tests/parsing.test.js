@@ -23,7 +23,7 @@ test('parses diagrams', async () => {
     const fileContent = readFileSync(filename);
     const parsed = parse(fileContent.toString());
     const expected = JSON.parse(
-      readFileSync(expectedResultFilename(filename)).toString(),
+      readFileSync(expectedResultFilename(filename)).toString()
     );
     expect(parsed).toEqual(expected);
   });
