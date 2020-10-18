@@ -7,8 +7,17 @@
   </head>
   <body>
     <div id="editor">
-      diagram "complete" { // creating the nodes aws.route53 dns aws.cloudfront
-      cf aws.lambda edge // creating the edges dns -> cf; cf -> edge; }
+      <pre>
+diagram "complete" {
+  // creating the nodes
+  aws.route53 dns
+  aws.cloudfront
+  cf aws.lambda edge
+  // creating the edges
+  dns -> cf;
+  cf -> edge;
+}
+      </pre>
     </div>
     <div id="cy"></div>
     <script src="js/index.js"></script>
