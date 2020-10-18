@@ -1,6 +1,8 @@
 import cytoscape from 'cytoscape';
+import {saveAs} from 'file-saver';
 
 jest.mock('cytoscape');
+jest.mock('file-saver');
 
 const validDocument = `
 diagram "complete" {
@@ -27,7 +29,25 @@ diagram "complete" {
 }
 `;
 
-describe('index', () => {
+const blob = new Blob();
+
+const mockCy = () => {
+  const cy = {
+    png: jest.fn().mockReturnValue(blob),
+    jpg: jest.fn().mockReturnValue(blob),
+  };
+
+  const originalWindow = {...window};
+  const windowSpy = jest.spyOn(global, 'window', 'get');
+  windowSpy.mockImplementation(() => ({
+    ...originalWindow,
+    cy: cy,
+  }));
+
+  return cy;
+};
+
+describe('refresh', () => {
   let refresh;
   let editor;
 
@@ -147,5 +167,42 @@ describe('index', () => {
       },
     ];
     expect(annotationSetter).toHaveBeenCalledWith(expectedErrors);
+  });
+});
+
+describe('save graph', () => {
+  let cy;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cy = mockCy();
+  });
+
+  it('saves the graph as png', () => {
+    document.body.innerHTML = `
+      <select id="format">
+        <option selected="">png</option>
+        <option>jpeg</option>
+      </select>
+      <div id="editor"></div>
+    `;
+    require('../src/js/index').saveGraph();
+
+    expect(cy.png).toHaveBeenCalledWith({output: 'blob'});
+    expect(saveAs).toHaveBeenCalledWith(blob, expect.stringMatching(/\.png$/));
+  });
+
+  it('saves the graph as jpg', () => {
+    document.body.innerHTML = `
+      <select id="format">
+        <option>png</option>
+        <option selected="">jpeg</option>
+      </select>
+      <div id="editor"></div>
+    `;
+    require('../src/js/index').saveGraph();
+
+    expect(cy.jpg).toHaveBeenCalledWith({output: 'blob'});
+    expect(saveAs).toHaveBeenCalledWith(blob, expect.stringMatching(/\.jpeg$/));
   });
 });

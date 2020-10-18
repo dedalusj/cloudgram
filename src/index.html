@@ -6,8 +6,18 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div id="editor">
-      <pre>
+    <div class="header">
+      <label class="item">
+        Format:
+        <select id="format">
+          <option selected="">png</option>
+          <option>jpeg</option>
+        </select>
+      </label>
+      <button id="save" class="item">Save</button>
+    </div>
+    <main>
+      <pre id="editor">
 diagram "complete" {
   // creating the nodes
   aws.route53 dns
@@ -18,8 +28,8 @@ diagram "complete" {
   cf -> edge;
 }
       </pre>
-    </div>
-    <div id="cy"></div>
+      <div id="cy"></div>
+    </main>
     <script src="js/index.js"></script>
   </body>
 </html>

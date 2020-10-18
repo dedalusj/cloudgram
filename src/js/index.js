@@ -1,5 +1,6 @@
 import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/theme-twilight';
+import {saveAs} from 'file-saver';
 
 import {parse} from './parser';
 import {render} from './graph';
@@ -35,10 +36,30 @@ export const refresh = _ => {
   if (errors && errors.length > 0) return;
 
   const diagram = transform(parsed);
-  render(diagram);
+  window.cy = render(diagram);
+};
+
+export const saveGraph = _ => {
+  const cy = window.cy;
+  const selectEl = document.getElementById('format');
+  const format = selectEl.options[selectEl.selectedIndex].value;
+
+  let imgBlob;
+  switch (format) {
+    case 'jpeg':
+      imgBlob = cy.jpg({output: 'blob'});
+      break;
+    case 'png':
+      imgBlob = cy.png({output: 'blob'});
+      break;
+  }
+
+  saveAs(imgBlob, `graph.${format}`);
 };
 
 document.addEventListener('DOMContentLoaded', function () {
   editor.getSession().on('change', refresh);
   refresh();
+
+  document.getElementById('save').addEventListener('click', saveGraph);
 });
