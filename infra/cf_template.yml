@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
 Parameters:
+  BucketName:
+    Type: String
+    Description: Name given to the S3 bucket
+
   DomainName:
     Type: String
     Description: The domain used for the site
@@ -20,8 +24,8 @@ Resources:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
     Properties:
-      BucketName: !Ref DomainName
-      AccessControl: Private
+      BucketName: !Ref BucketName
+      AccessControl: BucketOwnerFullControl
 
   S3BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -44,7 +48,7 @@ Resources:
       DistributionConfig:
         Comment: !Ref DomainName
         Origins:
-          - DomainName: !Sub '${S3Bucket}.s3.amazonaws.com'
+          - DomainName: !GetAtt S3Bucket.DomainName
             Id: S3Origin
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CFOriginAccessIdentity}'
