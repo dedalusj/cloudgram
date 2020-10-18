@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: The domain used for the site
+
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: ID of the hosted zone to use for the domain
+
+Resources:
+  CFOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: CloudFrontOAI
+
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Ref DomainName
+      AccessControl: Private
+
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: s3:GetObject
+            Principal:
+              CanonicalUser: !GetAtt CFOriginAccessIdentity.S3CanonicalUserId
+            Resource: !Sub 'arn:aws:s3:::${S3Bucket}/*'
+
+  Cloudfront:
+    Type: AWS::CloudFront::Distribution
+    DependsOn:
+      - S3Bucket
+    Properties:
+      DistributionConfig:
+        Comment: !Ref DomainName
+        Origins:
+          - DomainName: !Sub '${S3Bucket}.s3.amazonaws.com'
+            Id: S3Origin
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CFOriginAccessIdentity}'
+        Enabled: true
+        HttpVersion: 'http2'
+        DefaultRootObject: index.html
+        Aliases:
+          - !Ref DomainName
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          Compress: true
+          TargetOriginId: S3Origin
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_All
+        ViewerCertificate:
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2
+        DNSName: !GetAtt Cloudfront.DomainName
