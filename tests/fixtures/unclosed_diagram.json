@@ -1,0 +1,20 @@
+{
+  "errors": [
+    {
+      "message": "Expecting --> '}' <-- but found --> '' <--",
+      "column": {
+        "start": 20,
+        "end": 20
+      },
+      "line": {
+        "start": 1,
+        "end": 1
+      }
+    }
+  ],
+  "parsed": {
+    "id": "unclosed",
+    "nodes": [],
+    "edges": []
+  }
+}

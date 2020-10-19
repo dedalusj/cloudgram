@@ -19,7 +19,7 @@ describe('transform', () => {
     return {subSubNode1, subSubNode2, subNode1, subNode2, node1, node2};
   };
 
-  test('it transform and sanitise a parsed diagram', () => {
+  it('transform and sanitise a parsed diagram', () => {
     const {
       subSubNode1,
       subSubNode2,
@@ -115,7 +115,7 @@ describe('transform', () => {
     expect(transformed).toEqual(expected);
   });
 
-  test('it explodes deep link edges to point to children', () => {
+  it('explodes deep link edges to point to children', () => {
     const {
       subSubNode1,
       subSubNode2,
@@ -209,7 +209,7 @@ describe('transform', () => {
     expect(transformed).toEqual(expected);
   });
 
-  test('it leaves deep links to nodes without children untouched', () => {
+  it('leaves deep links to nodes without children untouched', () => {
     const {
       subSubNode1,
       subSubNode2,
@@ -289,7 +289,7 @@ describe('transform', () => {
     expect(transformed).toEqual(expected);
   });
 
-  test('it removes duplicate nodes and edges', () => {
+  it('removes duplicate nodes and edges', () => {
     const {
       subSubNode1,
       subSubNode2,
@@ -385,7 +385,7 @@ describe('transform', () => {
     expect(transformed).toEqual(expected);
   });
 
-  test('it adds missing nodes for unknown edges', () => {
+  it('adds missing nodes for unknown edges', () => {
     const {
       subSubNode1,
       subSubNode2,

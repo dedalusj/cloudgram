@@ -6,7 +6,7 @@ import {randomNode} from './utils';
 
 jest.mock('cytoscape');
 
-test('it should configure cytoscape to render the diagram', () => {
+it('should configure cytoscape to render the diagram', () => {
   const nodes = [randomNode(), randomNode(), randomNode(), randomNode()];
   nodes[1]['parent'] = nodes[0].id;
   const edges = [

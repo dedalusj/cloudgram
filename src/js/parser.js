@@ -201,10 +201,24 @@ const interpreter = new DiagramInterpreter();
 const convertError = ({
   message,
   token: {startLine, endLine, startColumn, endColumn},
+  previousToken: {
+    startLine: previousStartLine,
+    endLine: previousEndLine,
+    startColumn: previousStartColumn,
+    endColumn: previousEndColumn,
+  },
 }) => ({
   message,
-  line: {start: startLine, end: endLine},
-  column: {start: startColumn, end: endColumn},
+  // some errors, like the EOF token errors, don't have line and column info so fallback
+  // to using the line and column from last recognised token or zero if empty
+  line: {
+    start: startLine || previousStartLine || 0,
+    end: endLine || previousEndLine || 0,
+  },
+  column: {
+    start: startColumn || previousStartColumn || 0,
+    end: endColumn || previousEndColumn || 0,
+  },
 });
 
 export const parse = text => {
