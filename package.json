@@ -1,5 +1,5 @@
 {
-  "name": "archdraw",
+  "name": "cloudwire",
   "version": "0.0.1",
   "scripts": {
     "test": "NODE_ENV=test nyc jest",

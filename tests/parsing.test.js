@@ -6,16 +6,16 @@ import {glob} from 'glob';
 
 import {parse} from '../src/js/parser.js';
 
-const archDrawExtension = 'ad';
+const cloudWireExtension = 'cw';
 const globPromise = promisify(glob);
 const findDiagrams = () =>
-  globPromise(`fixtures/*.${archDrawExtension}`, {
+  globPromise(`fixtures/*.${cloudWireExtension}`, {
     cwd: __dirname,
     nodir: true,
     absolute: true,
   });
 const expectedResultFilename = filename =>
-  filename.replace(`.${archDrawExtension}`, '.json');
+  filename.replace(`.${cloudWireExtension}`, '.json');
 
 test('parses diagrams', async () => {
   const filenames = await findDiagrams();
