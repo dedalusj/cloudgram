@@ -1,49 +1,24 @@
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 
-import iconMap from './icons';
+import iconMap from '../icons';
+
+import {getNodesAndEdges} from './transform';
+import {getOr} from '../utils';
 
 cytoscape.use(dagre);
 
-const createNodes = ({nodes}) =>
-  nodes.map(node => ({
-    data: {
-      id: node['id'],
-      label: node['id'],
-      parent: node['parent'],
-      provider: node['provider'],
-      service: node['service'],
-    },
-    selected: false,
-    selectable: false,
-    locked: false,
-    grabbable: false,
-  }));
-
-const createEdges = ({edges}) =>
-  edges.map(e => ({
-    data: {
-      id: `${e['src']}-${e['dst']}`,
-      source: e['src'],
-      target: e['dst'],
-    },
-  }));
-
+const getDirection = getOr(['direction'], 'TB');
 const imageForNode = ({provider, service}) => iconMap[provider][service];
 
-const elementsConfig = diagram => ({
-  nodes: createNodes(diagram),
-  edges: createEdges(diagram),
-});
-
-export const render = diagram =>
+export const render = ({elements, attributes}) =>
   cytoscape({
     container: document.getElementById('cy'),
     boxSelectionEnabled: false,
-    elements: elementsConfig(diagram),
+    elements: getNodesAndEdges(elements),
     layout: {
       name: 'dagre',
-      rankDir: 'TB',
+      rankDir: getDirection(attributes),
       spacingFactor: 2,
     },
     style: [

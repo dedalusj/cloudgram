@@ -1,52 +1,96 @@
 {
   "parsed": {
     "id": "complete",
-    "edges": [
+    "attributes": {
+      "direction": "lr"
+    },
+    "elements": [
       {
-        "src": "dns",
-        "dst": "cf",
-        "connection": "normal"
-      },
-      {
-        "src": "cf",
-        "dst": "elb",
-        "connection": "deep"
-      },
-      {
-        "src": "cf",
-        "dst": "edge",
-        "connection": "deep"
-      }
-    ],
-    "nodes": [
-      {
-        "provider": "aws",
-        "service": "route53",
+        "type": "node",
         "id": "dns",
-        "nodes": [],
-        "edges": []
+        "service": "route53",
+        "provider": "aws",
+        "attributes": {},
+        "parent": null
       },
       {
-        "provider": "aws",
-        "service": "cloudfront",
+        "type": "node",
         "id": "cf",
-        "nodes": [
+        "service": "cloudfront",
+        "provider": "aws",
+        "attributes": {
+          "label": "CDN"
+        },
+        "parent": null
+      },
+      {
+        "type": "group",
+        "id": "vpc",
+        "attributes": {
+          "color": "green"
+        },
+        "parent": null,
+        "elements": [
           {
+            "type": "node",
+            "id": "load_balancer",
+            "service": "alb",
             "provider": "aws",
-            "service": "lambda",
-            "id": "edge",
-            "nodes": [],
-            "edges": []
+            "attributes": {},
+            "parent": "vpc"
           },
           {
-            "provider": "aws",
-            "service": "ec2",
-            "id": "elb",
-            "nodes": [],
-            "edges": []
+            "type": "group",
+            "id": "servers",
+            "attributes": {},
+            "parent": "vpc",
+            "elements": [
+              {
+                "type": "node",
+                "id": "server1",
+                "service": "ec2",
+                "provider": "aws",
+                "attributes": {},
+                "parent": "servers"
+              },
+              {
+                "type": "node",
+                "id": "server2",
+                "service": "ec2",
+                "provider": "aws",
+                "attributes": {},
+                "parent": "servers"
+              }
+            ]
           }
-        ],
-        "edges": []
+        ]
+      },
+      {
+        "type": "link",
+        "src": "dns",
+        "dst": "cf",
+        "childrenPassThrough": false,
+        "attributes": {
+          "color": "blue",
+          "style": "dashed"
+        }
+      },
+      {
+        "type": "link",
+        "src": "cf",
+        "dst": "load_balancer",
+        "childrenPassThrough": false,
+        "attributes": {
+          "color": "blue",
+          "style": "dashed"
+        }
+      },
+      {
+        "type": "link",
+        "src": "load_balancer",
+        "dst": "servers",
+        "childrenPassThrough": true,
+        "attributes": {}
       }
     ]
   },

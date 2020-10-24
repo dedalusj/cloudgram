@@ -1,9 +1,4 @@
-import {drop, pluck, arrayDiff, uniqBy, renameProp} from '../src/js/utils';
-
-it('drops a value from object', () => {
-  expect(drop('a')({a: 1, b: 2})).toEqual({b: 2});
-  expect(drop('c')({a: 1, b: 2})).toEqual({a: 1, b: 2});
-});
+import {pluck, arrayDiff, uniqBy, renameProp} from '../src/js/utils';
 
 it('pluck a value from object', () => {
   expect(pluck('a')({a: 1, b: 2})).toEqual(1);
@@ -19,38 +14,51 @@ it('return missing elements from second list', () => {
 });
 
 describe('unique by', () => {
-  it('find unique elements by key', () => {
-    expect(uniqBy([], 'id')).toEqual([]);
+  it('leaves empty array untouched', () => {
+    expect(uniqBy([], ({id}) => id)).toEqual([]);
+  });
+
+  it('leaves arrays with no duplicates untouched', () => {
     expect(
       uniqBy(
         [
           {id: 1, a: 2},
           {id: 2, a: 2},
         ],
-        'id'
+        ({id}) => id
       )
     ).toEqual([
       {id: 1, a: 2},
       {id: 2, a: 2},
     ]);
+  });
+
+  it('find unique elements by key keeping the first one', () => {
     expect(
       uniqBy(
         [
           {id: 1, a: 2},
           {id: 1, a: 3},
         ],
-        'id'
+        ({id}) => id
       )
-    ).toEqual([{id: 1, a: 3}]);
+    ).toEqual([{id: 1, a: 2}]);
+  });
+
+  it('collapses all elements without a key to one', () => {
     expect(
       uniqBy(
         [
           {id: 1, a: 2},
           {id: 1, a: 3},
+          {unknown: 2, a: 4},
         ],
-        'unknown'
+        ({unknown}) => unknown
       )
-    ).toEqual([{id: 1, a: 3}]);
+    ).toEqual([
+      {id: 1, a: 2},
+      {unknown: 2, a: 4},
+    ]);
   });
 
   it('defaults to id as key', () => {
@@ -59,7 +67,7 @@ describe('unique by', () => {
         {id: 1, a: 2},
         {id: 1, a: 3},
       ])
-    ).toEqual([{id: 1, a: 3}]);
+    ).toEqual([{id: 1, a: 2}]);
   });
 });
 

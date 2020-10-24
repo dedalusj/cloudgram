@@ -1,39 +1,45 @@
 {
   "parsed": {
     "id": "missing_semicolon",
-    "nodes": [
+    "attributes": {},
+    "elements": [
       {
         "provider": "aws",
         "service": "route53",
         "id": "dns",
-        "nodes": [],
-        "edges": []
+        "type": "node",
+        "attributes": {},
+        "parent": null
       },
       {
         "provider": "aws",
         "service": "cloudfront",
         "id": "cf",
-        "nodes": [],
-        "edges": []
+        "type": "node",
+        "attributes": {},
+        "parent": null
       },
       {
         "provider": "aws",
         "service": "alb",
         "id": "lb",
-        "nodes": [],
-        "edges": []
-      }
-    ],
-    "edges": [
-      {
-        "src": "dns",
-        "dst": "cf",
-        "connection": "normal"
+        "type": "node",
+        "attributes": {},
+        "parent": null
       },
       {
+        "type": "link",
+        "src": "dns",
+        "dst": "cf",
+        "childrenPassThrough": false,
+        "attributes": {}
+      },
+      {
+        "type": "link",
         "src": "cf",
         "dst": "lb",
-        "connection": "normal"
+        "childrenPassThrough": false,
+        "attributes": {}
       }
     ]
   },

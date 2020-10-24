@@ -14,7 +14,7 @@
   ],
   "parsed": {
     "id": "unclosed",
-    "nodes": [],
-    "edges": []
+    "elements": [],
+    "attributes": {}
   }
 }

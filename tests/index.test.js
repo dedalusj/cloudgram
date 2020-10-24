@@ -7,9 +7,9 @@ jest.mock('file-saver');
 const validDocument = `
 diagram "complete" {
   // creating the nodes
-  aws.route53 dns
-  aws.cloudfront cf
-  aws.lambda edge
+  aws.route53 dns;
+  aws.cloudfront cf;
+  aws.lambda edge;
 
   // creating the edges
   dns -> cf;
@@ -19,9 +19,9 @@ diagram "complete" {
 
 const invalidDocument = `
 diagram "complete" {
-  aws.route53 dns
-  aws.cloudfront cf
-  aws.lambda edge
+  aws.route53 dns;
+  aws.cloudfront cf;
+  aws.lambda edge;
 
   // missing semi colon will generate an error
   dns -> cf
@@ -82,7 +82,7 @@ describe('refresh', () => {
             label: 'dns',
             provider: 'aws',
             service: 'route53',
-            parent: undefined,
+            parent: null,
           },
           selected: false,
           selectable: false,
@@ -95,7 +95,7 @@ describe('refresh', () => {
             label: 'cf',
             provider: 'aws',
             service: 'cloudfront',
-            parent: undefined,
+            parent: null,
           },
           selected: false,
           selectable: false,
@@ -108,7 +108,7 @@ describe('refresh', () => {
             label: 'edge',
             provider: 'aws',
             service: 'lambda',
-            parent: undefined,
+            parent: null,
           },
           selected: false,
           selectable: false,

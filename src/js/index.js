@@ -3,8 +3,7 @@ import 'ace-builds/src-noconflict/theme-twilight';
 import {saveAs} from 'file-saver';
 
 import {parse} from './parser';
-import {render} from './graph';
-import {transform} from './transform';
+import {render} from './renderer';
 import {Mode} from './editor/mode';
 
 // exported to be mocked by tests
@@ -35,8 +34,7 @@ export const refresh = _ => {
   displayErrors(errors);
   if (errors && errors.length > 0) return;
 
-  const diagram = transform(parsed);
-  window.cy = render(diagram);
+  window.cy = render(parsed);
 };
 
 export const saveGraph = _ => {
