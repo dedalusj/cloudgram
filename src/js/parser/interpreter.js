@@ -50,8 +50,6 @@ class DiagramInterpreter extends BaseCstVisitor {
     } else if (ctx[groupLabel]) {
       return this.visit(ctx[groupLabel]);
     }
-
-    return {};
   }
 
   edge(ctx) {
@@ -119,7 +117,7 @@ class DiagramInterpreter extends BaseCstVisitor {
   }
 
   attr_list(ctx) {
-    return ctx[attrLabel].map(a => this.visit(a)).reduce((acc, a) => ({...acc, ...a}), {});
+    return ctx[attrLabel] ? ctx[attrLabel].map(a => this.visit(a)).reduce((acc, a) => ({...acc, ...a}), {}) : {};
   }
 }
 

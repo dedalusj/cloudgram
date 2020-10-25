@@ -1,1 +1,1 @@
-diagram "unclosed" { // some comment preventing closure }
+diagram "unclosed_diagram" { // some comment

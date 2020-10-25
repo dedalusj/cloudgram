@@ -29,7 +29,7 @@ export const parse = text => {
   const lexResult = lexer.tokenize(text);
   parser.input = lexResult.tokens;
   const cst = parser.diagram();
-  const value = interpreter.visit(cst);
+  const value = parser.errors.length === 0 ? interpreter.visit(cst) : {};
 
   return {
     parsed: value,

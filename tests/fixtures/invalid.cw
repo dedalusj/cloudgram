@@ -1,4 +1,4 @@
-diagram "missing_semicolon" {
+diagram "invalid" {
   aws.route53 "dns";
   aws.cloudfront "cf";
   aws.alb "lb";

@@ -23,5 +23,3 @@ export const renameProp = (oldProp, newProp) => ({[oldProp]: v, ...rest}) => ({
 });
 
 export const get = p => o => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
-
-export const getOr = (p, defaultValue) => o => get(p)(o) || defaultValue;

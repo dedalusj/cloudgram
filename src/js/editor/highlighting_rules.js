@@ -1,8 +1,7 @@
 import ace from 'ace-builds';
 
 const oop = ace.require('ace/lib/oop');
-const TextHighlightRules = ace.require('ace/mode/text_highlight_rules')
-  .TextHighlightRules;
+const TextHighlightRules = ace.require('ace/mode/text_highlight_rules').TextHighlightRules;
 
 export const HighlightRules = function () {
   this.$rules = {
@@ -28,16 +27,11 @@ export const HighlightRules = function () {
         regex: /}/,
       },
       {
-        token: _ => [
-          'entity.name.type',
-          'punctuation.operator',
-          'entity.name.type',
-        ],
+        token: _ => ['entity.name.type', 'punctuation.operator', 'entity.name.type'],
         regex: /([a-zA-Z][a-zA-Z0-9_\-]+)(\.)([a-zA-Z][a-zA-Z0-9_\-]+)/,
       },
       {
-        token: value =>
-          value.toLowerCase() === 'diagram' ? 'keyword' : 'text',
+        token: value => (value.toLowerCase() === 'diagram' ? 'keyword' : 'text'),
         regex: '\\-?[a-zA-Z_][a-zA-Z0-9_\\-]*',
       },
     ],

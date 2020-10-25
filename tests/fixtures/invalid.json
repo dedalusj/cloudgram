@@ -1,0 +1,10 @@
+{
+  "parsed": {},
+  "errors": [
+    {
+      "message": "Expecting --> ';' <-- but found --> 'cf' <--",
+      "line": {"start": 7, "end": 7},
+      "column": {"start": 3, "end": 4}
+    }
+  ]
+}

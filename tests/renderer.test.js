@@ -12,7 +12,7 @@ describe('renderer', () => {
   it('configures cytoscape to render a diagram', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -74,7 +74,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -83,7 +83,7 @@ describe('renderer', () => {
   it('links a node to a group children if requested', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -146,7 +146,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -155,7 +155,7 @@ describe('renderer', () => {
   it('links a node to a group if the group has no children', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -206,7 +206,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -215,7 +215,7 @@ describe('renderer', () => {
   it('automatically creates nodes for unknown edge sources', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -263,7 +263,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -272,7 +272,7 @@ describe('renderer', () => {
   it('automatically creates nodes for unknown edge targets', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -320,7 +320,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -329,7 +329,7 @@ describe('renderer', () => {
   it('automatically creates nodes for unknown edge ends', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -372,7 +372,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -381,7 +381,7 @@ describe('renderer', () => {
   it('removes duplicate nodes keeping the first encountered', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -429,7 +429,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -438,7 +438,7 @@ describe('renderer', () => {
   it('removes duplicate edges', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'LR'},
+      attributes: {direction: 'lr'},
       elements: [
         {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
         {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
@@ -486,7 +486,7 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'LR',
+        rankDir: 'lr',
       }),
       style: expect.any(Array),
     });
@@ -495,28 +495,8 @@ describe('renderer', () => {
   it('sets the diagram direction correctly', () => {
     const diagram = {
       id: 'complete',
-      attributes: {direction: 'TB'},
-      elements: [
-        {type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null},
-        {type: 'node', id: 'cf', service: 'cloudfront', provider: 'aws', attributes: {label: 'CDN'}, parent: null},
-        {
-          type: 'group',
-          id: 'vpc',
-          attributes: {color: 'green'},
-          parent: null,
-          elements: [
-            {type: 'node', id: 'load_balancer', service: 'alb', provider: 'aws', attributes: {}, parent: 'vpc'},
-          ],
-        },
-        {type: 'link', src: 'dns', dst: 'cf', childrenPassThrough: false, attributes: {color: 'blue', style: 'dashed'}},
-        {
-          type: 'link',
-          src: 'cf',
-          dst: 'load_balancer',
-          childrenPassThrough: false,
-          attributes: {color: 'blue', style: 'dashed'},
-        },
-      ],
+      attributes: {direction: 'tb'},
+      elements: [{type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null}],
     };
 
     render(diagram);
@@ -524,16 +504,8 @@ describe('renderer', () => {
     const expectedNode = data => ({data, selected: false, selectable: false, locked: false, grabbable: false});
     const expectedEdge = data => ({data});
     const expectedElements = {
-      nodes: [
-        expectedNode({id: 'dns', label: 'dns', provider: 'aws', service: 'route53', parent: null}),
-        expectedNode({id: 'cf', label: 'CDN', provider: 'aws', service: 'cloudfront', parent: null}),
-        expectedNode({id: 'vpc', label: 'vpc', provider: null, service: null, parent: null}),
-        expectedNode({id: 'load_balancer', label: 'load_balancer', provider: 'aws', service: 'alb', parent: 'vpc'}),
-      ],
-      edges: [
-        expectedEdge({source: 'dns', target: 'cf', id: expect.any(String)}),
-        expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
-      ],
+      nodes: [expectedNode({id: 'dns', label: 'dns', provider: 'aws', service: 'route53', parent: null})],
+      edges: [],
     };
 
     expect(cytoscape).toHaveBeenCalledWith({
@@ -542,7 +514,63 @@ describe('renderer', () => {
       elements: expectedElements,
       layout: expect.objectContaining({
         name: 'dagre',
-        rankDir: 'TB',
+        rankDir: 'tb',
+      }),
+      style: expect.any(Array),
+    });
+  });
+
+  it('defaults the direction to top bottom', () => {
+    const diagram = {
+      id: 'complete',
+      attributes: {},
+      elements: [{type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null}],
+    };
+
+    render(diagram);
+
+    const expectedNode = data => ({data, selected: false, selectable: false, locked: false, grabbable: false});
+    const expectedEdge = data => ({data});
+    const expectedElements = {
+      nodes: [expectedNode({id: 'dns', label: 'dns', provider: 'aws', service: 'route53', parent: null})],
+      edges: [],
+    };
+
+    expect(cytoscape).toHaveBeenCalledWith({
+      boxSelectionEnabled: expect.any(Boolean),
+      container: null, // null for testing since the DOM is not present
+      elements: expectedElements,
+      layout: expect.objectContaining({
+        name: 'dagre',
+        rankDir: 'tb',
+      }),
+      style: expect.any(Array),
+    });
+  });
+
+  it('uses top bottom for invalid direction', () => {
+    const diagram = {
+      id: 'complete',
+      attributes: {direction: 'invalid'},
+      elements: [{type: 'node', id: 'dns', service: 'route53', provider: 'aws', attributes: {}, parent: null}],
+    };
+
+    render(diagram);
+
+    const expectedNode = data => ({data, selected: false, selectable: false, locked: false, grabbable: false});
+    const expectedEdge = data => ({data});
+    const expectedElements = {
+      nodes: [expectedNode({id: 'dns', label: 'dns', provider: 'aws', service: 'route53', parent: null})],
+      edges: [],
+    };
+
+    expect(cytoscape).toHaveBeenCalledWith({
+      boxSelectionEnabled: expect.any(Boolean),
+      container: null, // null for testing since the DOM is not present
+      elements: expectedElements,
+      layout: expect.objectContaining({
+        name: 'dagre',
+        rankDir: 'tb',
       }),
       style: expect.any(Array),
     });

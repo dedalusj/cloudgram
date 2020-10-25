@@ -1,20 +1,10 @@
 {
+  "parsed": {},
   "errors": [
     {
       "message": "Expecting --> '}' <-- but found --> '' <--",
-      "column": {
-        "start": 20,
-        "end": 20
-      },
-      "line": {
-        "start": 1,
-        "end": 1
-      }
+      "line": {"start": 1, "end": 1},
+      "column": {"start": 28, "end": 28}
     }
-  ],
-  "parsed": {
-    "id": "unclosed",
-    "elements": [],
-    "attributes": {}
-  }
+  ]
 }

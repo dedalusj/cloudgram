@@ -1,0 +1,17 @@
+{
+  "parsed": {
+    "id": "empty_attributes",
+    "attributes": {},
+    "elements": [
+      {
+        "type": "node",
+        "id": "dns",
+        "service": "route53",
+        "provider": "aws",
+        "attributes": {},
+        "parent": null
+      }
+    ]
+  },
+  "errors": []
+}

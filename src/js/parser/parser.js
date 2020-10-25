@@ -113,7 +113,7 @@ class DiagramParser extends CstParser {
 
     $.RULE('attr_list', () => {
       $.CONSUME(lBracket);
-      $.AT_LEAST_ONE_SEP({
+      $.MANY_SEP({
         SEP: comma,
         DEF: () => $.SUBRULE($.attribute, {LABEL: attrLabel}),
       });

@@ -4,11 +4,18 @@ import dagre from 'cytoscape-dagre';
 import iconMap from '../icons';
 
 import {getNodesAndEdges} from './transform';
-import {getOr} from '../utils';
+import {get} from '../utils';
 
 cytoscape.use(dagre);
 
-const getDirection = getOr(['direction'], 'TB');
+const TB = 'tb';
+const LR = 'lr';
+const directions = new Set([TB, LR]);
+
+const getDirection = attributes => {
+  const direction = get(['direction'])(attributes);
+  return direction && directions.has(direction.toLowerCase()) ? direction.toLowerCase() : TB;
+};
 const imageForNode = ({provider, service}) => iconMap[provider][service];
 
 export const render = ({elements, attributes}) =>
