@@ -1,4 +1,4 @@
-import {pluck, arrayDiff, uniqBy, renameProp} from '../src/js/utils';
+import {pluck, arrayDiff, uniqBy, renameProp, get, getOr} from '../src/js/utils';
 
 it('pluck a value from object', () => {
   expect(pluck('a')({a: 1, b: 2})).toEqual(1);
@@ -88,5 +88,29 @@ describe('rename properties', () => {
 
   it('overrides an existing property if clashes with new name', () => {
     expect(renameProp('old', 'new')({old: 1, new: 2})).toEqual({new: 1});
+  });
+});
+
+describe('nested property', () => {
+  it('gets a root property from an object', () => {
+    expect(get(['a'])({a: 1})).toEqual(1);
+  });
+
+  it('gets a nested property from an object', () => {
+    expect(get(['a', 'b'])({a: {b: 2}})).toEqual(2);
+  });
+
+  it('returns null if the property does not exists', () => {
+    expect(get(['a', 'c'])({a: {b: 2}})).toEqual(null);
+    expect(get(['c', 'b'])({a: {b: 2}})).toEqual(null);
+  });
+
+  it('uses the default value if the property does not exists', () => {
+    expect(getOr(['a', 'b'], 3)({a: {b: 2}})).toEqual(2);
+    expect(getOr(['a', 'c'], 3)({a: {b: 2}})).toEqual(3);
+  });
+
+  it('preserves empty strings', () => {
+    expect(get(['a', 'b'])({a: {b: ''}})).toEqual('');
   });
 });

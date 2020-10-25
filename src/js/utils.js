@@ -15,11 +15,12 @@ export const uniqBy = (array, keyFn = pluck('id')) => {
     return seen.has(k) ? false : seen.add(k);
   });
 };
-// Object.values(array.reduce((acc, v) => ({...acc, [keyFn(v)]: v}), {}));
 
 export const renameProp = (oldProp, newProp) => ({[oldProp]: v, ...rest}) => ({
   ...rest,
   [newProp]: v,
 });
 
-export const get = p => o => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
+export const get = p => o => p.reduce((xs, x) => (xs && xs.hasOwnProperty(x) ? xs[x] : null), o);
+
+export const getOr = (p, defaultValue) => o => get(p)(o) || defaultValue;

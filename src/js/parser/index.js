@@ -4,13 +4,13 @@ import {interpreter} from './interpreter';
 
 const convertError = ({
   message,
-  token: {startLine, endLine, startColumn, endColumn},
+  token: {startLine, endLine, startColumn, endColumn} = {},
   previousToken: {
     startLine: previousStartLine,
     endLine: previousEndLine,
     startColumn: previousStartColumn,
     endColumn: previousEndColumn,
-  },
+  } = {},
 }) => ({
   message,
   // some errors, like the EOF token errors, don't have line and column info so fallback

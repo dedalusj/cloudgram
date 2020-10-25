@@ -83,11 +83,13 @@ describe('refresh', () => {
             provider: 'aws',
             service: 'route53',
             parent: null,
+            attributes: {},
           },
           selected: false,
           selectable: false,
           locked: false,
           grabbable: false,
+          classes: ['service'],
         },
         {
           data: {
@@ -96,11 +98,13 @@ describe('refresh', () => {
             provider: 'aws',
             service: 'cloudfront',
             parent: null,
+            attributes: {},
           },
           selected: false,
           selectable: false,
           locked: false,
           grabbable: false,
+          classes: ['service'],
         },
         {
           data: {
@@ -109,11 +113,13 @@ describe('refresh', () => {
             provider: 'aws',
             service: 'lambda',
             parent: null,
+            attributes: {},
           },
           selected: false,
           selectable: false,
           locked: false,
           grabbable: false,
+          classes: ['service'],
         },
       ],
       edges: [
@@ -122,6 +128,7 @@ describe('refresh', () => {
             source: 'dns',
             target: 'cf',
             id: expect.any(String),
+            attributes: {},
           },
         },
         {
@@ -129,6 +136,7 @@ describe('refresh', () => {
             source: 'cf',
             target: 'edge',
             id: expect.any(String),
+            attributes: {},
           },
         },
       ],

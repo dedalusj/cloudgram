@@ -3,7 +3,7 @@ diagram "complete" [direction=lr] {
   aws.route53 "dns";
   aws.cloudfront cf [label="CDN"];
 
-  group vpc [color=green] {
+  group vpc [fill=green] {
       aws.alb load_balancer;
 
       group servers {

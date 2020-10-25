@@ -27,7 +27,7 @@
         "type": "group",
         "id": "vpc",
         "attributes": {
-          "color": "green"
+          "fill": "green"
         },
         "parent": null,
         "elements": [

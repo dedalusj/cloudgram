@@ -11,10 +11,10 @@ export const groupKeyword = createToken({
   name: 'groupKeyword',
   pattern: /group/,
 });
-export const id = createToken({name: 'id', pattern: /[a-zA-Z][a-zA-Z0-9_\-]*/});
+export const id = createToken({name: 'id', pattern: /([a-zA-Z][a-zA-Z0-9_\-]*|[-]?[0-9]+(\.[0-9]*)?)/});
 export const quotedId = createToken({
   name: 'quotedId',
-  pattern: /"[a-zA-Z][a-zA-Z0-9_\- ]*"/,
+  pattern: /"[a-zA-Z0-9_\- ,().]*"/,
 });
 export const provider = createToken({
   name: 'provider',

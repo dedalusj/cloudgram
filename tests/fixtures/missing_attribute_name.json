@@ -1,0 +1,38 @@
+{
+  "parsed": {},
+  "errors": [
+    {
+      "column": {
+        "end": 14,
+        "start": 14
+      },
+      "line": {
+        "end": 6,
+        "start": 6
+      },
+      "message": "Expecting --> ']' <-- but found --> '=' <--"
+    },
+    {
+      "column": {
+        "end": 18,
+        "start": 18
+      },
+      "line": {
+        "end": 6,
+        "start": 6
+      },
+      "message": "Expecting: expecting at least one iteration which starts with one of these possible Token sequences::\n  <['->'] ,['=>']>\nbut found: ']'"
+    },
+    {
+      "column": {
+        "end": 5,
+        "start": 3
+      },
+      "line": {
+        "end": 16,
+        "start": 16
+      },
+      "message": "Redundant input, expecting EOF but found: dns"
+    }
+  ]
+}

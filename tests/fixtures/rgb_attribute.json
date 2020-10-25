@@ -1,0 +1,27 @@
+{
+  "parsed": {
+    "id": "rgb_attribute",
+    "attributes": {},
+    "elements": [
+      {
+        "type": "group",
+        "id": "vpc",
+        "attributes": {
+          "fill": "rgb(255,0,0,0.1)"
+        },
+        "parent": null,
+        "elements": [
+          {
+            "type": "node",
+            "id": "load_balancer",
+            "service": "alb",
+            "provider": "aws",
+            "attributes": {},
+            "parent": "vpc"
+          }
+        ]
+      }
+    ]
+  },
+  "errors": []
+}

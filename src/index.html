@@ -18,14 +18,23 @@
     </div>
     <main>
       <pre id="editor">
-diagram "complete" {
+diagram "complete" [direction=lr] {
   // creating the nodes
-  aws.route53 dns;
-  aws.cloudfront cf;
-  aws.lambda edge;
+  aws.route53 dns [label="DNS"];
+  aws.cloudfront cf [label="CDN"];
+
+  group vpc [label="VPC"] {
+      aws.elasticLoadBalancing load_balancer [label="Load balancer"];
+
+      group servers [label="Servers"] {
+          aws.ec2 server1 [label="Server 1"];
+          aws.ec2 server2 [label="Server 2"];
+      }
+  }
+
   // creating the edges
-  dns -> cf;
-  cf -> edge;
+  dns -> cf -> load_balancer;
+  load_balancer => servers;
 }
       </pre>
       <div id="cy"></div>
