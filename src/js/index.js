@@ -55,7 +55,14 @@ export const saveGraph = _ => {
   saveAs(imgBlob, `graph.${format}`);
 };
 
+const initDocument = () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('document')) editor.setValue(params.get('document'), -1);
+};
+
 document.addEventListener('DOMContentLoaded', function () {
+  initDocument();
+
   editor.getSession().on('change', refresh);
   refresh();
 
