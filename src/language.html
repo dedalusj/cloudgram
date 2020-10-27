@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CloudWire - Language</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <include src="nav_items.html"></include>
+    </div>
+    <main id="main" class="scrollable">
+      <div class="left-half">
+        <article>
+          <h1>CloudWire Language</h1>
+          In the following grammar definition terminals are in bold while non terminals are in italic. The ( and )
+          parenthesis are used to indicate a sequence of tokens while the characters ?, * and + after a token indicate
+          that the token can be optional, it can match zero or more times and can match one or more times respectively.
+          The vertical character | indicate possible alternatives. Strings inside single quotes indicate literal matches
+          while single quotes preceded by r indicate regex matches.
+          <table>
+            <tbody>
+              <tr>
+                <td class="align-right"><i>diagram</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>'diagram'</b><i> identifier </i> <i>attrList</i>? <i>elements</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>elements</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>'{'</b> <i>element</i>* <b>'}'</b></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>element</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><i>node</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"></td>
+                <td class="align-left">|</td>
+                <td class="align-left"><i>edge</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"></td>
+                <td class="align-left">|</td>
+                <td class="align-left"><i>group</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>node</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left">
+                  <i>provider</i> <b>'.'</b> <i>id</i> <i>identifier</i> <i>attrList</i>? <b>';'</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>edge</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left">
+                  <i>identifier</i> (<i>link</i> <i>identifier</i>)+ <i>attrList</i>? <b>';'</b>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>group</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>'group'</b> <i>identifier</i> <i>attrList</i>? <i>elements</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>attrList</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>'['</b> <i>attribute</i> (<b>','</b> attribute)* <b>']'</b></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>attribute</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><i>id</i> <b>'='</b> <i>identifier</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>link</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>'->'</b> | <b>'=>'</b></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>identifier</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><i>id</i> | <i>quotedId</i></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>id</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>r'([a-zA-Z][a-zA-Z0-9_\-]*|[-]?[0-9]+(\.[0-9]*)?)'</b></td>
+              </tr>
+              <tr>
+                <td class="align-right"><i>quotedId</i></td>
+                <td class="align-left">:</td>
+                <td class="align-left"><b>r'"[a-zA-Z0-9_\- ,().]*"'</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+      <div class="right-half">
+        <include src="grammar_diagram.html"></include>
+      </div>
+    </main>
+  </body>
+</html>

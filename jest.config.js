@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collectCoverage: true,
   collectCoverageFrom: [
     `src/**/*.js`,
@@ -17,7 +17,6 @@ module.exports = {
   coverageReporters: ['json-summary', 'text', 'lcov'],
   transform: {
     '^.+\\.js$': 'babel-jest',
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2|svg)$':
-      'jest-transform-stub',
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2|svg)$': 'jest-transform-stub',
   },
 };

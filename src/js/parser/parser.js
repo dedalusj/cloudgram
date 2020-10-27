@@ -18,7 +18,7 @@ import {
   attrListLabel,
   arrowLabel,
   deepArrowLabel,
-} from './labels';
+} from './labels.js';
 
 import {
   tokensList,
@@ -37,7 +37,7 @@ import {
   equal,
   arrow,
   deepArrow,
-} from './lexer';
+} from './lexer.js';
 
 class DiagramParser extends CstParser {
   constructor() {
@@ -51,7 +51,7 @@ class DiagramParser extends CstParser {
       $.CONSUME(diagramKeyword);
       $.SUBRULE($.identifier, {LABEL: idLabel});
       $.OPTION(() => {
-        $.SUBRULE($.attr_list, {LABEL: attrListLabel});
+        $.SUBRULE($.attrList, {LABEL: attrListLabel});
       });
       $.SUBRULE($.elements, {LABEL: elementsLabel});
     });
@@ -85,7 +85,7 @@ class DiagramParser extends CstParser {
       $.CONSUME(id, {LABEL: serviceLabel});
       $.SUBRULE2($.identifier, {LABEL: idLabel});
       $.OPTION(() => {
-        $.SUBRULE($.attr_list, {LABEL: attrListLabel});
+        $.SUBRULE($.attrList, {LABEL: attrListLabel});
       });
       $.CONSUME(semicolon);
     });
@@ -97,7 +97,7 @@ class DiagramParser extends CstParser {
         $.SUBRULE2($.identifier, {LABEL: idLabel});
       });
       $.OPTION(() => {
-        $.SUBRULE($.attr_list, {LABEL: attrListLabel});
+        $.SUBRULE($.attrList, {LABEL: attrListLabel});
       });
       $.CONSUME(semicolon);
     });
@@ -106,12 +106,12 @@ class DiagramParser extends CstParser {
       $.CONSUME(groupKeyword);
       $.SUBRULE($.identifier, {LABEL: idLabel});
       $.OPTION(() => {
-        $.SUBRULE($.attr_list, {LABEL: attrListLabel});
+        $.SUBRULE($.attrList, {LABEL: attrListLabel});
       });
       $.SUBRULE($.elements, {LABEL: elementsLabel});
     });
 
-    $.RULE('attr_list', () => {
+    $.RULE('attrList', () => {
       $.CONSUME(lBracket);
       $.MANY_SEP({
         SEP: comma,

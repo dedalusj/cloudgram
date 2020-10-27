@@ -69,7 +69,7 @@ const addMissingNodes = ({nodes, edges}) => {
         id,
         parent: null,
         provider: 'generic',
-        service: 'unknown',
+        service: 'generic',
         attributes: {},
       })),
     ],

@@ -1,4 +1,4 @@
-import {parser} from './parser';
+import {parser} from './parser.js';
 
 import {
   idLabel,
@@ -17,7 +17,7 @@ import {
   attrValueLabel,
   attrListLabel,
   deepArrowLabel,
-} from './labels';
+} from './labels.js';
 
 const BaseCstVisitor = parser.getBaseCstVisitorConstructor();
 
@@ -116,7 +116,7 @@ class DiagramInterpreter extends BaseCstVisitor {
     return {[name]: value};
   }
 
-  attr_list(ctx) {
+  attrList(ctx) {
     return ctx[attrLabel] ? ctx[attrLabel].map(a => this.visit(a)).reduce((acc, a) => ({...acc, ...a}), {}) : {};
   }
 }

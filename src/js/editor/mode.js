@@ -1,6 +1,6 @@
 import ace from 'ace-builds';
 
-import {HighlightRules} from './highlighting_rules';
+import {HighlightRules} from './highlighting_rules.js';
 
 const oop = ace.require('ace/lib/oop');
 const TextMode = ace.require('ace/mode/text').Mode;

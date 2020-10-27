@@ -69,6 +69,8 @@ export const tokensList = [
 
 export const lexer = new Lexer(tokensList, {});
 
+diagramKeyword.LABEL = "'diagram'";
+groupKeyword.LABEL = "'group'";
 lBrace.LABEL = "'{'";
 rBrace.LABEL = "'}'";
 lBracket.LABEL = "'['";
@@ -76,6 +78,6 @@ rBracket.LABEL = "']'";
 semicolon.LABEL = "';'";
 comma.LABEL = "','";
 dot.LABEL = "'.'";
-equal.LABEL = "','";
+equal.LABEL = "'='";
 arrow.LABEL = `'${arrowSymbol}'`;
 deepArrow.LABEL = `'${deepArrowSymbol}'`;

@@ -1,19 +1,35 @@
-.header {
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 40px;
-  background: #eee;
+  background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
 }
 
-.item {
+.nav-item {
   margin-right: 10px;
   margin-left: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-control {
+  position: absolute;
+  right: 0;
+  min-width: 200px;
+}
+
+.control-item {
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 main {
@@ -24,7 +40,11 @@ main {
   width: 100%;
 }
 
-#editor {
+.scrollable {
+  overflow: scroll;
+}
+
+.left-half {
   position: absolute;
   top: 0;
   left: 0;
@@ -34,10 +54,50 @@ main {
   margin-bottom: 0;
 }
 
-#cy {
+.right-half {
   position: absolute;
   top: 0;
   left: 50%;
   height: 100%;
   width: 50%;
+}
+
+details {
+  font-size: 1.3em;
+  padding-left: 20px;
+  padding-top: 15px;
+}
+
+details > summary {
+  padding: 2px 6px;
+  border: none;
+  cursor: pointer;
+}
+
+details > ul {
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
+article {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  color: #262626;
+  padding: 30px;
+  font-weight: lighter;
+}
+
+article > h1 {
+  font-size: 2.3em;
+  font-weight: normal;
+}
+
+article > table {
+  margin-top: 30px;
 }

@@ -3,7 +3,7 @@ import dagre from 'cytoscape-dagre';
 
 import iconMap from '../icons';
 
-import {getNodesAndEdges} from './transform';
+import {getNodesAndEdges} from './transform.js';
 import {get, getOr} from '../utils';
 
 cytoscape.use(dagre);

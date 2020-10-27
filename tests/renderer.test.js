@@ -207,7 +207,7 @@ describe('renderer', () => {
         expectedNode({id: 'cf', label: 'CDN', service: 'cloudfront', attributes: {label: 'CDN'}}),
         expectedNode({id: 'vpc', provider: null, service: null, attributes: {fill: 'green'}, classes: []}),
         expectedNode({id: 'load_balancer', service: 'elasticLoadBalancing', parent: 'vpc'}),
-        expectedNode({id: 'unknown', label: 'unknown', provider: 'generic', service: 'unknown'}),
+        expectedNode({id: 'unknown', label: 'unknown', provider: 'generic', service: 'generic'}),
       ],
       edges: [
         expectedEdge({source: 'dns', target: 'cf', id: expect.any(String)}),
@@ -253,7 +253,7 @@ describe('renderer', () => {
         expectedNode({id: 'cf', label: 'CDN', service: 'cloudfront', attributes: {label: 'CDN'}}),
         expectedNode({id: 'vpc', provider: null, service: null, attributes: {fill: 'green'}, classes: []}),
         expectedNode({id: 'load_balancer', service: 'elasticLoadBalancing', parent: 'vpc'}),
-        expectedNode({id: 'unknown', label: 'unknown', provider: 'generic', service: 'unknown'}),
+        expectedNode({id: 'unknown', label: 'unknown', provider: 'generic', service: 'generic'}),
       ],
       edges: [
         expectedEdge({source: 'dns', target: 'cf', id: expect.any(String)}),
@@ -299,8 +299,8 @@ describe('renderer', () => {
         expectedNode({id: 'cf', label: 'CDN', service: 'cloudfront', attributes: {label: 'CDN'}}),
         expectedNode({id: 'vpc', provider: null, service: null, attributes: {fill: 'green'}, classes: []}),
         expectedNode({id: 'load_balancer', service: 'elasticLoadBalancing', parent: 'vpc'}),
-        expectedNode({id: 'unknown1', label: 'unknown1', provider: 'generic', service: 'unknown'}),
-        expectedNode({id: 'unknown2', label: 'unknown2', provider: 'generic', service: 'unknown'}),
+        expectedNode({id: 'unknown1', label: 'unknown1', provider: 'generic', service: 'generic'}),
+        expectedNode({id: 'unknown2', label: 'unknown2', provider: 'generic', service: 'generic'}),
       ],
       edges: [
         expectedEdge({source: 'dns', target: 'cf', id: expect.any(String)}),

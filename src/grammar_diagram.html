@@ -1,0 +1,410 @@
+
+<!-- This is a generated file -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  body {
+    background-color: hsl(30, 20%, 95%)
+  }
+</style>
+
+
+<link rel='stylesheet' href='https://unpkg.com/chevrotain@7.0.2/diagrams/diagrams.css'>
+
+<script src='https://unpkg.com/chevrotain@7.0.2/diagrams/vendor/railroad-diagrams.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.2/diagrams/src/diagrams_builder.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.2/diagrams/src/diagrams_behavior.js'></script>
+<script src='https://unpkg.com/chevrotain@7.0.2/diagrams/src/main.js'></script>
+
+<div id="diagrams" align="center"></div>    
+
+<script>
+    window.serializedGrammar = [
+  {
+    "type": "Rule",
+    "name": "diagram",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "diagramKeyword",
+        "label": "'diagram'",
+        "idx": 0,
+        "pattern": "diagram"
+      },
+      {
+        "type": "NonTerminal",
+        "name": "identifier",
+        "idx": 0
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "attrList",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "NonTerminal",
+        "name": "elements",
+        "idx": 0
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "identifier",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "id",
+                "label": "id",
+                "idx": 0,
+                "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "quotedId",
+                "label": "quotedId",
+                "idx": 0,
+                "pattern": "\"[a-zA-Z0-9_\\- ,().]*\""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "elements",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "lBrace",
+        "label": "'{'",
+        "idx": 0,
+        "pattern": "{"
+      },
+      {
+        "type": "Repetition",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "element",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "rBrace",
+        "label": "'}'",
+        "idx": 0,
+        "pattern": "}"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "element",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "node",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "edge",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "NonTerminal",
+                "name": "group",
+                "idx": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "node",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "provider",
+        "label": "provider",
+        "idx": 0,
+        "pattern": "(aws|generic)"
+      },
+      {
+        "type": "Terminal",
+        "name": "dot",
+        "label": "'.'",
+        "idx": 0,
+        "pattern": "\\."
+      },
+      {
+        "type": "Terminal",
+        "name": "id",
+        "label": "id",
+        "idx": 0,
+        "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
+      },
+      {
+        "type": "NonTerminal",
+        "name": "identifier",
+        "idx": 2
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "attrList",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "semicolon",
+        "label": "';'",
+        "idx": 0,
+        "pattern": ";"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "edge",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "NonTerminal",
+        "name": "identifier",
+        "idx": 0
+      },
+      {
+        "type": "RepetitionMandatory",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "link",
+            "idx": 0
+          },
+          {
+            "type": "NonTerminal",
+            "name": "identifier",
+            "idx": 2
+          }
+        ]
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "attrList",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "semicolon",
+        "label": "';'",
+        "idx": 0,
+        "pattern": ";"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "group",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "groupKeyword",
+        "label": "'group'",
+        "idx": 0,
+        "pattern": "group"
+      },
+      {
+        "type": "NonTerminal",
+        "name": "identifier",
+        "idx": 0
+      },
+      {
+        "type": "Option",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "attrList",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "NonTerminal",
+        "name": "elements",
+        "idx": 0
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "attrList",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "lBracket",
+        "label": "'['",
+        "idx": 0,
+        "pattern": "\\["
+      },
+      {
+        "type": "RepetitionWithSeparator",
+        "idx": 0,
+        "separator": {
+          "type": "Terminal",
+          "name": "comma",
+          "label": "','",
+          "idx": 1,
+          "pattern": ","
+        },
+        "definition": [
+          {
+            "type": "NonTerminal",
+            "name": "attribute",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "type": "Terminal",
+        "name": "rBracket",
+        "label": "']'",
+        "idx": 0,
+        "pattern": "]"
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "attribute",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Terminal",
+        "name": "id",
+        "label": "id",
+        "idx": 0,
+        "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
+      },
+      {
+        "type": "Terminal",
+        "name": "equal",
+        "label": "'='",
+        "idx": 0,
+        "pattern": "="
+      },
+      {
+        "type": "NonTerminal",
+        "name": "identifier",
+        "idx": 0
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "link",
+    "orgText": "",
+    "definition": [
+      {
+        "type": "Alternation",
+        "idx": 0,
+        "definition": [
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "arrow",
+                "label": "'->'",
+                "idx": 0,
+                "pattern": "->"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "deepArrow",
+                "label": "'=>'",
+                "idx": 0,
+                "pattern": "=>"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+</script>
+
+<script>
+    var diagramsDiv = document.getElementById("diagrams");
+    main.drawDiagramsFromSerializedGrammar(serializedGrammar, diagramsDiv);
+</script>

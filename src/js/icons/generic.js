@@ -1,3 +1,3 @@
-import unknown from '../../images/generic/unknown.svg';
+import generic from '../../images/generic/generic.svg';
 
-export {unknown};
+export {generic};

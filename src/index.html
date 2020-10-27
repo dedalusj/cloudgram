@@ -2,25 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Rollup Bundle</title>
+    <title>CloudWire</title>
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div class="header">
-      <label class="item">
-        Format:
-        <select id="format">
-          <option selected="">png</option>
-          <option>jpeg</option>
-        </select>
-      </label>
-      <button id="save" class="item">Save</button>
+    <div class="nav">
+      <include src="nav_items.html"></include>
+      <div class="nav-item nav-control">
+        <label class="control-item">
+          Format:
+          <select id="format">
+            <option selected="">png</option>
+            <option>jpeg</option>
+          </select>
+        </label>
+        <button id="save" class="control-item">Save</button>
+      </div>
     </div>
     <main>
-      <pre id="editor">
-diagram "complete" [direction=lr] {
+      <pre id="editor" class="left-half">
+diagram "example" [direction=lr] {
   // creating the nodes
-  aws.route53 dns [label="DNS"];
+  aws.route53 DNS;
   aws.cloudfront cf [label="CDN"];
 
   group vpc [label="VPC"] {
@@ -33,11 +36,11 @@ diagram "complete" [direction=lr] {
   }
 
   // creating the edges
-  dns -> cf -> load_balancer;
+  DNS -> cf -> load_balancer;
   load_balancer => servers;
 }
       </pre>
-      <div id="cy"></div>
+      <div id="cy" class="right-half"></div>
     </main>
     <script src="js/index.js"></script>
   </body>

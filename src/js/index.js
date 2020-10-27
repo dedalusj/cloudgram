@@ -27,8 +27,11 @@ const displayErrors = errors => {
   }
 };
 
+const getDocument = () => editor.getSession().getDocument().getValue();
+const setDocument = doc => editor.setValue(doc, -1);
+
 export const refresh = _ => {
-  const src = editor.getSession().getDocument().getValue();
+  const src = getDocument();
   const {parsed, errors} = parse(src);
 
   displayErrors(errors);
@@ -57,8 +60,10 @@ export const saveGraph = _ => {
 
 const initDocument = () => {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('document')) editor.setValue(params.get('document'), -1);
+  if (params.has('document')) setDocument(params.get('document'));
 };
+
+const isIFrame = () => window.location !== window.parent.location;
 
 document.addEventListener('DOMContentLoaded', function () {
   initDocument();
