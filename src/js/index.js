@@ -58,12 +58,28 @@ export const saveGraph = _ => {
   saveAs(imgBlob, `graph.${format}`);
 };
 
+export const copyToClipboard = text => {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+};
+
+export const copyLink = _ => {
+  const src = getDocument();
+  const url = `${location.protocol}//${location.host}${location.pathname}?document=${encodeURIComponent(src)}`;
+  copyToClipboard(url);
+};
+
 const initDocument = () => {
   const params = new URLSearchParams(window.location.search);
   if (params.has('document')) setDocument(params.get('document'));
 };
-
-const isIFrame = () => window.location !== window.parent.location;
 
 document.addEventListener('DOMContentLoaded', function () {
   initDocument();
@@ -72,4 +88,5 @@ document.addEventListener('DOMContentLoaded', function () {
   refresh();
 
   document.getElementById('save').addEventListener('click', saveGraph);
+  document.getElementById('copy-link').addEventListener('click', copyLink);
 });

@@ -9,14 +9,16 @@
     <div class="nav">
       <include src="nav_items.html"></include>
       <div class="nav-item nav-control">
-        <label class="control-item">
-          Format:
-          <select id="format">
+        <div class="input-group">
+          <select id="format" class="input-element select left">
             <option selected="">png</option>
             <option>jpeg</option>
           </select>
-        </label>
-        <a id="save" href="#" class="button">Save</a>
+          <a id="save" href="#" class="input-element button right">Save</a>
+        </div>
+        <div class="input-group">
+          <a id="copy-link" href="#" class="input-element button">Copy link</a>
+        </div>
       </div>
     </div>
     <main>
