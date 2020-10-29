@@ -7,3 +7,4 @@ public/bundle*
 .tmp
 .cache
 dist
+dev

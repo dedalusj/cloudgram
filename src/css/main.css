@@ -22,9 +22,29 @@ body {
 }
 
 .nav-control {
-  position: absolute;
-  right: 0;
-  min-width: 200px;
+  margin-left: auto;
+  display: flex;
+}
+
+.nav-control > div {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.input-group {
+  display: table;
+}
+
+.input-element {
+  border-radius: 10px;
+  font-size: 11px;
+  padding: 5px 10px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+}
+
+.input-element.select {
+  border: none;
 }
 
 .control-item {
@@ -72,9 +92,6 @@ details > summary {
   padding: 2px 6px;
   border: none;
   cursor: pointer;
-}
-
-details > ul {
 }
 
 .align-right {
@@ -156,15 +173,10 @@ article > table {
 }
 
 .button {
-  background-color: #eee;
-  border-radius: 10px;
-  border: 1px solid #ccc;
   display: inline-block;
   cursor: pointer;
   color: black;
-  font-family: Arial;
-  font-size: 12px;
-  padding: 5px 10px;
+  font-family: Arial, serif;
   text-decoration: none;
 }
 .button:hover {
@@ -173,4 +185,14 @@ article > table {
 .button:active {
   position: relative;
   top: 1px;
+}
+
+.right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
