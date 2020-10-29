@@ -9,8 +9,14 @@
     <div class="nav">
       <include src="nav_items.html"></include>
     </div>
-    <main id="main" class="scrollable">
-      <p>Here is a list of currently supported providers and services:</p>
+    <main class="scrollable side-menu-layout">
+      <div class="side-nav">
+        <ul id="providers"></ul>
+      </div>
+      <div class="container">
+        <h1 id="provider-name"></h1>
+        <ul id="services"></ul>
+      </div>
     </main>
     <script src="js/resources.js"></script>
   </body>

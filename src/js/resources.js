@@ -1,23 +1,40 @@
 import resourcesMap from './icons';
 
+export const drawProvider = provider => {
+  const servicesEl = document.getElementById('services');
+  servicesEl.innerHTML = '';
+
+  Object.keys(resourcesMap[provider]).forEach(service => {
+    const serviceItem = document.createElement('li');
+    serviceItem.append(document.createTextNode(`${provider}.${service}`));
+    servicesEl.append(serviceItem);
+  });
+
+  document.getElementById('provider-name').innerText = provider.toUpperCase();
+};
+
+export const drawProviders = providers => {
+  const providersEl = document.getElementById('providers');
+
+  providers.forEach(p => {
+    const providerItem = document.createElement('li');
+    providersEl.append(providerItem);
+
+    const providerLink = document.createElement('a');
+    providerLink.append(document.createTextNode(p));
+    providerLink.title = p;
+    providerLink.id = p;
+    providerLink.href = `#${p}`;
+    providerItem.append(providerLink);
+  });
+};
+
+const providerChanged = () => drawProvider(location.hash.slice(1));
+
 document.addEventListener('DOMContentLoaded', function () {
-  const main = document.getElementById('main');
-
-  for (const [provider, services] of Object.entries(resourcesMap)) {
-    const details = document.createElement('details');
-    const summary = document.createElement('summary');
-
-    details.append(summary);
-    summary.append(document.createTextNode(provider));
-    main.append(details);
-
-    const servicesList = document.createElement('ul');
-    details.append(servicesList);
-    for (const service of Object.keys(services)) {
-      const serviceItem = document.createElement('li');
-      serviceItem.classList.add('service');
-      serviceItem.appendChild(document.createTextNode(service));
-      servicesList.appendChild(serviceItem);
-    }
-  }
+  const providers = Object.keys(resourcesMap);
+  drawProviders(providers);
+  window.addEventListener('hashchange', providerChanged);
+  window.location.hash = `#${providers[0]}`;
+  drawProvider(providers[0]);
 });

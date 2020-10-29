@@ -96,8 +96,81 @@ article {
 article > h1 {
   font-size: 2.3em;
   font-weight: normal;
+  color: #2376ae;
+}
+
+article > h2 {
+  border-bottom: 1px solid #888;
+}
+
+article > pre {
+  padding: 15px;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  background-color: #eee;
+}
+
+article code {
+  background-color: #f5f3ff;
 }
 
 article > table {
   margin-top: 30px;
+}
+
+.side-menu-layout {
+  display: flex;
+}
+
+.side-nav {
+  flex: 0 0 200px;
+  font-size: 1.2em;
+  line-height: 1.7em;
+}
+
+.side-nav ul li {
+  list-style-type: none;
+}
+
+.side-nav ul li a {
+  text-decoration: none;
+  color: #393939;
+}
+
+.container {
+  flex: 1 auto;
+  font-size: 1.1em;
+  line-height: 1.6em;
+  font-weight: 400;
+}
+
+.container ul li {
+  list-style-type: none;
+}
+
+#provider-name {
+  padding-inline-start: 40px;
+  font-size: 2.3em;
+  font-weight: normal;
+  color: #2376ae;
+}
+
+.button {
+  background-color: #eee;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  cursor: pointer;
+  color: black;
+  font-family: Arial;
+  font-size: 12px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+.button:hover {
+  background-color: #ffffff;
+}
+.button:active {
+  position: relative;
+  top: 1px;
 }
