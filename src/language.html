@@ -2,17 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>CloudWire - Language</title>
+    <title>Language</title>
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div class="nav">
+    <div class="fixed-nav-bar">
       <include src="nav_items.html"></include>
     </div>
-    <main id="main" class="scrollable">
-      <div class="left-half">
+    <main>
+      <div class="column">
         <article>
-          <h1>CloudWire Language</h1>
+          <h1>The language</h1>
           In the following grammar definition terminals are in bold while non terminals are in italic. The ( and )
           parenthesis are used to indicate a sequence of tokens while the characters ?, * and + after a token indicate
           that the token can be optional, it can match zero or more times and can match one or more times respectively.
@@ -98,7 +98,7 @@
           </table>
         </article>
       </div>
-      <div class="right-half">
+      <div class="column">
         <include src="grammar_diagram.html"></include>
       </div>
     </main>

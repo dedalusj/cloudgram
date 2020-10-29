@@ -6,23 +6,22 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div class="nav">
+    <div class="fixed-nav-bar">
       <include src="nav_items.html"></include>
       <div class="nav-item nav-control">
         <div class="input-group">
-          <select id="format" class="input-element select left">
+          <select id="format" class="input-element select left-element">
             <option selected="">png</option>
             <option>jpeg</option>
           </select>
-          <a id="save" href="#" class="input-element button right">Save</a>
+          <a id="save" href="#" class="input-element button right-element">Save</a>
         </div>
         <div class="input-group">
           <a id="copy-link" href="#" class="input-element button">Copy link</a>
         </div>
       </div>
     </div>
-    <main>
-      <pre id="editor" class="left-half">
+    <pre id="editor">
 diagram "example" [direction=lr] {
   // creating the nodes
   aws.route53 DNS;
@@ -41,9 +40,9 @@ diagram "example" [direction=lr] {
   DNS -> cf -> load_balancer;
   load_balancer => servers;
 }
-      </pre>
-      <div id="cy" class="right-half"></div>
-    </main>
+      </pre
+    >
+    <div id="cy"></div>
     <script src="js/index.js"></script>
   </body>
 </html>
