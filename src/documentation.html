@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>CloudWire - Documentation</title>
+    <title>Documentation</title>
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <div class="nav">
+    <div class="fixed-nav-bar">
       <include src="nav_items.html"></include>
     </div>
-    <main id="main" class="scrollable">
-      <article>
+    <main>
+      <article class="column">
         <h1>Anatomy of a diagram file</h1>
         <p>Here is an example diagram file:</p>
 
@@ -38,7 +38,7 @@ diagram "example" [direction=lr] {
         <h2>Diagram</h2>
         <p>
           Each diagram file must start with the word <code>diagram</code>. This is followed by the name of the diagram
-          which is an identifier. In CloudWire identifiers are one of the following:
+          which is an identifier. Identifiers are one of the following:
         </p>
         <ul>
           <li>a letter followed by a series of letters, digits, underscores or dashes</li>
@@ -48,9 +48,9 @@ diagram "example" [direction=lr] {
 
         <p>
           After the name of the diagram we have <code>[direction=lr]</code>, called an attributes list. Attributes lists
-          are optional in CloudWire and can appears is several other places as we will see later. For a diagram the only
-          supported attribute is <code>direction</code> determining the direction of the drawn graph. The supported
-          values are <code>lr</code> for left-to-right and <code>tb</code> for top-to-bottom.
+          are optional and can appears is several other places as we will see later. For a diagram the only supported
+          attribute is <code>direction</code> determining the direction of the drawn graph. The supported values are
+          <code>lr</code> for left-to-right and <code>tb</code> for top-to-bottom.
         </p>
 
         <p>A diagram contains three kind of elements: nodes, groups or links.</p>
@@ -78,9 +78,9 @@ diagram "example" [direction=lr] {
         <h3>Links</h3>
 
         <p>
-          A link is a directed connection between nodes and groups. Link are declared with either the <code>-></code> or
-          <code>=></code> symbols. The second is simply a convenience notation to link a node with all the children of a
-          group, see below. For convenience CloudWire supports declaring a chain of links like
+          A link is a directed connection between nodes and groups. Link are declared with either the
+          <code>-></code> or <code>=></code> symbols. The second is simply a convenience notation to link a node with
+          all the children of a group, see below. For convenience a chain of links can be declared with
           <code>DNS -> cf -> load_balancer</code>.
         </p>
 
@@ -91,7 +91,8 @@ diagram "example" [direction=lr] {
             <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
           </li>
           <li>
-            <code>style</code>: the style applied to the link line, e.g. <code>dashed</code> or <code>solid</code>
+            <code>style</code>: the style applied to the link line, e.g. <code>dashed</code> or
+            <code>solid</code>
           </li>
           <li><code>width</code>: the width for the link line</li>
         </ul>
@@ -119,7 +120,8 @@ group servers [label="Servers"] {
             <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
           </li>
           <li>
-            <code>style</code>: the style applied to the group border, e.g. <code>dashed</code> or <code>solid</code>
+            <code>style</code>: the style applied to the group border, e.g. <code>dashed</code> or
+            <code>solid</code>
           </li>
           <li><code>width</code>: the width for the group border</li>
           <li><code>fill</code>: the color for the group background</li>
@@ -128,7 +130,7 @@ group servers [label="Servers"] {
 
         <h2>Comments</h2>
 
-        <p>CloudWire supports comments in the form <code>// this is a comment</code></p>
+        <p>Comments are supported in the form <code>// this is a comment</code></p>
       </article>
     </main>
   </body>

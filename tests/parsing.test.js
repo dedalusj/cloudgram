@@ -5,10 +5,10 @@ import {glob} from 'glob';
 
 import {parse} from '../src/js/parser';
 
-const cloudWireExtension = 'cw';
-const expectedResultFilename = filename => filename.replace(`.${cloudWireExtension}`, '.json');
+const fileExtension = 'cw';
+const expectedResultFilename = filename => filename.replace(`.${fileExtension}`, '.json');
 
-const filesToTest = glob.sync(`fixtures/*.${cloudWireExtension}`, {
+const filesToTest = glob.sync(`fixtures/*.${fileExtension}`, {
   cwd: __dirname,
   nodir: true,
   absolute: true,
