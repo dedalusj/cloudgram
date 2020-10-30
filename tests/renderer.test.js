@@ -1,6 +1,18 @@
 import cytoscape from 'cytoscape';
 
-import {render} from '../src/js/renderer';
+import {
+  render,
+  getBackgroundColor,
+  getBorderStyle,
+  getBorderWidth,
+  getOpacity,
+  getColor,
+  getEdgeStyle,
+  getEdgeWidth,
+  getDirection,
+  getHPosForNode,
+  getVPosForNode,
+} from '../src/js/renderer';
 
 import {inputNode, inputGroup, inputLink, expectedNode, expectedEdge} from './utils';
 
@@ -530,5 +542,56 @@ describe('renderer', () => {
       }),
       style: expect.any(Array),
     });
+  });
+});
+
+describe('style properties', () => {
+  const element = (attributes = {}, data = {}) => ({data: () => ({...data, attributes})});
+
+  test.each([
+    [getBackgroundColor, {fill: 'blue'}, 'blue'],
+    [getBackgroundColor, {}, '#eee'],
+    [getBorderStyle, {style: 'solid'}, 'solid'],
+    [getBorderStyle, {}, 'dashed'],
+    [getBorderWidth, {width: 5}, 5],
+    [getBorderWidth, {}, 1],
+    [getOpacity, {opacity: 0.1}, 0.1],
+    [getOpacity, {}, 1.0],
+    [getColor, {stroke: 'blue'}, 'blue'],
+    [getColor, {}, '#ccc'],
+    [getEdgeStyle, {style: 'solid'}, 'solid'],
+    [getEdgeStyle, {}, 'solid'],
+    [getEdgeWidth, {width: 5}, 5],
+    [getEdgeWidth, {}, 2],
+    [getHPosForNode, {labelPosition: 'n'}, 'center'],
+    [getHPosForNode, {labelPosition: 's'}, 'center'],
+    [getHPosForNode, {labelPosition: 'e'}, 'left'],
+    [getHPosForNode, {labelPosition: 'w'}, 'right'],
+    [getHPosForNode, {labelPosition: 'ne'}, 'left'],
+    [getHPosForNode, {labelPosition: 'nw'}, 'right'],
+    [getHPosForNode, {labelPosition: 'se'}, 'left'],
+    [getHPosForNode, {labelPosition: 'sw'}, 'right'],
+    [getHPosForNode, {}, 'center'],
+    [getVPosForNode, {labelPosition: 'n'}, 'top'],
+    [getVPosForNode, {labelPosition: 's'}, 'bottom'],
+    [getVPosForNode, {labelPosition: 'e'}, 'center'],
+    [getVPosForNode, {labelPosition: 'w'}, 'center'],
+    [getVPosForNode, {labelPosition: 'ne'}, 'top'],
+    [getVPosForNode, {labelPosition: 'nw'}, 'top'],
+    [getVPosForNode, {labelPosition: 'se'}, 'bottom'],
+    [getVPosForNode, {labelPosition: 'sw'}, 'bottom'],
+    [getVPosForNode, {}, 'top'],
+  ])(`%#`, (fn, attr, expected) => {
+    const e = element(attr);
+    expect(fn(e)).toEqual(expected);
+  });
+
+  it('gets directions', () => {
+    expect(getDirection({direction: 'lr'})).toEqual('lr');
+    expect(getDirection({direction: 'tb'})).toEqual('tb');
+    expect(getDirection({direction: 'LR'})).toEqual('lr');
+    expect(getDirection({direction: 'TB'})).toEqual('tb');
+    expect(getDirection({direction: 'unknown'})).toEqual('tb');
+    expect(getDirection({})).toEqual('tb');
   });
 });
