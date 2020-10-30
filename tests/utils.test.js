@@ -1,4 +1,4 @@
-import {pluck, arrayDiff, uniqBy, renameProp, get, getOr} from '../src/js/utils';
+import {pluck, arrayDiff, uniqBy, renameProp, get, getOr, inSetOr, pipe, toLowerCase} from '../src/js/utils';
 
 it('pluck a value from object', () => {
   expect(pluck('a')({a: 1, b: 2})).toEqual(1);
@@ -112,5 +112,26 @@ describe('nested property', () => {
 
   it('preserves empty strings', () => {
     expect(get(['a', 'b'])({a: {b: ''}})).toEqual('');
+  });
+});
+
+describe('value from set', () => {
+  const fn = inSetOr(new Set(['a', 'b', 'c']), 'a');
+
+  it('returns a value if present in a set', () => {
+    expect(fn('b')).toEqual('b');
+  });
+
+  it('returns the default value if not present in the set', () => {
+    expect(fn('d')).toEqual('a');
+  });
+});
+
+describe('pipe functions', () => {
+  it('nests functions', () => {
+    const doubler = n => n * 2;
+    const adder = n => n + 1;
+    expect(pipe(doubler, adder)(3)).toEqual(7);
+    expect(pipe(adder, doubler)(3)).toEqual(8);
   });
 });

@@ -5,7 +5,7 @@ const TextHighlightRules = ace.require('ace/mode/text_highlight_rules').TextHigh
 
 export const HighlightRules = function () {
   const keywords = 'diagram|group'.split('|');
-  const attributes = 'label|stroke|fill|style|width|opacity'.split('|');
+  const attributes = 'label|stroke|fill|style|width|opacity|labelposition'.split('|');
 
   this.$rules = {
     start: [

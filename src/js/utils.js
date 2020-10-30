@@ -24,3 +24,9 @@ export const renameProp = (oldProp, newProp) => ({[oldProp]: v, ...rest}) => ({
 export const get = p => o => p.reduce((xs, x) => (xs && xs.hasOwnProperty(x) ? xs[x] : null), o);
 
 export const getOr = (p, defaultValue) => o => get(p)(o) || defaultValue;
+
+export const inSetOr = (set, defaultValue) => o => (o && set.has(o) ? o : defaultValue);
+
+export const pipe = (...fns) => x => fns.reduce((y, f) => f(y), x);
+
+export const toLowerCase = x => (!x ? x : x.toLowerCase());
