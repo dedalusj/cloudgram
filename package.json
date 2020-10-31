@@ -48,6 +48,7 @@
     "pretty-quick": "^3.0.2",
     "regenerator-runtime": "^0.13.7",
     "serve": "^11.3.2",
-    "unzipper": "^0.10.11"
+    "unzipper": "^0.10.11",
+    "xml2js": "^0.4.23"
   }
 }
