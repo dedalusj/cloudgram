@@ -8,5 +8,10 @@
     "url": "https://github.com/kubernetes/community/archive/master.zip",
     "copyPattern": "**/icons/svg/**/unlabeled/*.svg",
     "renamePattern": "^(.*)$"
+  },
+  "azure": {
+    "url": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip",
+    "copyPattern": "**/*.svg",
+    "renamePattern": "^[0-9]+-icon-service-(.*)$"
   }
 }

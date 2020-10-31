@@ -18,7 +18,7 @@ export const quotedId = createToken({
 });
 export const provider = createToken({
   name: 'provider',
-  pattern: /(aws|k8s|generic)/,
+  pattern: /(aws|k8s|azure|generic)/,
 });
 export const lBrace = createToken({name: 'lBrace', pattern: /{/});
 export const rBrace = createToken({name: 'rBrace', pattern: /}/});

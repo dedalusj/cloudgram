@@ -2,6 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import url from 'url';
 
 import axios from 'axios';
 import camelCase from 'camelcase';
@@ -9,7 +10,7 @@ import glob from 'glob';
 import mustache from 'mustache';
 import pino from 'pino';
 import unzipper from 'unzipper';
-import {fileURLToPath} from 'url';
+import xml2js from 'xml2js';
 
 const logger = pino({
   prettyPrint: {
@@ -19,7 +20,10 @@ const logger = pino({
   },
 });
 
-const __filename = fileURLToPath(import.meta.url);
+const parser = new xml2js.Parser();
+const builder = new xml2js.Builder();
+
+const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const assetsInfo = JSON.parse(fs.readFileSync(path.join(__dirname, './assets.config.json')).toString());
@@ -63,13 +67,37 @@ const copyFiles = async (sourcePattern, outputDir) => {
 
 const renameFiles = async (sourceDir, pattern, outputDir) => {
   await mkdir(outputDir);
+  const regex = new RegExp(pattern, 'i');
   const files = glob
     .sync(`${sourceDir}/*`)
     .map(f => [f, path.basename(f)])
-    .map(([src, basename]) => [src, basename.match(pattern).slice(1).join('')])
+    .map(([src, basename]) => [src, basename.match(regex).slice(1).join('')])
     .map(([src, renamed]) => [src, renamed.toLowerCase()])
     .map(([src, filename]) => [src, path.join(outputDir, filename)]);
   return Promise.all(files.map(([src, dest]) => fs.promises.copyFile(src, dest)));
+};
+
+const resizeSVG = async ([source, target]) =>
+  fs.promises
+    .readFile(source)
+    .then(src => src.toString())
+    .then(parser.parseStringPromise)
+    .then(({svg: {$: attr, ...svgRest}, ...topRest}) => ({
+      ...topRest,
+      svg: {...svgRest, $: {...attr, width: '80px', height: '80px'}},
+    }))
+    .then(o => builder.buildObject(o))
+    .then(s => fs.promises.writeFile(target, s));
+
+const resizeSVGs = async (sourceDir, outputDir) => {
+  await mkdir(outputDir);
+  return Promise.all(
+    glob
+      .sync(`${sourceDir}/*`)
+      .map(f => [f, path.basename(f)])
+      .map(([src, filename]) => [src, path.join(outputDir, filename)])
+      .map(resizeSVG)
+  );
 };
 
 const basename = filepath => path.basename(filepath, path.extname(filepath));
@@ -93,6 +121,7 @@ for (const [provider, {url, copyPattern, renamePattern}] of Object.entries(asset
   const extractDir = path.join(providerDir, 'extract');
   const copiedDir = path.join(providerDir, 'copy');
   const renamedDir = path.join(providerDir, 'rename');
+  const resizedDir = path.join(providerDir, 'resize');
 
   const finalDir = path.join(__dirname, '..', 'src', 'images', provider);
   const renderedJS = path.join(__dirname, '..', 'src', 'js', 'icons', `${provider}.js`);
@@ -108,7 +137,9 @@ for (const [provider, {url, copyPattern, renamePattern}] of Object.entries(asset
     .then(_ => logger.info(`${rootMsg}Copied files to ${copiedDir}`))
     .then(_ => renameFiles(copiedDir, renamePattern, renamedDir))
     .then(_ => logger.info(`${rootMsg}Renamed files to ${renamedDir}`))
-    .then(_ => copyFiles(`${renamedDir}/*`, finalDir))
+    .then(_ => resizeSVGs(renamedDir, resizedDir))
+    .then(_ => logger.info(`${rootMsg}Resized files to ${resizedDir}`))
+    .then(_ => copyFiles(`${resizedDir}/*`, finalDir))
     .then(_ => logger.info(`${rootMsg}Copied files to final location ${finalDir}`))
     .then(_ => renderJS(finalDir, renderedJS))
     .then(_ => logger.info(`${rootMsg}Rendered javascript to ${renderedJS}`))
