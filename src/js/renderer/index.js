@@ -102,6 +102,7 @@ export const render = ({elements, attributes}) =>
           height: 80,
           width: 80,
           'background-image': getIconForNode,
+          'background-opacity': 0.0,
         },
       },
       {

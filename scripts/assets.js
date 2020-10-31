@@ -9,6 +9,7 @@ import glob from 'glob';
 import mustache from 'mustache';
 import pino from 'pino';
 import unzipper from 'unzipper';
+import {fileURLToPath} from 'url';
 
 const logger = pino({
   prettyPrint: {
@@ -18,7 +19,10 @@ const logger = pino({
   },
 });
 
-const assetsUrl = require('./assets.config.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const assetsInfo = JSON.parse(fs.readFileSync(path.join(__dirname, './assets.config.json')).toString());
 
 const mkdir = async dir => {
   if (!fs.existsSync(dir)) return fs.promises.mkdir(dir, {recursive: true});
@@ -62,7 +66,7 @@ const renameFiles = async (sourceDir, pattern, outputDir) => {
   const files = glob
     .sync(`${sourceDir}/*`)
     .map(f => [f, path.basename(f)])
-    .map(([src, basename]) => [src, basename.match(pattern).slice(1, 3).join('')]) // TODO: watch out for matches
+    .map(([src, basename]) => [src, basename.match(pattern).slice(1).join('')])
     .map(([src, renamed]) => [src, renamed.toLowerCase()])
     .map(([src, filename]) => [src, path.join(outputDir, filename)]);
   return Promise.all(files.map(([src, dest]) => fs.promises.copyFile(src, dest)));
@@ -82,7 +86,7 @@ const renderJS = async (sourceDir, outputFile) => {
   return fs.promises.writeFile(outputFile, rendered);
 };
 
-for (const [provider, {url, copyPattern, renamePattern}] of Object.entries(assetsUrl)) {
+for (const [provider, {url, copyPattern, renamePattern}] of Object.entries(assetsInfo)) {
   const rootMsg = `Provider: ${provider} - `;
   const providerDir = path.join('.tmp', provider);
   const downloadedFile = path.join(providerDir, 'downloaded');
