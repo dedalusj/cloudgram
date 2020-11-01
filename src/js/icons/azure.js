@@ -170,7 +170,6 @@ import privateLink from '../../images/azure/private-link.svg';
 import privateLinkService from '../../images/azure/private-link-service.svg';
 import processExplorer from '../../images/azure/process-explorer.svg';
 import productionReadyDatabase from '../../images/azure/production-ready-database.svg';
-import publicIpAddresses from '../../images/azure/public-ip-addresses.svg';
 import publicIpAddressesClassic from '../../images/azure/public-ip-addresses-(classic).svg';
 import quickstartCenter from '../../images/azure/quickstart-center.svg';
 import recent from '../../images/azure/recent.svg';
@@ -182,7 +181,6 @@ import resourceGraphExplorer from '../../images/azure/resource-graph-explorer.sv
 import resourceGroupList from '../../images/azure/resource-group-list.svg';
 import resourceGroups from '../../images/azure/resource-groups.svg';
 import resourceLinked from '../../images/azure/resource-linked.svg';
-import routeFilters from '../../images/azure/route-filters.svg';
 import sapAzureMonitor from '../../images/azure/sap-azure-monitor.svg';
 import scale from '../../images/azure/scale.svg';
 import scheduler from '../../images/azure/scheduler.svg';
@@ -413,7 +411,6 @@ export {
   privateLinkService,
   processExplorer,
   productionReadyDatabase,
-  publicIpAddresses,
   publicIpAddressesClassic,
   quickstartCenter,
   recent,
@@ -425,7 +422,6 @@ export {
   resourceGroupList,
   resourceGroups,
   resourceLinked,
-  routeFilters,
   sapAzureMonitor,
   scale,
   scheduler,
