@@ -7,7 +7,7 @@ import url from 'url';
 import axios from 'axios';
 import camelCase from 'camelcase';
 import glob from 'glob-promise';
-import mustache from 'mustache';
+import nunjucks from 'nunjucks';
 import pino from 'pino';
 import unzipper from 'unzipper';
 import xml2js from 'xml2js';
@@ -25,11 +25,25 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const parser = new xml2js.Parser();
 const builder = new xml2js.Builder();
-const template = fs.readFileSync(path.join(__dirname, 'assets.mustache')).toString();
+const providerJsTemplate = fs.readFileSync(path.join(__dirname, 'provider.js.njk')).toString();
+const docsTemplate = fs.readFileSync(path.join(__dirname, 'resources_content.html.njk')).toString();
 
 const imagesDir = provider => path.join(__dirname, '..', 'src', 'images', provider);
 const renderJSFile = provider => path.join(__dirname, '..', 'src', 'js', 'icons', `${provider}.js`);
+const resourceDocsFile = path.join(__dirname, '..', 'src', 'resources_content.html');
 
+const tap = fn => data => {
+  fn(data);
+  return data;
+};
+const groupBy = key => objs =>
+  objs.reduce(
+    (acc, o) => ({
+      ...acc,
+      [o[key]]: [...(acc[o[key]] || []), o],
+    }),
+    {}
+  );
 const getParent = (f, level = 1) => path.dirname(f).split(path.sep).slice(-level)[0];
 const basename = filepath => path.basename(filepath, path.extname(filepath));
 const sanitize = s => s.replace(/[^a-zA-Z0-9_$-]/g, '').replace(/-+/, '-');
@@ -118,8 +132,8 @@ const renderJS = provider => async assets => {
     target,
     importPath: path.relative(path.dirname(renderJSFile(provider)), target),
   }));
-  const rendered = mustache.render(template, {assets: toRender});
-  return fs.promises.writeFile(renderJSFile(provider), rendered);
+  const rendered = nunjucks.renderString(providerJsTemplate, {assets: toRender});
+  return fs.promises.writeFile(renderJSFile(provider), rendered).then(_ => toRender);
 };
 
 const AWS = 'aws';
@@ -130,6 +144,7 @@ const K8s = 'k8s';
 const awsPatterns = [
   [/lot/gi, 'iot'],
   [/lense/gi, 'lens'],
+  [/&/gi, 'and'],
   [/_48_dark/gi, ''],
   [/_64/gi, ''],
   [/res_amazon-/gi, ''],
@@ -200,6 +215,7 @@ const azureExtractGroup = ({source, ...rest}) => ({
     .toLocaleLowerCase()
     .trim()
     .replace(/\+/g, 'and')
+    .replace('iot', 'Internet of things')
     .replace(/^\w/, c => c.toUpperCase()),
 });
 const k8sExtractGroup = ({source, ...rest}) => ({
@@ -208,7 +224,7 @@ const k8sExtractGroup = ({source, ...rest}) => ({
   group: 'Generic', // no group information available in k8s
 });
 
-const providers = {
+const config = {
   [AWS]: {
     url:
       'https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip',
@@ -251,22 +267,21 @@ const providers = {
   },
 };
 
-for (const provider of Object.keys(providers)) {
+const processProvider = ([provider, options]) => {
   const providerDir = path.join('.tmp', provider);
 
   const removeProviderDir = _ => rmdir(providerDir);
   const createProviderDir = _ => mkdir(providerDir);
-  const downloadAssets = _ => downloadFile(providers[provider].url);
+  const downloadAssets = _ => downloadFile(options.url);
   const extractAssets = downloadedFile => unzipFile(downloadedFile, providerDir);
   const selectSVGs = _ => glob.promise(`${providerDir}/**/*.svg`, {nodir: true});
-  const filterRelevantFiles = files => files.filter(providers[provider].filter);
-  const prepareAssets = files => Promise.all(files.map(providers[provider].prepare));
+  const filterRelevantFiles = files => files.filter(options.filter);
+  const prepareAssets = files => Promise.all(files.map(options.prepare));
   const sort = assets => assets.sort(compareAssets);
   const removeImagesDir = _ => rmdir(imagesDir(provider));
-  const render = renderJS(provider);
 
   logger.info(`Producing assets for ${provider}`);
-  removeProviderDir()
+  return removeProviderDir()
     .then(createProviderDir)
     .then(downloadAssets)
     .then(extractAssets)
@@ -277,8 +292,29 @@ for (const provider of Object.keys(providers)) {
     .then(removeDuplicateAssets)
     .then(sort)
     .then(saveAssets)
-    .then(render)
-    .then(removeProviderDir)
-    .then(_ => logger.info(`Finished producing assets for ${provider}`))
+    .then(renderJS(provider))
+    .then(tap(removeProviderDir))
+    .then(tap(_ => logger.info(`Finished producing assets for ${provider}`)))
     .catch(err => logger.error(err));
-}
+};
+
+const keepRelevantProps = assets => assets.map(({provider, group, importName}) => ({provider, group, importName}));
+const groupByProvider = assets =>
+  Object.entries(groupBy('provider')(assets)).map(([k, v]) => ({provider: k, assets: v}));
+const groupByGroup = assets =>
+  assets.map(({provider, assets}) => ({
+    name: provider,
+    groups: Object.entries(groupBy('group')(assets)).map(([k, v]) => ({name: k, assets: v})),
+  }));
+const renderResourceDocs = providers => {
+  const rendered = nunjucks.renderString(docsTemplate, {providers});
+  return fs.promises.writeFile(resourceDocsFile, rendered);
+};
+
+Promise.all(Object.entries(config).map(processProvider))
+  .then(assets => assets.flat())
+  .then(keepRelevantProps)
+  .then(groupByProvider)
+  .then(groupByGroup)
+  .then(renderResourceDocs)
+  .catch(err => logger.error(err));

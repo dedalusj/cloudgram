@@ -1,0 +1,8 @@
+{%- for asset in assets -%}
+import {{asset.importName}} from '{{asset.importPath}}';
+{% endfor %}
+export {
+{%- for asset in assets %}
+  {{asset.importName}},
+{%- endfor %}
+};

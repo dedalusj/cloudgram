@@ -106,7 +106,8 @@ article {
   font-size: 1.1em;
   line-height: 1.6em;
   color: #262626;
-  padding: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   font-weight: 100;
 }
 
@@ -137,21 +138,24 @@ article > table {
 
 .side-menu-layout {
   display: flex;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .side-nav {
-  flex: 0 0 200px;
+  flex: 0 0 350px;
   font-size: 1.2em;
   line-height: 1.7em;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .side-nav ul li {
   list-style-type: none;
-  padding-left: 15px;
-}
-
-.side-nav ul li:hover {
-  background-color: rgba(35, 118, 174, 0.2);
 }
 
 .side-nav ul li a {
@@ -159,22 +163,45 @@ article > table {
   color: #393939;
 }
 
+ul.group {
+  padding-inline-start: 0;
+}
+
+ul.group li {
+  padding-inline-start: 0;
+  font-size: 0.8em;
+  line-height: 1.8em;
+}
+
+ul.group:last-child {
+  margin-bottom: 15px;
+}
+
+ul.group li a {
+  color: #999;
+}
+
+ul.group li:hover a {
+  color: #004c7a;
+}
+
 .content {
   flex: 1 auto;
   font-size: 1.1em;
   line-height: 1.6em;
   font-weight: 100;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.content h1 {
+  font-size: 2.3em;
+  font-weight: normal;
+  color: #2376ae;
 }
 
 .content ul li {
   list-style-type: none;
-}
-
-#provider-name {
-  padding-inline-start: 40px;
-  font-size: 2.3em;
-  font-weight: normal;
-  color: #2376ae;
 }
 
 .button {

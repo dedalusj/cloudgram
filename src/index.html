@@ -29,7 +29,7 @@ diagram "example" [direction=lr] {
   aws.cloudfront cf [label="CDN"];
 
   group vpc [label="VPC"] {
-      aws.elasticLoadBalancing load_balancer [label="Load balancer"];
+      aws.elb load_balancer [label="Load balancer"];
 
       group servers [label="Servers"] {
           aws.ec2 server1 [label="Server 1"];
