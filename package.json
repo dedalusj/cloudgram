@@ -34,6 +34,7 @@
     "camelcase": "^6.1.0",
     "core-js": "^3.6.5",
     "glob": "^7.1.6",
+    "glob-promise": "^3.4.0",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "jest-transform-stub": "^2.0.0",
@@ -48,6 +49,7 @@
     "pretty-quick": "^3.0.2",
     "regenerator-runtime": "^0.13.7",
     "serve": "^11.3.2",
+    "tmp": "^0.2.1",
     "unzipper": "^0.10.11",
     "xml2js": "^0.4.23"
   }

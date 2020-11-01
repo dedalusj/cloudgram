@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="80px" height="80px">
+  <defs>
+    <style>.cls-1{fill:#fff;}</style>
+  </defs>
+  <title>Traditional-server_dark-bg</title>
+  <g id="Working">
+    <path class="cls-1" d="M37.66,48.5H12.34a1,1,0,0,1-1-1V2.5a1,1,0,0,1,1-1H37.66a1,1,0,0,1,1,1v45A1,1,0,0,1,37.66,48.5Zm-24.32-2H36.66V3.5H13.34Z"/>
+    <rect class="cls-1" x="16.09" y="6.19" width="17.81" height="2"/>
+    <rect class="cls-1" x="16.09" y="10.88" width="17.81" height="2"/>
+    <rect class="cls-1" x="16.09" y="15.56" width="17.81" height="2"/>
+    <rect class="cls-1" x="16.09" y="20.25" width="17.81" height="2"/>
+  </g>
+</svg>

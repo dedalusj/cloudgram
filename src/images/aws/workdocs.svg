@@ -4,16 +4,14 @@
   <desc>Created with Sketch.</desc>
   <defs>
     <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-      <stop stop-color="#055F4E" offset="0%"/>
-      <stop stop-color="#56C0A7" offset="100%"/>
+      <stop stop-color="#BD0816" offset="0%"/>
+      <stop stop-color="#FF5252" offset="100%"/>
     </linearGradient>
   </defs>
   <g id="Icon-Architecture/64/Arch_Amazon-WorkDocs_64" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <g id="Icon-Architecture-BG/64/End-User-Computing" fill="url(#linearGradient-1)">
+    <g id="Icon-Architecture-BG/64/Business-Applications" fill="url(#linearGradient-1)">
       <rect id="Rectangle" x="0" y="0" width="80" height="80"/>
     </g>
-    <g id="Icon-Service/64/Amazon-WorkDocs" transform="translate(8.000000, 8.000000)" fill="#FFFFFF">
-      <path d="M25,33 L28,33 L28,31 L25,31 L25,33 Z M31,53 L33,53 L33,50 L31,50 L31,53 Z M31,48 L33,48 L33,45 L31,45 L31,48 Z M31,38 L33,38 L33,35 L31,35 L31,38 Z M31,43 L33,43 L33,40 L31,40 L31,43 Z M20,33 L23,33 L23,31 L20,31 L20,33 Z M15,33 L18,33 L18,31 L15,31 L15,33 Z M10,33 L13,33 L13,31 L10,31 L10,33 Z M33,58 L33,55 L31,55 L31,58 L6,58 L6,33 L8,33 L8,31 L6,31 L6,6 L31,6 L31,31 L30,31 L30,33 L32,33 L33,33 L58,33 L58,58 L33,58 Z M33,7.414 L56.586,31 L33,31 L33,7.414 Z M60,32 C60,31.74 59.898,31.484 59.707,31.293 L32.707,4.293 C32.515,4.102 32.26,4 32,4 L5,4 C4.447,4 4,4.448 4,5 L4,59 C4,59.552 4.447,60 5,60 L59,60 C59.552,60 60,59.552 60,59 L60,32 Z" id="Amazon-WorkDocs_Icon_64_Squid"/>
-    </g>
+    <path d="M33,41 L36,41 L36,39 L33,39 L33,41 Z M39,61 L41,61 L41,58 L39,58 L39,61 Z M39,56 L41,56 L41,53 L39,53 L39,56 Z M39,46 L41,46 L41,43 L39,43 L39,46 Z M39,51 L41,51 L41,48 L39,48 L39,51 Z M28,41 L31,41 L31,39 L28,39 L28,41 Z M23,41 L26,41 L26,39 L23,39 L23,41 Z M18,41 L21,41 L21,39 L18,39 L18,41 Z M41,66 L41,63 L39,63 L39,66 L14,66 L14,41 L16,41 L16,39 L14,39 L14,14 L39,14 L39,39 L38,39 L38,41 L40,41 L41,41 L66,41 L66,66 L41,66 Z M41,15.414 L64.586,39 L41,39 L41,15.414 Z M68,40 C68,39.74 67.898,39.484 67.707,39.293 L40.707,12.293 C40.515,12.102 40.26,12 40,12 L13,12 C12.447,12 12,12.448 12,13 L12,67 C12,67.552 12.447,68 13,68 L67,68 C67.552,68 68,67.552 68,67 L68,40 Z" id="Amazon-WorkDocs_Icon_64_Squid" fill="#FFFFFF"/>
   </g>
 </svg>

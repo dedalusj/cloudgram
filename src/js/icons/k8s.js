@@ -32,6 +32,42 @@ import svc from '../../images/k8s/svc.svg';
 import user from '../../images/k8s/user.svg';
 import vol from '../../images/k8s/vol.svg';
 
+export const groupMap = {
+  cRole: 'Generic',
+  cm: 'Generic',
+  crb: 'Generic',
+  crd: 'Generic',
+  cronjob: 'Generic',
+  deploy: 'Generic',
+  ds: 'Generic',
+  ep: 'Generic',
+  etcd: 'Generic',
+  group: 'Generic',
+  hpa: 'Generic',
+  ing: 'Generic',
+  job: 'Generic',
+  limits: 'Generic',
+  master: 'Generic',
+  netpol: 'Generic',
+  node: 'Generic',
+  ns: 'Generic',
+  pod: 'Generic',
+  psp: 'Generic',
+  pv: 'Generic',
+  pvc: 'Generic',
+  quota: 'Generic',
+  rb: 'Generic',
+  role: 'Generic',
+  rs: 'Generic',
+  sa: 'Generic',
+  sc: 'Generic',
+  secret: 'Generic',
+  sts: 'Generic',
+  svc: 'Generic',
+  user: 'Generic',
+  vol: 'Generic',
+};
+
 export {
   cRole,
   cm,

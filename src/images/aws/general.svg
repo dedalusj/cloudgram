@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80px" height="80px">
+  <defs>
+    <style>.cls-1{fill:#fff;}.cls-2{fill:none;}.cls-3{fill:#232f3e;}</style>
+  </defs>
+  <title>General_dark-bg</title>
+  <g id="Working">
+    <rect class="cls-1" x="8.5" y="8.5" width="82" height="82"/>
+    <rect class="cls-2" width="100" height="100"/>
+    <path class="cls-1" d="M89,10V89H10V10H89m3-3H7V92H92V7Z"/>
+    <path class="cls-3" d="M50,23.85,27.35,36.92V63.08L50,76.15,72.65,63.08V36.92ZM69.65,37.5,50,48.85,30.35,37.5,50,26.15Zm-40.3,1.73L49,50.58V73.27L29.35,61.92ZM51,73.27V50.58L70.65,39.23V61.92Z"/>
+  </g>
+</svg>
