@@ -1,6 +1,6 @@
 {
-  "name": "cloudwire",
-  "version": "0.0.1",
+  "name": "cloudgram",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test nyc jest",
