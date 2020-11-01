@@ -1,9 +1,9 @@
-<div class="side-nav">
-    <ul>
+<div class="nav-column">
+    <ul class="section">
     {%- for provider in providers %}
         <li>
             <a title="{{provider.name | upper}}" href="#{{provider.name | lower}}">{{provider.name | upper}}</a>
-            <ul class="group">
+            <ul class="sub-section">
             {%- for group in provider.groups %}
                 <li>
                     <a title="{{group.name | capitalize}}" href="#{{provider.name | lower}}_{{group.name | lower | replace(" ", "_")}}">{{group.name | capitalize}}</a>
@@ -14,7 +14,7 @@
     {%- endfor %}
     </ul>
 </div>
-<div class="content">
+<div class="column content">
 {%- for provider in providers %}
     <h1 id="{{provider.name | lower}}">{{provider.name | upper}}</h1>
     {%- for group in provider.groups %}

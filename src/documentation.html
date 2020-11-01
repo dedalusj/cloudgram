@@ -11,11 +11,39 @@
       <include src="nav_items.html"></include>
     </div>
     <main>
-      <article class="column">
-        <h1>Anatomy of a diagram file</h1>
-        <p>Here is an example diagram file:</p>
+      <div class="nav-column">
+        <ul>
+          <li>
+            <a title="Diagram" href="#diagram">Diagram</a>
+            <ul class="sub-section">
+              <li>
+                <a title="Diagram" href="#diagram_diagram">Diagram</a>
+              </li>
+              <li>
+                <a title="Nodes" href="#diagram_nodes">Nodes</a>
+              </li>
+              <li>
+                <a title="Links" href="#diagram_links">Links</a>
+              </li>
+              <li>
+                <a title="Groups" href="#diagram_groups">Groups</a>
+              </li>
+              <li>
+                <a title="Comments" href="#diagram_comments">Comments</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a title="Sharing" href="#sharing">Sharing</a>
+          </li>
+        </ul>
+      </div>
+      <div class="column content">
+        <article class="column">
+          <h1 id="diagram">The diagram file</h1>
+          <p>Here is an example diagram file:</p>
 
-        <pre>
+          <pre>
 diagram "example" [direction=lr] {
   // creating the nodes
   aws.route53 DNS;
@@ -34,115 +62,128 @@ diagram "example" [direction=lr] {
   DNS -> cf -> load_balancer [stroke=blue,style=dashed];
   load_balancer => servers;
 }</pre
-        >
+          >
 
-        <h2>Diagram</h2>
-        <p>
-          Each diagram file must start with the word <code>diagram</code>. This is followed by the name of the diagram
-          which is an identifier. Identifiers are one of the following:
-        </p>
-        <ul>
-          <li>a letter followed by a series of letters, digits, underscores or dashes</li>
-          <li>a number</li>
-          <li>any series of characters within double quotes. A double quote must be escaped with a /</li>
-        </ul>
+          <h2 id="diagram_diagram">Diagram</h2>
+          <p>
+            Each diagram file must start with the word <code>diagram</code>. This is followed by the name of the diagram
+            which is an identifier. Identifiers are one of the following:
+          </p>
+          <ul>
+            <li>a letter followed by a series of letters, digits, underscores or dashes</li>
+            <li>a number</li>
+            <li>any series of characters within double quotes. A double quote must be escaped with a /</li>
+          </ul>
 
-        <p>
-          After the name of the diagram we have <code>[direction=lr]</code>, called an attributes list. Attributes lists
-          are optional and can appears is several other places as we will see later. For a diagram the only supported
-          attribute is <code>direction</code> determining the direction of the drawn graph. The supported values are
-          <code>lr</code> for left-to-right and <code>tb</code> for top-to-bottom.
-        </p>
+          <p>
+            After the name of the diagram we have <code>[direction=lr]</code>, called an attributes list. Attributes
+            lists are optional and can appears is several other places as we will see later. For a diagram the only
+            supported attribute is <code>direction</code> determining the direction of the drawn graph. The supported
+            values are <code>lr</code> for left-to-right and <code>tb</code> for top-to-bottom.
+          </p>
 
-        <p>A diagram contains three kind of elements: nodes, groups or links.</p>
+          <p>A diagram contains three kind of elements: nodes, groups or links.</p>
 
-        <h2>Elements</h2>
+          <h2 id="diagram_nodes">Nodes</h2>
 
-        <h3>Nodes</h3>
+          <p>
+            A node represents a service in your architecture and it is declared like
+            <code>aws.cloudfront cf [label="CDN"];</code>. <code>aws</code> is the provider of the service,
+            <code>cloudfront</code> is the type of the service and <code>cf</code> is an identifier, like the one we
+            encountered before, for this service. Beware that all nodes in a diagram require a unique identifier. If you
+            declare more than one node with the same identifier the latest node declaration will override all other.
+          </p>
 
-        <p>
-          A node represents a service in your architecture and it is declared like
-          <code>aws.cloudfront cf [label="CDN"];</code>. <code>aws</code> is the provider of the service,
-          <code>cloudfront</code> is the type of the service and <code>cf</code> is an identifier, like the one we
-          encountered before, for this service. Beware that all nodes in a diagram require a unique identifier. If you
-          declare more than one node with the same identifier the latest node declaration will override all other.
-        </p>
+          <p>
+            Like we saw for diagrams a node can have attributes. Here is the list of supported attributes for a node:
+          </p>
+          <ul>
+            <li>
+              <code>label</code>: by default a node will be drawn with its identifier as name but you can override this
+              behaviour with the label attribute
+            </li>
+            <li>
+              <code>labelPosition</code>: location of the label, supported values are , <code>n</code>,
+              <code>s</code>,<code>e</code>, <code>w</code>, <code>ne</code>, <code>nw</code>, <code>se</code>,
+              <code>sw</code>
+            </li>
+          </ul>
 
-        <p>Like we saw for diagrams a node can have attributes. Here is the list of supported attributes for a node:</p>
-        <ul>
-          <li>
-            <code>label</code>: by default a node will be drawn with its identifier as name but you can override this
-            behaviour with the label attribute
-          </li>
-          <li>
-            <code>labelPosition</code>: location of the label, supported values are , <code>n</code>,
-            <code>s</code>,<code>e</code>, <code>w</code>, <code>ne</code>, <code>nw</code>, <code>se</code>,
-            <code>sw</code>
-          </li>
-        </ul>
+          <h2 id="diagram_links">Links</h2>
 
-        <h3>Links</h3>
+          <p>
+            A link is a directed connection between nodes and groups. Link are declared with either the
+            <code>-></code> or <code>=></code> symbols. The second is simply a convenience notation to link a node with
+            all the children of a group, see below. For convenience a chain of links can be declared with
+            <code>DNS -> cf -> load_balancer</code>.
+          </p>
 
-        <p>
-          A link is a directed connection between nodes and groups. Link are declared with either the
-          <code>-></code> or <code>=></code> symbols. The second is simply a convenience notation to link a node with
-          all the children of a group, see below. For convenience a chain of links can be declared with
-          <code>DNS -> cf -> load_balancer</code>.
-        </p>
+          <p>Links also support attributes. Here is a list of supported attributes for a link:</p>
+          <ul>
+            <li>
+              <code>stroke</code>: the color of the link in the graph. The value for color can be a color name, e.g.
+              <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
+            </li>
+            <li>
+              <code>style</code>: the style applied to the link line, e.g. <code>dashed</code> or
+              <code>solid</code>
+            </li>
+            <li><code>width</code>: the width for the link line</li>
+          </ul>
 
-        <p>Links also support attributes. Here is a list of supported attributes for a link:</p>
-        <ul>
-          <li>
-            <code>stroke</code>: the color of the link in the graph. The value for color can be a color name, e.g.
-            <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
-          </li>
-          <li>
-            <code>style</code>: the style applied to the link line, e.g. <code>dashed</code> or
-            <code>solid</code>
-          </li>
-          <li><code>width</code>: the width for the link line</li>
-        </ul>
+          <p>
+            When attributes are declared after a link chain the attributes will apply to all the links in the chain.
+          </p>
 
-        <p>When attributes are declared after a link chain the attributes will apply to all the links in the chain.</p>
+          <h2 id="diagram_groups">Groups</h2>
 
-        <h3>Groups</h3>
-
-        <p>
-          A group is nothing more of a collection of other elements and will be drawn as box encompassing all the child
-          elements. Declaration of a group starts with the keyword <code>group</code> followed by the identifier for the
-          group, optional attributes and the group elements, e.g.
-        </p>
-        <pre>
+          <p>
+            A group is nothing more of a collection of other elements and will be drawn as box encompassing all the
+            child elements. Declaration of a group starts with the keyword <code>group</code> followed by the identifier
+            for the group, optional attributes and the group elements, e.g.
+          </p>
+          <pre>
 group servers [label="Servers"] {
   aws.ec2 server1 [label="Server 1"];
   aws.ec2 server2 [label="Server 2"];
 }</pre
-        >
+          >
 
-        <p>the list of supported attributes for a group is:</p>
-        <ul>
-          <li>
-            <code>stroke</code>: the color of the group border. The value for color can be a color name, e.g.
-            <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
-          </li>
-          <li>
-            <code>style</code>: the style applied to the group border, e.g. <code>dashed</code> or
-            <code>solid</code>
-          </li>
-          <li><code>width</code>: the width for the group border</li>
-          <li><code>fill</code>: the color for the group background</li>
-          <li><code>opacity</code>: the opacity of the group background</li>
-          <li>
-            <code>labelPosition</code>: location of the label, supported values are <code>n</code>,
-            <code>s</code>,<code>e</code>, <code>w</code>, <code>ne</code>, <code>nw</code>, <code>se</code>,
-            <code>sw</code>
-          </li>
-        </ul>
+          <p>the list of supported attributes for a group is:</p>
+          <ul>
+            <li>
+              <code>stroke</code>: the color of the group border. The value for color can be a color name, e.g.
+              <code>red</code>, <code>blue</code>, or in rgb form with syntax <code>"rgb(32,64,128)"</code>
+            </li>
+            <li>
+              <code>style</code>: the style applied to the group border, e.g. <code>dashed</code> or
+              <code>solid</code>
+            </li>
+            <li><code>width</code>: the width for the group border</li>
+            <li><code>fill</code>: the color for the group background</li>
+            <li><code>opacity</code>: the opacity of the group background</li>
+            <li>
+              <code>labelPosition</code>: location of the label, supported values are <code>n</code>,
+              <code>s</code>,<code>e</code>, <code>w</code>, <code>ne</code>, <code>nw</code>, <code>se</code>,
+              <code>sw</code>
+            </li>
+          </ul>
 
-        <h2>Comments</h2>
+          <h2 id="diagram_comments">Comments</h2>
 
-        <p>Comments are supported in the form <code>// this is a comment</code></p>
-      </article>
+          <p>Comments are supported in the form <code>// this is a comment</code></p>
+
+          <h1 id="sharing">Sharing</h1>
+          <p>
+            CloudWire supports initializing a diagram directly from a URL. The share button will generate an copy a URL
+            suitable for sharing with others.
+          </p>
+          <p>
+            Alternatively if you want to craft a URL by hand simply URL encode the diagram content and add it to the URL
+            with a query parameter name <code>document</code>.
+          </p>
+        </article>
+      </div>
     </main>
   </body>
 </html>

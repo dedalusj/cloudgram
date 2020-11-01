@@ -22,7 +22,8 @@
         </div>
       </div>
     </div>
-    <pre id="editor">
+    <main>
+      <pre id="editor">
 diagram "example" [direction=lr] {
   // creating the nodes
   aws.route53 DNS;
@@ -41,9 +42,9 @@ diagram "example" [direction=lr] {
   DNS -> cf -> load_balancer;
   load_balancer => servers;
 }
-      </pre
-    >
-    <div id="cy"></div>
+      </pre>
+      <div id="cy"></div>
+    </main>
     <script src="js/index.js"></script>
   </body>
 </html>
