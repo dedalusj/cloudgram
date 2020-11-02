@@ -1,3 +1,8 @@
+/*
+Define an ACE editor mode and highlighting
+rules for the CloudGram syntax
+*/
+
 import ace from 'ace-builds';
 
 import {HighlightRules} from './highlighting_rules.js';

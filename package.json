@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "type": "module",
   "scripts": {
-    "test": "NODE_ENV=test nyc jest",
+    "test": "nyc jest",
     "lint": "node_modules/.bin/prettier --write \"{src,tests,scripts}/**/*.js\"",
     "dev": "parcel src/index.html -d dev",
     "build": "rm -fr dist && parcel build src/index.html --no-source-maps",
@@ -13,7 +13,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "echo 'Pre-commit checks...' && exit 0",
-      "pre-commit": "pretty-quick --staged && npm test && npm run diagram"
+      "pre-commit": "pretty-quick --staged && yarn test && yarn run diagram"
     }
   },
   "dependencies": {
@@ -21,8 +21,7 @@
     "chevrotain": "^7.0.2",
     "cytoscape": "^3.16.2",
     "cytoscape-dagre": "^2.3.0",
-    "file-saver": "^2.0.2",
-    "ramda": "^0.27.1"
+    "file-saver": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -52,5 +51,8 @@
     "tmp": "^0.2.1",
     "unzipper": "^0.10.11",
     "xml2js": "^0.4.23"
+  },
+  "resolutions": {
+    "node-forge": "0.10.0"
   }
 }

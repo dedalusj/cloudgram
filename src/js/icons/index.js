@@ -1,3 +1,10 @@
+/*
+Import all the SVG files for the services and make them available for other components
+
+All the provider files are automatically generated via the `scripts/assets.js` file
+while this file and the generic.js file are manually maintained.
+*/
+
 import * as awsIcons from './aws.js';
 import * as k8sIcons from './k8s.js';
 import * as azureIcons from './azure.js';

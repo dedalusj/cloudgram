@@ -1,10 +1,22 @@
+/*
+Entrypoint for the app
+
+The starting point is the `draw` method performing the following tasks:
+- get the document from the ACE editor
+- pass the documented to the parser
+- pass the parsed document to the renderer
+
+Upon loading of the page an event listener is setup for changes in the
+editor that will trigger a redraw.
+*/
+
 import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/theme-twilight';
 import {saveAs} from 'file-saver';
 
 import {parse} from './parser';
 import {render} from './renderer';
-import {Mode} from './editor/mode';
+import {Mode} from './editor';
 
 // exported to be mocked by tests
 export const editor = ace.edit('editor', {
@@ -28,19 +40,9 @@ const displayErrors = errors => {
 };
 
 const getDocument = () => editor.getSession().getDocument().getValue();
-const setDocument = doc => editor.setValue(doc, -1);
+const setDocument = document => editor.setValue(document, -1);
 
-export const refresh = _ => {
-  const src = getDocument();
-  const {parsed, errors} = parse(src);
-
-  displayErrors(errors);
-  if (errors && errors.length > 0) return;
-
-  window.cy = render(parsed);
-};
-
-export const saveGraph = _ => {
+export const saveGraph = () => {
   const cy = window.cy;
   const selectEl = document.getElementById('format');
   const format = selectEl.options[selectEl.selectedIndex].value;
@@ -70,7 +72,7 @@ export const copyToClipboard = text => {
   document.body.removeChild(el);
 };
 
-export const copyLink = _ => {
+export const copyLink = () => {
   const src = getDocument();
   const url = `${location.protocol}//${location.host}${location.pathname}?document=${encodeURIComponent(src)}`;
   copyToClipboard(url);
@@ -81,11 +83,23 @@ const initDocument = () => {
   if (params.has('document')) setDocument(params.get('document'));
 };
 
+// main method that parses the document
+// from the editor and renders it
+export const draw = () => {
+  const src = getDocument();
+  const {parsed, errors} = parse(src);
+
+  displayErrors(errors);
+  if (errors && errors.length > 0) return;
+
+  window.cy = render(parsed);
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   initDocument();
 
-  editor.getSession().on('change', refresh);
-  refresh();
+  editor.getSession().on('change', draw);
+  draw();
 
   document.getElementById('save').addEventListener('click', saveGraph);
   document.getElementById('copy-link').addEventListener('click', copyLink);

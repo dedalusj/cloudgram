@@ -59,7 +59,7 @@ describe('refresh', () => {
     // we require the index after mocking the document
     // body so that ace can find the editor div
     const index = require('../src/js/index');
-    refresh = index.refresh;
+    refresh = index.draw;
     editor = index.editor;
   });
 

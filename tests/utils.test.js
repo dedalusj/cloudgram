@@ -1,4 +1,4 @@
-import {pluck, arrayDiff, uniqBy, renameProp, get, getOr, inSetOr, pipe, toLowerCase} from '../src/js/utils';
+import {pluck, arrayDiff, uniqBy, renameProp, get, getOrDefault, inSetOrDefault, pipe} from '../src/js/utils';
 
 it('pluck a value from object', () => {
   expect(pluck('a')({a: 1, b: 2})).toEqual(1);
@@ -106,8 +106,8 @@ describe('nested property', () => {
   });
 
   it('uses the default value if the property does not exists', () => {
-    expect(getOr(['a', 'b'], 3)({a: {b: 2}})).toEqual(2);
-    expect(getOr(['a', 'c'], 3)({a: {b: 2}})).toEqual(3);
+    expect(getOrDefault(['a', 'b'], 3)({a: {b: 2}})).toEqual(2);
+    expect(getOrDefault(['a', 'c'], 3)({a: {b: 2}})).toEqual(3);
   });
 
   it('preserves empty strings', () => {
@@ -116,7 +116,7 @@ describe('nested property', () => {
 });
 
 describe('value from set', () => {
-  const fn = inSetOr(new Set(['a', 'b', 'c']), 'a');
+  const fn = inSetOrDefault(new Set(['a', 'b', 'c']), 'a');
 
   it('returns a value if present in a set', () => {
     expect(fn('b')).toEqual('b');

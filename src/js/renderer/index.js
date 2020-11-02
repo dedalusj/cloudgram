@@ -1,10 +1,15 @@
+/*
+It receives the output from the parser and render it thanks to cytoscape.
+
+It defines a single entrypoint, the `render` function.
+*/
+
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 
 import iconMap from '../icons';
-
 import {getNodesAndEdges} from './transform.js';
-import {get, getOr, pipe, inSetOr, toLowerCase} from '../utils';
+import {get, getOrDefault, pipe, inSetOrDefault, toLowerCase} from '../utils';
 
 cytoscape.use(dagre);
 
@@ -24,18 +29,18 @@ const labelPositions = new Set([N, S, E, W, NE, NW, SE, SW]);
 
 const getData = e => e.data();
 
-export const getBackgroundColor = pipe(getData, getOr(['attributes', 'fill'], '#eee'));
-export const getBorderStyle = pipe(getData, getOr(['attributes', 'style'], 'dashed'));
-export const getBorderWidth = pipe(getData, getOr(['attributes', 'width'], 1));
-export const getOpacity = pipe(getData, getOr(['attributes', 'opacity'], 1.0));
-export const getColor = pipe(getData, getOr(['attributes', 'stroke'], '#ccc'));
-export const getEdgeStyle = pipe(getData, getOr(['attributes', 'style'], 'solid'));
-export const getEdgeWidth = pipe(getData, getOr(['attributes', 'width'], 2));
+export const getBackgroundColor = pipe(getData, getOrDefault(['attributes', 'fill'], '#eee'));
+export const getBorderStyle = pipe(getData, getOrDefault(['attributes', 'style'], 'dashed'));
+export const getBorderWidth = pipe(getData, getOrDefault(['attributes', 'width'], 1));
+export const getOpacity = pipe(getData, getOrDefault(['attributes', 'opacity'], 1.0));
+export const getColor = pipe(getData, getOrDefault(['attributes', 'stroke'], '#ccc'));
+export const getEdgeStyle = pipe(getData, getOrDefault(['attributes', 'style'], 'solid'));
+export const getEdgeWidth = pipe(getData, getOrDefault(['attributes', 'width'], 2));
 
 const getIcon = ({provider, service}) => iconMap[provider][service];
 export const getIconForNode = pipe(getData, getIcon);
 
-export const getDirection = pipe(get(['direction']), toLowerCase, inSetOr(directions, TB));
+export const getDirection = pipe(get(['direction']), toLowerCase, inSetOrDefault(directions, TB));
 
 const getVerticalPosition = p => {
   switch (p) {
@@ -69,13 +74,19 @@ const getHorizontalPosition = p => {
 };
 const getLabelPosition = pipe(
   getData,
-  getOr(['attributes', 'labelPosition'], N),
+  getOrDefault(['attributes', 'labelPosition'], N),
   toLowerCase,
-  inSetOr(labelPositions, N)
+  inSetOrDefault(labelPositions, N)
 );
 export const getHPosForNode = pipe(getLabelPosition, getHorizontalPosition);
 export const getVPosForNode = pipe(getLabelPosition, getVerticalPosition);
 
+/**
+ * Creates and returns a cytoscape object for rendering the graph
+ * @param {Array.<Element>} elements
+ * @param {Object.<string,string>} attributes
+ * @returns a cytoscape object rendering the graph
+ */
 export const render = ({elements, attributes}) =>
   cytoscape({
     container: document.getElementById('cy'),

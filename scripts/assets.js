@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/*
+Node script to create SVG assets and their related
+JS files for the service icons of each provider
+*/
+
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
@@ -44,16 +49,14 @@ const groupBy = key => objs =>
     }),
     {}
   );
-const getParent = (f, level = 1) => path.dirname(f).split(path.sep).slice(-level)[0];
+const getParentDir = (f, level = 1) => path.dirname(f).split(path.sep).slice(-level)[0];
 const basename = filepath => path.basename(filepath, path.extname(filepath));
-const sanitize = s => s.replace(/[^a-zA-Z0-9_$-]/g, '').replace(/-+/, '-');
+const sanitizeName = s => s.replace(/[^a-zA-Z0-9_$-]/g, '').replace(/-+/, '-');
 
-const mkdir = async dir => {
-  if (!fs.existsSync(dir)) return fs.promises.mkdir(dir, {recursive: true});
-};
-
+const mkdir = async dir => fs.promises.mkdir(dir, {recursive: true});
 const rmdir = async dir => fs.promises.rmdir(dir, {recursive: true, maxRetries: 10});
 
+// download a file onto a temporary directory
 const downloadFile = async url => {
   const outputFile = tmp.tmpNameSync({});
   const writer = fs.createWriteStream(outputFile);
@@ -67,7 +70,7 @@ const downloadFile = async url => {
   response.data.pipe(writer);
 
   return new Promise((resolve, reject) => {
-    writer.on('finish', _ => resolve(outputFile));
+    writer.on('finish', () => resolve(outputFile));
     writer.on('error', reject);
   });
 };
@@ -80,6 +83,7 @@ const unzipFile = async (sourceFile, outputDir) => {
   });
 };
 
+// utils for the assets generation pipeline
 const extractFilename = ({source, ...rest}) => ({...rest, source, filename: path.basename(source).toLowerCase()});
 const replacePatterns = patterns => ({filename, ...rest}) => ({
   ...rest,
@@ -96,7 +100,7 @@ const addTarget = ({provider, filename, ...rest}) => ({
 const addImportName = ({filename, ...rest}) => ({
   ...rest,
   filename,
-  importName: camelCase(sanitize(basename(filename))),
+  importName: camelCase(sanitizeName(basename(filename))),
 });
 const readContent = async ({source, ...rest}) =>
   fs.promises.readFile(source).then(s => ({
@@ -117,15 +121,17 @@ const removeDuplicateAssets = assets =>
   assets.filter((v, i, a) => a.findIndex(t => t.importName === v.importName) === i);
 const compareAssets = ({importName: n1}, {importName: n2}) => (n1 < n2 ? -1 : n2 > n1 ? 1 : 0);
 
+// save the assets (SVGs) into their final destination
 const saveAssets = async assets =>
   Promise.all(
     assets.map(({target, resizedContent, ...rest}) =>
       mkdir(path.dirname(target))
-        .then(_ => fs.promises.writeFile(target, resizedContent))
-        .then(_ => ({...rest, target, resizedContent}))
+        .then(() => fs.promises.writeFile(target, resizedContent))
+        .then(() => ({...rest, target, resizedContent}))
     )
   );
 
+// render the JS file importing all the SVG icons for a provider
 const renderJS = provider => async assets => {
   const toRender = assets.map(({target, ...rest}) => ({
     ...rest,
@@ -133,14 +139,18 @@ const renderJS = provider => async assets => {
     importPath: path.relative(path.dirname(renderJSFile(provider)), target),
   }));
   const rendered = nunjucks.renderString(providerJsTemplate, {assets: toRender});
-  return fs.promises.writeFile(renderJSFile(provider), rendered).then(_ => toRender);
+  return fs.promises.writeFile(renderJSFile(provider), rendered).then(() => toRender);
 };
 
 const AWS = 'aws';
 const Azure = 'azure';
 const K8s = 'k8s';
 
-// order is important in the following
+// the following patterns in the form [regex, string replacement] allow for
+// customisation of asset names for each provider.
+//
+// NOTE: order is important in the following as the regex
+// substitutions will be applied in order of definition
 const awsPatterns = [
   [/lot/gi, 'iot'],
   [/lense/gi, 'lens'],
@@ -192,11 +202,12 @@ const azurePatterns = [
 ];
 const k8sPatterns = [];
 
-// extract groups from paths
-const awsExtractGroup = ({source, ...rest}) => ({
+// custom provider functions to compute the name of the group a
+// service should belong from the name of the SVG file
+const awsComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
-  group: getParent(source, 2)
+  group: getParentDir(source, 2)
     .toLowerCase()
     .replace('arch_', '')
     .replace('res_', '')
@@ -208,22 +219,30 @@ const awsExtractGroup = ({source, ...rest}) => ({
     .replace('Iot', 'Internet of things')
     .replace('enagagement', 'engagement'),
 });
-const azureExtractGroup = ({source, ...rest}) => ({
+const azureComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
-  group: getParent(source)
-    .toLocaleLowerCase()
+  group: getParentDir(source)
+    .toLowerCase()
     .trim()
     .replace(/\+/g, 'and')
     .replace('iot', 'Internet of things')
     .replace(/^\w/, c => c.toUpperCase()),
 });
-const k8sExtractGroup = ({source, ...rest}) => ({
+const k8sComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
   group: 'Generic', // no group information available in k8s
 });
 
+// providers configs
+// each provider object contains the following:
+// - url: url of the file containing the SVG icons for the services
+// - filter: a function taking the path of an SVG and returning a boolean
+//           indicating whether the SVG icon should be used or not
+// - prepare: a function taking the icon path as input and returning a Promise
+//            resolving to an object containing all the necessary metadata,
+//            e.g. source path, the svg content, the group name etc.
 const config = {
   [AWS]: {
     url:
@@ -232,7 +251,7 @@ const config = {
     prepare: filepath =>
       Promise.resolve({provider: AWS, source: filepath})
         .then(extractFilename)
-        .then(awsExtractGroup)
+        .then(awsComputeGroup)
         .then(replacePatterns(awsPatterns))
         .then(addTarget)
         .then(addImportName)
@@ -241,11 +260,11 @@ const config = {
   },
   [Azure]: {
     url: 'https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip',
-    filter: _ => true, // keep all svg in downloaded assets
+    filter: () => true, // keep all svg in downloaded assets
     prepare: filepath =>
       Promise.resolve({provider: Azure, source: filepath})
         .then(extractFilename)
-        .then(azureExtractGroup)
+        .then(azureComputeGroup)
         .then(replacePatterns(azurePatterns))
         .then(addTarget)
         .then(addImportName)
@@ -258,7 +277,7 @@ const config = {
     prepare: filepath =>
       Promise.resolve({provider: K8s, source: filepath})
         .then(extractFilename)
-        .then(k8sExtractGroup)
+        .then(k8sComputeGroup)
         .then(replacePatterns(k8sPatterns))
         .then(addTarget)
         .then(addImportName)
@@ -267,18 +286,23 @@ const config = {
   },
 };
 
+// define the entire processing pipeline for a provider
+// it will download the provider file containing the SVGs onto a temporary directory
+// extract the SVG icons, filter them, resize them if necessary, save them onto
+// their final destination (src/images/<provider>/<service>.svg) and create the JS
+// file used to import the icons in the app
 const processProvider = ([provider, options]) => {
   const providerDir = path.join('.tmp', provider);
 
-  const removeProviderDir = _ => rmdir(providerDir);
-  const createProviderDir = _ => mkdir(providerDir);
-  const downloadAssets = _ => downloadFile(options.url);
+  const removeProviderDir = () => rmdir(providerDir);
+  const createProviderDir = () => mkdir(providerDir);
+  const downloadAssets = () => downloadFile(options.url);
   const extractAssets = downloadedFile => unzipFile(downloadedFile, providerDir);
-  const selectSVGs = _ => glob.promise(`${providerDir}/**/*.svg`, {nodir: true});
+  const selectSVGs = () => glob.promise(`${providerDir}/**/*.svg`, {nodir: true});
   const filterRelevantFiles = files => files.filter(options.filter);
   const prepareAssets = files => Promise.all(files.map(options.prepare));
-  const sort = assets => assets.sort(compareAssets);
-  const removeImagesDir = _ => rmdir(imagesDir(provider));
+  const sortAssets = assets => assets.sort(compareAssets);
+  const removeImagesDir = () => rmdir(imagesDir(provider));
 
   logger.info(`Producing assets for ${provider}`);
   return removeProviderDir()
@@ -290,15 +314,16 @@ const processProvider = ([provider, options]) => {
     .then(filterRelevantFiles)
     .then(prepareAssets)
     .then(removeDuplicateAssets)
-    .then(sort)
+    .then(sortAssets)
     .then(saveAssets)
     .then(renderJS(provider))
     .then(tap(removeProviderDir))
-    .then(tap(_ => logger.info(`Finished producing assets for ${provider}`)))
+    .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
     .catch(err => logger.error(err));
 };
 
-const keepRelevantProps = assets => assets.map(({provider, group, importName}) => ({provider, group, importName}));
+// utility functions to render the documentation (src/resources_content.html) listing the
+// available services and their groups after all the providers have been processed
 const groupByProvider = assets =>
   Object.entries(groupBy('provider')(assets)).map(([k, v]) => ({provider: k, assets: v}));
 const groupByGroup = assets =>
@@ -311,9 +336,9 @@ const renderResourceDocs = providers => {
   return fs.promises.writeFile(resourceDocsFile, rendered);
 };
 
+// kick off the processing in parallel for each provider
 Promise.all(Object.entries(config).map(processProvider))
   .then(assets => assets.flat())
-  .then(keepRelevantProps)
   .then(groupByProvider)
   .then(groupByGroup)
   .then(renderResourceDocs)

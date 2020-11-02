@@ -66,30 +66,30 @@
         ]
       },
       {
-        "type": "link",
+        "type": "edge",
         "src": "dns",
         "dst": "cf",
-        "childrenPassThrough": false,
+        "deepLink": false,
         "attributes": {
           "color": "blue",
           "style": "dashed"
         }
       },
       {
-        "type": "link",
+        "type": "edge",
         "src": "cf",
         "dst": "load_balancer",
-        "childrenPassThrough": false,
+        "deepLink": false,
         "attributes": {
           "color": "blue",
           "style": "dashed"
         }
       },
       {
-        "type": "link",
+        "type": "edge",
         "src": "load_balancer",
         "dst": "servers",
-        "childrenPassThrough": true,
+        "deepLink": true,
         "attributes": {}
       }
     ]

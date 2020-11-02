@@ -13,11 +13,11 @@ export const inputGroup = (id, elements, {attributes = {}, parent = null}) => ({
   elements: elements.map(({type, ...rest}) => (type === 'link' ? {type, ...rest} : {type, ...rest, parent: id})),
   parent,
 });
-export const inputLink = (src, dst, childrenPassThrough = false, attributes = {}) => ({
-  type: 'link',
+export const inputEdge = (src, dst, deepLink = false, attributes = {}) => ({
+  type: 'edge',
   src,
   dst,
-  childrenPassThrough,
+  deepLink,
   attributes,
 });
 export const expectedNode = ({

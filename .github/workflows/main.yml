@@ -20,6 +20,6 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-        run: npm ci
+        run: yarn install
       - name: Run tests
         run: npm test

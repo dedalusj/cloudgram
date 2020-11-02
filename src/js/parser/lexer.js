@@ -1,3 +1,6 @@
+// define the main tokens for the syntax and
+// creates a chevrotain Lexer from them
+
 import {createToken, Lexer} from 'chevrotain';
 
 const arrowSymbol = '->';

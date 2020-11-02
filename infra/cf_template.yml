@@ -7,7 +7,7 @@ Parameters:
 
   DomainName:
     Type: String
-    Description: The domain used for the site
+    Description: The domain used for the hosting
 
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id

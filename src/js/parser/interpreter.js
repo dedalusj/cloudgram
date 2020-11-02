@@ -59,7 +59,7 @@ class DiagramInterpreter extends BaseCstVisitor {
     const edges = [];
     for (let i = 0; i < ids.length - 1; i++) {
       edges.push({
-        type: 'link',
+        type: 'edge',
         src: ids[i],
         dst: ids[i + 1],
         ...links[i],
@@ -107,7 +107,7 @@ class DiagramInterpreter extends BaseCstVisitor {
   }
 
   link(ctx) {
-    return {childrenPassThrough: ctx.hasOwnProperty(deepArrowLabel)};
+    return {deepLink: ctx.hasOwnProperty(deepArrowLabel)};
   }
 
   attribute(ctx) {

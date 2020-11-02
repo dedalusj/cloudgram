@@ -14,7 +14,7 @@ import {
   getVPosForNode,
 } from '../src/js/renderer';
 
-import {inputNode, inputGroup, inputLink, expectedNode, expectedEdge} from './utils';
+import {inputNode, inputGroup, inputEdge, expectedNode, expectedEdge} from './utils';
 
 jest.mock('cytoscape');
 
@@ -35,12 +35,12 @@ describe('renderer', () => {
           [
             inputNode('load_balancer', 'elasticLoadBalancing', {}),
             inputGroup('servers', [inputNode('server1', 'ec2', {}), inputNode('server2', 'ec2', {})], {}),
-            inputLink('load_balancer', 'servers'),
+            inputEdge('load_balancer', 'servers'),
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputLink('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
-        inputLink('cf', 'load_balancer', false),
+        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('cf', 'load_balancer', false),
       ],
     };
 
@@ -92,12 +92,12 @@ describe('renderer', () => {
           [
             inputNode('load_balancer', 'elasticLoadBalancing', {}),
             inputGroup('servers', [inputNode('server1', 'ec2', {}), inputNode('server2', 'ec2', {})], {}),
-            inputLink('load_balancer', 'servers', true, {stroke: 'blue', style: 'dashed'}),
+            inputEdge('load_balancer', 'servers', true, {stroke: 'blue', style: 'dashed'}),
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputLink('dns', 'cf', false),
-        inputLink('cf', 'load_balancer', false),
+        inputEdge('dns', 'cf', false),
+        inputEdge('cf', 'load_balancer', false),
       ],
     };
 
@@ -155,12 +155,12 @@ describe('renderer', () => {
           [
             inputNode('load_balancer', 'elasticLoadBalancing', {}),
             inputGroup('servers', [], {}),
-            inputLink('load_balancer', 'servers', true),
+            inputEdge('load_balancer', 'servers', true),
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputLink('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
-        inputLink('cf', 'load_balancer', false),
+        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('cf', 'load_balancer', false),
       ],
     };
 
@@ -206,8 +206,8 @@ describe('renderer', () => {
         inputNode('dns', 'route53', {}),
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
-        inputLink('dns', 'cf', false),
-        inputLink('unknown', 'load_balancer', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false),
+        inputEdge('unknown', 'load_balancer', false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -252,8 +252,8 @@ describe('renderer', () => {
         inputNode('dns', 'route53', {}),
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
-        inputLink('dns', 'cf', false),
-        inputLink('cf', 'unknown', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false),
+        inputEdge('cf', 'unknown', false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -298,8 +298,8 @@ describe('renderer', () => {
         inputNode('dns', 'route53', {}),
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
-        inputLink('dns', 'cf', false),
-        inputLink('unknown1', 'unknown2', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false),
+        inputEdge('unknown1', 'unknown2', false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -346,8 +346,8 @@ describe('renderer', () => {
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
         inputNode('load_balancer', 'elasticLoadBalancing', {}),
-        inputLink('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
-        inputLink('cf', 'load_balancer', false),
+        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('cf', 'load_balancer', false),
       ],
     };
 
@@ -390,11 +390,11 @@ describe('renderer', () => {
       elements: [
         inputNode('dns', 'route53', {}),
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
-        inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {}), inputLink('cf', 'load_balancer')], {
+        inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {}), inputEdge('cf', 'load_balancer')], {
           attributes: {fill: 'green'},
         }),
-        inputLink('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
-        inputLink('cf', 'load_balancer', false),
+        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('cf', 'load_balancer', false),
       ],
     };
 
