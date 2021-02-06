@@ -1,12 +1,12 @@
 {
   "name": "cloudgram",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "test": "nyc jest",
     "lint": "node_modules/.bin/prettier --write \"{src,tests,scripts}/**/*.js\"",
     "dev": "parcel src/index.html -d dev",
-    "build": "rm -fr dist && parcel build src/index.html",
+    "build": "rm -fr dist && NODE_ENV=production parcel build src/index.html",
     "assets": "scripts/assets.js",
     "diagram": "scripts/generate_grammar_diagram.js",
     "patch": "yarn version --patch",

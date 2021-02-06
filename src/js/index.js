@@ -21,6 +21,7 @@ Sentry.init({
   release: 'cloudgram@' + process.env.npm_package_version,
   integrations: [new Integrations.BrowserTracing()],
   tracesSampleRate: 1.0,
+  environment: process.env.NODE_ENV,
 });
 
 import {parse} from './parser';
