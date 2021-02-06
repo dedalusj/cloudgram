@@ -13,6 +13,15 @@ editor that will trigger a redraw.
 import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/theme-twilight';
 import {saveAs} from 'file-saver';
+import * as Sentry from '@sentry/browser';
+import {Integrations} from '@sentry/tracing';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  release: 'cloudgram@' + process.env.npm_package_version,
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 
 import {parse} from './parser';
 import {render} from './renderer';
