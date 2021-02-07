@@ -81,7 +81,6 @@ import diskEncryptionSets from '../../images/azure/disk-encryption-sets.svg';
 import disks from '../../images/azure/disks.svg';
 import disksClassic from '../../images/azure/disks-(classic).svg';
 import disksSnapshots from '../../images/azure/disks-snapshots.svg';
-import dnsZones from '../../images/azure/dns-zones.svg';
 import download from '../../images/azure/download.svg';
 import education from '../../images/azure/education.svg';
 import elasticJobAgents from '../../images/azure/elastic-job-agents.svg';
@@ -124,14 +123,12 @@ import instancePools from '../../images/azure/instance-pools.svg';
 import integrationAccounts from '../../images/azure/integration-accounts.svg';
 import iotCentralApplications from '../../images/azure/iot-central-applications.svg';
 import iotHub from '../../images/azure/iot-hub.svg';
-import ipGroups from '../../images/azure/ip-groups.svg';
 import journeyHub from '../../images/azure/journey-hub.svg';
 import kubernetesServices from '../../images/azure/kubernetes-services.svg';
 import labServices from '../../images/azure/lab-services.svg';
 import launchPortal from '../../images/azure/launch-portal.svg';
 import learn from '../../images/azure/learn.svg';
 import lighthouse from '../../images/azure/lighthouse.svg';
-import loadBalancers from '../../images/azure/load-balancers.svg';
 import loadTest from '../../images/azure/load-test.svg';
 import location from '../../images/azure/location.svg';
 import logAnalyticsWorkspaces from '../../images/azure/log-analytics-workspaces.svg';
@@ -155,8 +152,6 @@ import module from '../../images/azure/module.svg';
 import monitor from '../../images/azure/monitor.svg';
 import multiTenancy from '../../images/azure/multi-tenancy.svg';
 import myCustomers from '../../images/azure/my-customers.svg';
-import networkSecurityGroups from '../../images/azure/network-security-groups.svg';
-import networkWatcher from '../../images/azure/network-watcher.svg';
 import notificationHubs from '../../images/azure/notification-hubs.svg';
 import offers from '../../images/azure/offers.svg';
 import operationLogClassic from '../../images/azure/operation-log-(classic).svg';
@@ -168,12 +163,8 @@ import power from '../../images/azure/power.svg';
 import powerUp from '../../images/azure/power-up.svg';
 import powershell from '../../images/azure/powershell.svg';
 import preview from '../../images/azure/preview.svg';
-import privateLink from '../../images/azure/private-link.svg';
-import privateLinkService from '../../images/azure/private-link-service.svg';
 import processExplorer from '../../images/azure/process-explorer.svg';
 import productionReadyDatabase from '../../images/azure/production-ready-database.svg';
-import publicIpAddresses from '../../images/azure/public-ip-addresses.svg';
-import publicIpAddressesClassic from '../../images/azure/public-ip-addresses-(classic).svg';
 import quickstartCenter from '../../images/azure/quickstart-center.svg';
 import recent from '../../images/azure/recent.svg';
 import recoveryServicesVaults from '../../images/azure/recovery-services-vaults.svg';
@@ -220,7 +211,6 @@ import timeSeriesInsightsEnvironments from '../../images/azure/time-series-insig
 import timeSeriesInsightsEventSources from '../../images/azure/time-series-insights-event-sources.svg';
 import tokenService from '../../images/azure/token-service.svg';
 import toolbox from '../../images/azure/toolbox.svg';
-import trafficManagerProfiles from '../../images/azure/traffic-manager-profiles.svg';
 import updates from '../../images/azure/updates.svg';
 import userPrivacy from '../../images/azure/user-privacy.svg';
 import userSubscriptions from '../../images/azure/user-subscriptions.svg';
@@ -229,8 +219,6 @@ import versions from '../../images/azure/versions.svg';
 import virtualClusters from '../../images/azure/virtual-clusters.svg';
 import virtualMachine from '../../images/azure/virtual-machine.svg';
 import virtualMachinesClassic from '../../images/azure/virtual-machines-(classic).svg';
-import virtualNetworkGateways from '../../images/azure/virtual-network-gateways.svg';
-import virtualNetworks from '../../images/azure/virtual-networks.svg';
 import vmImagesClassic from '../../images/azure/vm-images-(classic).svg';
 import vmScaleSets from '../../images/azure/vm-scale-sets.svg';
 import webSlots from '../../images/azure/web-slots.svg';
@@ -323,7 +311,6 @@ export {
   disks,
   disksClassic,
   disksSnapshots,
-  dnsZones,
   download,
   education,
   elasticJobAgents,
@@ -366,14 +353,12 @@ export {
   integrationAccounts,
   iotCentralApplications,
   iotHub,
-  ipGroups,
   journeyHub,
   kubernetesServices,
   labServices,
   launchPortal,
   learn,
   lighthouse,
-  loadBalancers,
   loadTest,
   location,
   logAnalyticsWorkspaces,
@@ -397,8 +382,6 @@ export {
   monitor,
   multiTenancy,
   myCustomers,
-  networkSecurityGroups,
-  networkWatcher,
   notificationHubs,
   offers,
   operationLogClassic,
@@ -410,12 +393,8 @@ export {
   powerUp,
   powershell,
   preview,
-  privateLink,
-  privateLinkService,
   processExplorer,
   productionReadyDatabase,
-  publicIpAddresses,
-  publicIpAddressesClassic,
   quickstartCenter,
   recent,
   recoveryServicesVaults,
@@ -462,7 +441,6 @@ export {
   timeSeriesInsightsEventSources,
   tokenService,
   toolbox,
-  trafficManagerProfiles,
   updates,
   userPrivacy,
   userSubscriptions,
@@ -471,8 +449,6 @@ export {
   virtualClusters,
   virtualMachine,
   virtualMachinesClassic,
-  virtualNetworkGateways,
-  virtualNetworks,
   vmImagesClassic,
   vmScaleSets,
   webSlots,

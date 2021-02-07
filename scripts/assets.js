@@ -5,7 +5,7 @@ Node script to create SVG assets and their related
 JS files for the service icons of each provider
 */
 
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 import url from 'url';
 
@@ -83,6 +83,8 @@ const unzipFile = async (sourceFile, outputDir) => {
   });
 };
 
+const copyFromDir = async (sourceDir, destDir) => fs.copy(sourceDir, destDir);
+
 // utils for the assets generation pipeline
 const extractFilename = ({source, ...rest}) => ({...rest, source, filename: path.basename(source).toLowerCase()});
 const replacePatterns = patterns => ({filename, ...rest}) => ({
@@ -145,6 +147,7 @@ const renderJS = provider => async assets => {
 const AWS = 'aws';
 const Azure = 'azure';
 const K8s = 'k8s';
+const Generic = 'generic';
 
 // the following patterns in the form [regex, string replacement] allow for
 // customisation of asset names for each provider.
@@ -201,6 +204,7 @@ const azurePatterns = [
   [/machinesazurearc/, 'machines-azure-arc'],
 ];
 const k8sPatterns = [];
+const genericPatterns = [];
 
 // custom provider functions to compute the name of the group a
 // service should belong from the name of the SVG file
@@ -234,6 +238,11 @@ const k8sComputeGroup = ({source, ...rest}) => ({
   source,
   group: 'Generic', // no group information available in k8s
 });
+const genericComputeGroup = ({source, ...rest}) => ({
+  ...rest,
+  source,
+  group: 'Generic',
+});
 
 // providers configs
 // each provider object contains the following:
@@ -245,8 +254,10 @@ const k8sComputeGroup = ({source, ...rest}) => ({
 //            e.g. source path, the svg content, the group name etc.
 const config = {
   [AWS]: {
-    url:
-      'https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip',
+    fetch: targetDir =>
+      downloadFile(
+        'https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip'
+      ).then(downloadedFile => unzipFile(downloadedFile, targetDir)),
     filter: filepath => filepath.match(/(64.*|Dark)\.svg$/i),
     prepare: filepath =>
       Promise.resolve({provider: AWS, source: filepath})
@@ -259,7 +270,10 @@ const config = {
         .then(resizeContent),
   },
   [Azure]: {
-    url: 'https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip',
+    fetch: targetDir =>
+      downloadFile('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip').then(downloadedFile =>
+        unzipFile(downloadedFile, targetDir)
+      ),
     filter: () => true, // keep all svg in downloaded assets
     prepare: filepath =>
       Promise.resolve({provider: Azure, source: filepath})
@@ -272,13 +286,29 @@ const config = {
         .then(resizeContent),
   },
   [K8s]: {
-    url: 'https://github.com/kubernetes/community/archive/master.zip',
+    fetch: targetDir =>
+      downloadFile('https://github.com/kubernetes/community/archive/master.zip').then(downloadedFile =>
+        unzipFile(downloadedFile, targetDir)
+      ),
     filter: filepath => filepath.match(/.*unlabeled\/.*\.svg$/i),
     prepare: filepath =>
       Promise.resolve({provider: K8s, source: filepath})
         .then(extractFilename)
         .then(k8sComputeGroup)
         .then(replacePatterns(k8sPatterns))
+        .then(addTarget)
+        .then(addImportName)
+        .then(readContent)
+        .then(resizeContent),
+  },
+  [Generic]: {
+    fetch: targetDir => copyFromDir(path.join(__dirname, 'generic'), targetDir),
+    filter: () => true, // keep all svg
+    prepare: filepath =>
+      Promise.resolve({provider: Generic, source: filepath})
+        .then(extractFilename)
+        .then(genericComputeGroup)
+        .then(replacePatterns(genericPatterns))
         .then(addTarget)
         .then(addImportName)
         .then(readContent)
@@ -296,8 +326,7 @@ const processProvider = ([provider, options]) => {
 
   const removeProviderDir = () => rmdir(providerDir);
   const createProviderDir = () => mkdir(providerDir);
-  const downloadAssets = () => downloadFile(options.url);
-  const extractAssets = downloadedFile => unzipFile(downloadedFile, providerDir);
+  const fetchAssets = () => options.fetch(providerDir);
   const selectSVGs = () => glob.promise(`${providerDir}/**/*.svg`, {nodir: true});
   const filterRelevantFiles = files => files.filter(options.filter);
   const prepareAssets = files => Promise.all(files.map(options.prepare));
@@ -307,8 +336,7 @@ const processProvider = ([provider, options]) => {
   logger.info(`Producing assets for ${provider}`);
   return removeProviderDir()
     .then(createProviderDir)
-    .then(downloadAssets)
-    .then(extractAssets)
+    .then(fetchAssets)
     .then(removeImagesDir)
     .then(selectSVGs)
     .then(filterRelevantFiles)

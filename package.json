@@ -38,6 +38,7 @@
     "babel-jest": "^26.5.2",
     "camelcase": "^6.1.0",
     "core-js": "^3.6.5",
+    "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
     "glob-promise": "^3.4.0",
     "husky": "^4.3.0",

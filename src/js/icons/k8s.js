@@ -2,6 +2,7 @@
 
 import cRole from '../../images/k8s/c-role.svg';
 import cm from '../../images/k8s/cm.svg';
+import controlPlane from '../../images/k8s/control-plane.svg';
 import crb from '../../images/k8s/crb.svg';
 import crd from '../../images/k8s/crd.svg';
 import cronjob from '../../images/k8s/cronjob.svg';
@@ -14,7 +15,6 @@ import hpa from '../../images/k8s/hpa.svg';
 import ing from '../../images/k8s/ing.svg';
 import job from '../../images/k8s/job.svg';
 import limits from '../../images/k8s/limits.svg';
-import master from '../../images/k8s/master.svg';
 import netpol from '../../images/k8s/netpol.svg';
 import node from '../../images/k8s/node.svg';
 import ns from '../../images/k8s/ns.svg';
@@ -37,6 +37,7 @@ import vol from '../../images/k8s/vol.svg';
 export {
   cRole,
   cm,
+  controlPlane,
   crb,
   crd,
   cronjob,
@@ -49,7 +50,6 @@ export {
   ing,
   job,
   limits,
-  master,
   netpol,
   node,
   ns,

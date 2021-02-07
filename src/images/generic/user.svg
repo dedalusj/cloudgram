@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>person</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Person" transform="translate(13.000000, 0.000000)" fill="#000000">
+      <path d="M27.0391061,32.5760237 C41.9723921,32.5760237 54.0782123,44.6818438 54.0782123,59.6151298 L54.0782123,76.5574113 L54.0782123,76.5574113 C45.0651769,78.819354 36.0521415,79.9503253 27.0391061,79.9503253 C18.0260708,79.9503253 9.01303538,78.819354 0,76.5574113 L0,59.6151298 C1.72391359e-15,44.6818438 12.1058202,32.5760237 27.0391061,32.5760237 Z" id="Torso"/>
+      <ellipse id="Head" cx="26.9273743" cy="15.8659218" rx="16.424581" ry="15.8659218"/>
+    </g>
+  </g>
+</svg>
