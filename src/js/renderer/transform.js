@@ -31,7 +31,7 @@ const processNode = node => ({
   selected: false,
   selectable: false,
   locked: false,
-  grabbable: false,
+  grabbable: true,
 });
 
 /**

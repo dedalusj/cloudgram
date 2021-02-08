@@ -88,7 +88,7 @@ describe('refresh', () => {
           selected: false,
           selectable: false,
           locked: false,
-          grabbable: false,
+          grabbable: true,
           classes: ['service'],
         },
         {
@@ -103,7 +103,7 @@ describe('refresh', () => {
           selected: false,
           selectable: false,
           locked: false,
-          grabbable: false,
+          grabbable: true,
           classes: ['service'],
         },
         {
@@ -118,7 +118,7 @@ describe('refresh', () => {
           selected: false,
           selectable: false,
           locked: false,
-          grabbable: false,
+          grabbable: true,
           classes: ['service'],
         },
       ],

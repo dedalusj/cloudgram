@@ -33,7 +33,7 @@ export const expectedNode = ({
   selected: false,
   selectable: false,
   locked: false,
-  grabbable: false,
+  grabbable: true,
   classes,
 });
 export const expectedEdge = ({source, target, id, attributes = {}}) => ({data: {source, target, id, attributes}});
