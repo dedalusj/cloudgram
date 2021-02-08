@@ -163,6 +163,7 @@ import power from '../../images/azure/power.svg';
 import powerUp from '../../images/azure/power-up.svg';
 import powershell from '../../images/azure/powershell.svg';
 import preview from '../../images/azure/preview.svg';
+import privateLink from '../../images/azure/private-link.svg';
 import processExplorer from '../../images/azure/process-explorer.svg';
 import productionReadyDatabase from '../../images/azure/production-ready-database.svg';
 import quickstartCenter from '../../images/azure/quickstart-center.svg';
@@ -393,6 +394,7 @@ export {
   powerUp,
   powershell,
   preview,
+  privateLink,
   processExplorer,
   productionReadyDatabase,
   quickstartCenter,

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg id="b8d97b58-1e1f-4258-85c4-83e06e63fbe2" xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" viewBox="0 0 50 50">
+  <defs>
+    <linearGradient id="f7395fd8-aa17-4d4b-84f4-be3619cc5bc0" x1="21.523" y1="25" x2="21.523" y2="13" gradientTransform="matrix(1, 0, 0, -1, 0, 50)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.23" stop-color="#5ea0ef"/>
+      <stop offset="0.32" stop-color="#5b9fee"/>
+      <stop offset="0.48" stop-color="#509aeb"/>
+      <stop offset="0.57" stop-color="#3f92e6"/>
+      <stop offset="0.75" stop-color="#2688df"/>
+      <stop offset="0.93" stop-color="#127fd9"/>
+    </linearGradient>
+    <linearGradient id="a403e3d9-5b3b-4869-9cea-1d3afbc72355" x1="27.477" y1="20" x2="27.477" y2="8" gradientTransform="matrix(1, 0, 0, -1, 0, 50)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.02" stop-color="#5ea0ef"/>
+      <stop offset="0.14" stop-color="#5b9fee"/>
+      <stop offset="0.23" stop-color="#5b9fee"/>
+      <stop offset="0.34" stop-color="#509aeb"/>
+      <stop offset="0.44" stop-color="#3f92e6"/>
+      <stop offset="0.63" stop-color="#2688df"/>
+      <stop offset="0.93" stop-color="#127fd9"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M23,7.1h3V26H23Z" fill="#7a7a7a"/>
+    <path d="M28.9,6.5a4.4,4.4,0,1,1-4.4-4.4A4.4,4.4,0,0,1,28.9,6.5Z" fill="#1490df"/>
+    <path d="M23.9,25H19.1a6,6,0,0,0-.93,11.92,6.427,6.427,0,0,1,.06-2.23,3.79,3.79,0,0,1,.87-7.49h4.8a3.8,3.8,0,1,1,0,7.6H22.58A2.865,2.865,0,0,0,22.3,36a2.783,2.783,0,0,0,.19,1H23.9a6,6,0,0,0,0-12Z" fill="url(#f7395fd8-aa17-4d4b-84f4-be3619cc5bc0)"/>
+    <path d="M30.83,30.08a6.91,6.91,0,0,1,.07.92,6.266,6.266,0,0,1-.13,1.31,3.79,3.79,0,0,1-.87,7.49H25.1a3.8,3.8,0,0,1,0-7.6h1.32A2.816,2.816,0,0,0,26.7,31a2.783,2.783,0,0,0-.19-1H25.1a6,6,0,0,0,0,12h4.8a6,6,0,0,0,.93-11.92Z" fill="url(#a403e3d9-5b3b-4869-9cea-1d3afbc72355)"/>
+    <path d="M15.86,44.52l-1.1,1.11a.751.751,0,0,1-1.06,0L1.39,33.35a1.51,1.51,0,0,1,0-2.13l1.11-1.1L15.86,43.46a.739.739,0,0,1,.014,1.046Z" fill="#50e6ff"/>
+    <path d="M14.53,19.12l1.23,1.23a.751.751,0,0,1,0,1.06L2.62,34.59,1.39,33.37a1.51,1.51,0,0,1,0-2.13L13.47,19.12A.751.751,0,0,1,14.53,19.12Z" fill="#1490df"/>
+    <path d="M34.13,45.39a.739.739,0,0,1-.014-1.046l.014-.014L47.5,31l1.11,1.11a1.51,1.51,0,0,1,0,2.13L36.29,46.5a.739.739,0,0,1-1.046.014L35.23,46.5Z" fill="#50e6ff"/>
+    <path d="M36.52,20,48.61,32.12a1.5,1.5,0,0,1,0,2.12l-1.23,1.23L34.23,22.29a.771.771,0,0,1,0-1.07L35.46,20A.751.751,0,0,1,36.52,20Z" fill="#1490df"/>
+  </g>
+  <metadata>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:li>public:true</rdf:li>
+      <rdf:li>sdk:false</rdf:li>
+      <rdf:li>category: Networking</rdf:li>
+    </rdf:RDF>
+  </metadata>
+</svg>
