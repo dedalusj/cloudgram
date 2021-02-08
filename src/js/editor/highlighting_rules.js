@@ -1,12 +1,10 @@
 import ace from 'ace-builds';
+import {keywords, attributes} from './constants';
 
 const oop = ace.require('ace/lib/oop');
 const TextHighlightRules = ace.require('ace/mode/text_highlight_rules').TextHighlightRules;
 
 export const HighlightRules = function () {
-  const keywords = 'diagram|group'.split('|');
-  const attributes = 'label|stroke|fill|style|width|opacity|labelposition'.split('|');
-
   this.$rules = {
     start: [
       {

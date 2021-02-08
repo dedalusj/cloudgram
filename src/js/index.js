@@ -12,6 +12,7 @@ editor that will trigger a redraw.
 
 import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/theme-twilight';
+import 'ace-builds/src-noconflict/ext-language_tools';
 import {saveAs} from 'file-saver';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
@@ -27,12 +28,16 @@ Sentry.init({
 import {parse} from './parser';
 import {render} from './renderer';
 import {Mode} from './editor';
+import {staticWordCompleter, textCompleter} from './editor/completion';
 
 // exported to be mocked by tests
 export const editor = ace.edit('editor', {
   theme: 'ace/theme/twilight',
   mode: new Mode(),
+  enableBasicAutocompletion: true,
+  enableLiveAutocompletion: true,
 });
+editor.completers = [staticWordCompleter, textCompleter];
 
 const displayErrors = errors => {
   if (!errors || errors.length === 0) {
