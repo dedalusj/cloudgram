@@ -93,6 +93,10 @@ const initDocument = () => {
   if (params.has('document')) setDocument(params.get('document'));
 };
 
+const drawVersion = () => {
+  document.getElementById('version').innerText = `v${process.env.npm_package_version}`;
+};
+
 // main method that parses the document
 // from the editor and renders it
 export const draw = () => {
@@ -107,6 +111,7 @@ export const draw = () => {
 
 document.addEventListener('DOMContentLoaded', function () {
   initDocument();
+  drawVersion();
 
   editor.getSession().on('change', draw);
   draw();
