@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>screen</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Screen" transform="translate(0.000000, 11.000000)" stroke="#000000">
+      <rect id="Rectangle" stroke-width="6" x="3" y="3" width="74" height="44" rx="8"/>
+      <line x1="22.25" y1="57.25" x2="57.5" y2="57.5" id="Line" stroke-width="6" stroke-linecap="round"/>
+      <line x1="31" y1="52.5" x2="49" y2="52.5" id="Line" stroke-width="14"/>
+    </g>
+  </g>
+</svg>

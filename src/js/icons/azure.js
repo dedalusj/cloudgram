@@ -96,7 +96,6 @@ import eventHubs from '../../images/azure/event-hubs.svg';
 import extensions from '../../images/azure/extensions.svg';
 import file from '../../images/azure/file.svg';
 import files from '../../images/azure/files.svg';
-import firewallManager from '../../images/azure/firewall-manager.svg';
 import folderBlank from '../../images/azure/folder-blank.svg';
 import folderWebsite from '../../images/azure/folder-website.svg';
 import ftp from '../../images/azure/ftp.svg';
@@ -163,7 +162,6 @@ import power from '../../images/azure/power.svg';
 import powerUp from '../../images/azure/power-up.svg';
 import powershell from '../../images/azure/powershell.svg';
 import preview from '../../images/azure/preview.svg';
-import privateLink from '../../images/azure/private-link.svg';
 import processExplorer from '../../images/azure/process-explorer.svg';
 import productionReadyDatabase from '../../images/azure/production-ready-database.svg';
 import quickstartCenter from '../../images/azure/quickstart-center.svg';
@@ -327,7 +325,6 @@ export {
   extensions,
   file,
   files,
-  firewallManager,
   folderBlank,
   folderWebsite,
   ftp,
@@ -394,7 +391,6 @@ export {
   powerUp,
   powershell,
   preview,
-  privateLink,
   processExplorer,
   productionReadyDatabase,
   quickstartCenter,
