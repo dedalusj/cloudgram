@@ -123,6 +123,7 @@ export const render = ({elements, attributes}) =>
         selector: 'edge',
         style: {
           'curve-style': 'bezier',
+          'control-point-step-size': 40,
           width: getEdgeWidth,
           'line-color': getColor,
           'line-style': getEdgeStyle,

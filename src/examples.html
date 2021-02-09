@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <include src="analytics.html"></include>
+  <meta charset="utf-8" />
+  <title>CloudGram - Examples</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="fixed-nav-bar">
+  <include src="nav_items.html"></include>
+</div>
+<main>
+  <div class="column">
+    <article>
+    <pre>
+diagram "example" [direction=lr] {
+  // creating the nodes
+  aws.route53 DNS;
+  aws.cloudfront cf [label="CDN"];
+
+  group vpc [label="VPC"] {
+      aws.elasticLoadBalancing load_balancer [label="Load balancer"];
+
+      group servers [label="Servers"] {
+          aws.ec2 server1 [label="Server 1"];
+          aws.ec2 server2 [label="Server 2"];
+      }
+  }
+
+  // creating the edges
+  DNS -> cf -> load_balancer [stroke=blue,style=dashed];
+  load_balancer => servers;
+}</pre>
+    </article>
+  </div>
+  <div class="column">
+    <img src="images/examples/basic.png" alt="Basic">
+  </div>
+</main>
+</body>
+</html>
