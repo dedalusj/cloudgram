@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <include src="analytics.html"></include>
     <meta charset="utf-8" />
     <title>CloudGram</title>
     <link rel="stylesheet" href="css/main.css" />
@@ -42,8 +43,7 @@ diagram "example" [direction=lr] {
   // creating the edges
   DNS -> cf -> load_balancer;
   load_balancer => servers;
-}
-      </pre>
+}</pre>
       <div id="cy"></div>
       <div id="version"></div>
     </main>
