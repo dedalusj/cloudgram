@@ -4,17 +4,34 @@
   <include src="analytics.html"></include>
   <meta charset="utf-8" />
   <title>CloudGram - Examples</title>
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/main.scss" />
 </head>
 <body>
-<div class="fixed-nav-bar">
+<header>
   <include src="nav_items.html"></include>
-</div>
+</header>
 <main>
-  <div class="column">
+  <div class="column side-bar overflow-y">
+    <ul>
+      <li>
+        <a title="Examples">Examples</a>
+        <ul class="sub-section">
+          <li>
+            <a title="Basic" href="#basic">Basic</a>
+          </li>
+          <li>
+            <a title="Serverless image processing" href="#serverless-image-processing">Serverless image processing</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="column overflow-y">
     <article>
-    <pre>
-diagram "example" [direction=lr] {
+      <h1 id="basic">Basic</h1>
+      <img src="images/examples/basic.png" alt="Basic">
+      <pre>
+diagram "basic" [direction=lr] {
   // creating the nodes
   aws.route53 DNS;
   aws.cloudfront cf [label="CDN"];
@@ -32,10 +49,48 @@ diagram "example" [direction=lr] {
   DNS -> cf -> load_balancer [stroke=blue,style=dashed];
   load_balancer => servers;
 }</pre>
+      <h1 id="serverless-image-processing">Serverless image processing</h1>
+      <img src="images/examples/serverless_image_processing.png" alt="Serverless image processing">
+      <pre>
+diagram "serverless image processing" [direction=lr] {
+  generic.user user [label="User"];
+  aws.appsync appsync [label="AWS AppSync"];
+  aws.s3 bucket [label="AWS S3 Bucket"];
+  aws.cognito cognito [label="AWS Cognito"];
+  aws.lambdaFunction workflow [label="Start workflow"];
+  aws.lambdaFunction resolver [label="Resolver"];
+
+  group backend [label="Backend",style=solid,opacity=0,stroke=red,width=4] {
+    aws.stepFunctions stepFunction [label="AWS Step Function"];
+
+    aws.lambdaFunction extraction [label="Extract metadata"];
+    aws.lambdaFunction detection [label="Object/Scene detection"];
+    aws.lambdaFunction thumbnailing [label="Create thumbnail"];
+    aws.lambdaFunction persistence [label="Persist metadata"];
+
+    aws.dynamodb dynamo [label="AWS DynamoDB"];
+    aws.rekognition rekognition [label="AWS Rekognition"];
+
+    stepFunction -> extraction;
+    stepFunction -> detection;
+    stepFunction -> thumbnailing;
+    stepFunction -> persistence;
+
+    persistence -> dynamo;
+    detection -> rekognition;
+  }
+
+  user -> cognito;
+  user -> appsync;
+  user -> bucket;
+  bucket -> workflow;
+  workflow -> appsync;
+  appsync -> resolver;
+
+  resolver -> stepFunction;
+  resolver -> dynamo;
+}</pre>
     </article>
-  </div>
-  <div class="column">
-    <img src="images/examples/basic.png" alt="Basic">
   </div>
 </main>
 </body>

@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <include src="analytics.html"></include>
-    <meta charset="utf-8" />
-    <title>CloudGram</title>
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-    <link rel="alternate icon" href="images/favicon.ico">
-  </head>
-  <body>
-    <div class="fixed-nav-bar">
-      <include src="nav_items.html"></include>
-      <div class="nav-item nav-control">
-        <div class="input-group">
-          <select id="format" class="input-element select left-element">
-            <option selected="">png</option>
-            <option>jpeg</option>
-          </select>
-          <a id="save" href="#" class="input-element button right-element">Save</a>
-        </div>
-        <div class="input-group">
-          <a id="copy-link" href="#" class="input-element button">Copy link</a>
-        </div>
-      </div>
+<head>
+  <include src="analytics.html"></include>
+  <meta charset="utf-8" />
+  <title>CloudGram</title>
+  <link rel="stylesheet" href='css/main.scss' />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="alternate icon" href="images/favicon.ico">
+</head>
+<body>
+<header>
+  <include src="nav_items.html"></include>
+  <div class="nav-item nav-controls">
+    <div class="input-group">
+      <select id="format" class="input-element left-element">
+        <option selected="">png</option>
+        <option>jpeg</option>
+      </select>
+      <a id="save" href="#" class="input-element button right-element">Save</a>
     </div>
-    <main>
-      <pre id="editor">
+    <div class="input-group">
+      <a id="copy-link" href="#" class="input-element button">Copy link</a>
+    </div>
+  </div>
+</header>
+<main>
+<pre id="editor" class="column m-0">
 diagram "example" [direction=lr] {
   // creating the nodes
   aws.route53 DNS;
@@ -44,9 +44,9 @@ diagram "example" [direction=lr] {
   DNS -> cf -> load_balancer;
   load_balancer <=> servers;
 }</pre>
-      <div id="cy"></div>
-      <div id="version"></div>
-    </main>
-    <script src="js/index.js"></script>
-  </body>
+  <div id="cy" class="column m-0"></div>
+</main>
+<div id="version"></div>
+<script src="js/index.js"></script>
+</body>
 </html>
