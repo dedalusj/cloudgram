@@ -101,15 +101,15 @@ diagram "wordpress" [direction=tb] {
   aws.route53 dns [label="Amazon Route 53"];
   aws.cloudfront cf [label="Amazon CloudFront"];
 
-  group region [label="Region",opacity=0,style=solid,stroke=black] {
+  group region [label="Region",opacity=0,style=solid,stroke=black,width=2] {
     aws.vpcInternetGateway igw [label="Internet Gateway"];
     aws.alb alb [label="Application Load Balancer"];
     aws.efs efs [label="Amazon EFS"];
 
-    alb -> igw;
+    alb <-> igw;
 
-    group vpc [label="VPC",opacity=0,style=solid,stroke=black] {
-      group az1 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)"] {
+    group vpc [label="VPC",opacity=0,style=solid,stroke=black,width=2] {
+      group az1 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)",width=5] {
         group publicSubnet1 [label="Public Subnet",opacity=0,style=solid,stroke=black] {
           aws.vpcNatGateway nat1 [label="NAT gateway"];
         }
@@ -125,12 +125,12 @@ diagram "wordpress" [direction=tb] {
         }
 
         app1 -> nat1;
-        app1 -> cache1;
-        app1 -> master;
-        app1 -> efs1;
+        app1 <-> cache1;
+        app1 <-> master;
+        app1 <-> efs1;
       }
 
-      group az2 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)"] {
+      group az2 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)",width=5] {
         group publicSubnet2 [label="Public Subnet",opacity=0,style=solid,stroke=black] {
           aws.vpcNatGateway nat2 [label="NAT gateway"];
         }
@@ -146,23 +146,24 @@ diagram "wordpress" [direction=tb] {
         }
 
         app2 -> nat2;
-        app2 -> cache2;
-        app2 -> replica;
-        app2 -> efs2;
+        app2 <-> cache2;
+        app2 <-> replica;
+        app2 <-> efs2;
       }
 
       nat1 -> igw;
       nat2 -> igw;
-      app1 -> alb;
-      app2 -> alb;
-      efs1 -> efs;
-      efs2 -> efs;
-      app1 -> replica;
-      app2 -> master;
+      app1 <-> alb;
+      app2 <-> alb;
+      efs1 <-> efs;
+      efs2 <-> efs;
+      app1 <-> replica;
+      app2 <-> master;
+      master -> replica;
     }
   }
 
-  users -> dns -> cf -> igw;
+  users <-> dns <-> cf <-> igw;
 }</pre>
     </article>
   </div>
