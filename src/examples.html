@@ -22,6 +22,9 @@
           <li>
             <a title="Serverless image processing" href="#serverless-image-processing">Serverless image processing</a>
           </li>
+          <li>
+            <a title="Wordpress" href="#wordpress">Wordpress</a>
+          </li>
         </ul>
       </li>
     </ul>
@@ -89,6 +92,77 @@ diagram "serverless image processing" [direction=lr] {
 
   resolver -> stepFunction;
   resolver -> dynamo;
+}</pre>
+      <h1 id="wordpress">Wordpress</h1>
+      <img src="images/examples/wordpress.png" alt="Wordpress">
+      <pre>
+diagram "wordpress" [direction=tb] {
+  generic.users users [label="Users"];
+  aws.route53 dns [label="Amazon Route 53"];
+  aws.cloudfront cf [label="Amazon CloudFront"];
+
+  group region [label="Region",opacity=0,style=solid,stroke=black] {
+    aws.vpcInternetGateway igw [label="Internet Gateway"];
+    aws.alb alb [label="Application Load Balancer"];
+    aws.efs efs [label="Amazon EFS"];
+
+    alb -> igw;
+
+    group vpc [label="VPC",opacity=0,style=solid,stroke=black] {
+      group az1 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)"] {
+        group publicSubnet1 [label="Public Subnet",opacity=0,style=solid,stroke=black] {
+          aws.vpcNatGateway nat1 [label="NAT gateway"];
+        }
+
+        group appSubnet1 [label="App Subnet",opacity=0,style=solid,stroke=black] {
+          aws.ec2 app1 [label="WordPress Instance"];
+        }
+
+        group dataSubnet1 [label="Data Subnet",opacity=0,style=solid,stroke=black] {
+          aws.elasticacheForMemcached cache1 [label="Memcached"];
+          aws.aurora master [label="Master"];
+          aws.efsFileSystem efs1 [label="EFS Mount Target"];
+        }
+
+        app1 -> nat1;
+        app1 -> cache1;
+        app1 -> master;
+        app1 -> efs1;
+      }
+
+      group az2 [label="Availability Zone",opacity=0,stroke="rgb(255,153,0)"] {
+        group publicSubnet2 [label="Public Subnet",opacity=0,style=solid,stroke=black] {
+          aws.vpcNatGateway nat2 [label="NAT gateway"];
+        }
+
+        group appSubnet2 [label="App Subnet",opacity=0,style=solid,stroke=black] {
+          aws.ec2 app2 [label="WordPress Instance"];
+        }
+
+        group dataSubnet2 [label="Data Subnet",opacity=0,style=solid,stroke=black] {
+          aws.elasticacheForMemcached cache2 [label="Memcached"];
+          aws.aurora replica [label="Read Replica"];
+          aws.efsFileSystem efs2 [label="EFS Mount Target"];
+        }
+
+        app2 -> nat2;
+        app2 -> cache2;
+        app2 -> replica;
+        app2 -> efs2;
+      }
+
+      nat1 -> igw;
+      nat2 -> igw;
+      app1 -> alb;
+      app2 -> alb;
+      efs1 -> efs;
+      efs2 -> efs;
+      app1 -> replica;
+      app2 -> master;
+    }
+  }
+
+  users -> dns -> cf -> igw;
 }</pre>
     </article>
   </div>
