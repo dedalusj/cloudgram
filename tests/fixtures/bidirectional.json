@@ -1,0 +1,113 @@
+{
+  "parsed": {
+    "id": "bidirectional",
+    "attributes": {},
+    "elements": [
+      {
+        "type": "node",
+        "id": "a",
+        "service": "component",
+        "provider": "generic",
+        "attributes": {},
+        "parent": null
+      },
+      {
+        "type": "node",
+        "id": "b",
+        "service": "component",
+        "provider": "generic",
+        "attributes": {},
+        "parent": null
+      },
+      {
+        "type": "node",
+        "id": "c",
+        "service": "component",
+        "provider": "generic",
+        "attributes": {},
+        "parent": null
+      },
+      {
+        "type": "group",
+        "id": "g1",
+        "attributes": {},
+        "parent": null,
+        "elements": [
+          {
+            "type": "node",
+            "id": "g11",
+            "service": "component",
+            "provider": "generic",
+            "attributes": {},
+            "parent": "g1"
+          },
+          {
+            "type": "node",
+            "id": "g12",
+            "service": "component",
+            "provider": "generic",
+            "attributes": {},
+            "parent": "g1"
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "g2",
+        "attributes": {},
+        "parent": null,
+        "elements": [
+          {
+            "type": "node",
+            "id": "g21",
+            "service": "component",
+            "provider": "generic",
+            "attributes": {},
+            "parent": "g2"
+          },
+          {
+            "type": "node",
+            "id": "g22",
+            "service": "component",
+            "provider": "generic",
+            "attributes": {},
+            "parent": "g2"
+          }
+        ]
+      },
+      {
+        "type": "edge",
+        "src": "a",
+        "dst": "b",
+        "deepLink": false,
+        "bidirectionalLink": false,
+        "attributes": {}
+      },
+      {
+        "type": "edge",
+        "src": "b",
+        "dst": "c",
+        "deepLink": false,
+        "bidirectionalLink": true,
+        "attributes": {}
+      },
+      {
+        "type": "edge",
+        "src": "b",
+        "dst": "g1",
+        "deepLink": true,
+        "bidirectionalLink": false,
+        "attributes": {}
+      },
+      {
+        "type": "edge",
+        "src": "c",
+        "dst": "g2",
+        "deepLink": true,
+        "bidirectionalLink": true,
+        "attributes": {}
+      }
+    ]
+  },
+  "errors": []
+}

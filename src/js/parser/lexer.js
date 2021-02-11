@@ -3,8 +3,10 @@
 
 import {createToken, Lexer} from 'chevrotain';
 
-const arrowSymbol = '->';
+const directedArrowSymbol = '->';
+const bidirectionalArrowSymbol = '<->';
 const deepArrowSymbol = '=>';
+const bidirectionalDeepArrowSymbol = '<=>';
 
 export const diagramKeyword = createToken({
   name: 'diagramKeyword',
@@ -31,13 +33,21 @@ export const semicolon = createToken({name: 'semicolon', pattern: /;/});
 export const comma = createToken({name: 'comma', pattern: /,/});
 export const equal = createToken({name: 'equal', pattern: /=/});
 export const dot = createToken({name: 'dot', pattern: /\./});
-export const arrow = createToken({
-  name: 'arrow',
-  pattern: new RegExp(arrowSymbol),
+export const directedArrow = createToken({
+  name: 'directedArrow',
+  pattern: new RegExp(directedArrowSymbol),
+});
+export const bidirectionalArrow = createToken({
+  name: 'bidirectionalArrow',
+  pattern: new RegExp(bidirectionalArrowSymbol),
 });
 export const deepArrow = createToken({
   name: 'deepArrow',
   pattern: new RegExp(deepArrowSymbol),
+});
+export const bidirectionalDeepArrow = createToken({
+  name: 'bidirectionalDeepArrow',
+  pattern: new RegExp(bidirectionalDeepArrowSymbol),
 });
 export const space = createToken({
   name: 'space',
@@ -60,8 +70,10 @@ export const tokensList = [
   rBracket,
   semicolon,
   comma,
-  arrow,
+  directedArrow,
+  bidirectionalArrow,
   deepArrow,
+  bidirectionalDeepArrow,
   equal,
   diagramKeyword,
   groupKeyword,
@@ -82,5 +94,7 @@ semicolon.LABEL = "';'";
 comma.LABEL = "','";
 dot.LABEL = "'.'";
 equal.LABEL = "'='";
-arrow.LABEL = `'${arrowSymbol}'`;
+directedArrow.LABEL = `'${directedArrowSymbol}'`;
+bidirectionalArrow.LABEL = `'${bidirectionalArrowSymbol}'`;
 deepArrow.LABEL = `'${deepArrowSymbol}'`;
+bidirectionalDeepArrow.LABEL = `'${bidirectionalDeepArrowSymbol}'`;

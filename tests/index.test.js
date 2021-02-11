@@ -128,7 +128,9 @@ describe('refresh', () => {
             source: 'dns',
             target: 'cf',
             id: expect.any(String),
-            attributes: {},
+            attributes: {
+              bidirectional: false,
+            },
           },
         },
         {
@@ -136,7 +138,9 @@ describe('refresh', () => {
             source: 'cf',
             target: 'edge',
             id: expect.any(String),
-            attributes: {},
+            attributes: {
+              bidirectional: false,
+            },
           },
         },
       ],

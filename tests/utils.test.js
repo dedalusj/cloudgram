@@ -1,4 +1,4 @@
-import {pluck, arrayDiff, uniqBy, renameProp, get, getOrDefault, inSetOrDefault, pipe} from '../src/js/utils';
+import {pluck, arrayDiff, uniqBy, renameProp, get, getOrDefault, inSetOrDefault, pipe, merge} from '../src/js/utils';
 
 it('pluck a value from object', () => {
   expect(pluck('a')({a: 1, b: 2})).toEqual(1);
@@ -133,5 +133,15 @@ describe('pipe functions', () => {
     const adder = n => n + 1;
     expect(pipe(doubler, adder)(3)).toEqual(7);
     expect(pipe(adder, doubler)(3)).toEqual(8);
+  });
+});
+
+describe('merge', () => {
+  it('merges two disjoint objects', () => {
+    expect(merge({a: 1, b: 2}, {c: 3, d: 4})).toEqual({a: 1, b: 2, c: 3, d: 4});
+  });
+
+  it('merges two overlapping objects', () => {
+    expect(merge({a: 1, b: 2}, {b: 3, c: 4})).toEqual({a: 1, b: 3, c: 4});
   });
 });

@@ -13,7 +13,7 @@ export const HighlightRules = function () {
       },
       {
         token: 'keyword.operator',
-        regex: /=>|->|=/,
+        regex: /=>|->|<=>|<->/,
       },
       {
         token: 'punctuation.operator',

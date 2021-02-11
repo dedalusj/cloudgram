@@ -16,7 +16,9 @@ import {
   attrNameLabel,
   attrValueLabel,
   attrListLabel,
+  bidirectionalArrowLabel,
   deepArrowLabel,
+  bidirectionalDeepArrowLabel,
 } from './labels.js';
 
 const BaseCstVisitor = parser.getBaseCstVisitorConstructor();
@@ -107,7 +109,10 @@ class DiagramInterpreter extends BaseCstVisitor {
   }
 
   link(ctx) {
-    return {deepLink: ctx.hasOwnProperty(deepArrowLabel)};
+    return {
+      deepLink: ctx.hasOwnProperty(deepArrowLabel) || ctx.hasOwnProperty(bidirectionalDeepArrowLabel),
+      bidirectionalLink: ctx.hasOwnProperty(bidirectionalArrowLabel) || ctx.hasOwnProperty(bidirectionalDeepArrowLabel),
+    };
   }
 
   attribute(ctx) {

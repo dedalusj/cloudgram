@@ -1,4 +1,4 @@
-import {arrayDiff, get, pluck, uniqBy, pipe} from '../utils';
+import {arrayDiff, get, pluck, uniqBy, pipe, merge} from '../utils';
 
 const pluckId = pluck('id');
 const pluckSrc = pluck('src');
@@ -116,7 +116,7 @@ const addMissingNodes = ({nodes, edges}) => {
 
 /**
  * Remove all duplicate nodes and edges. A node is considered duplicate by its id
- * while an edge is considered duplicate if its source, destination and deepLink
+ * while an edge is considered duplicate if its source, destination, deepLink and bidirectionalLink
  * type are equal
  * @param {Array.<Node|Group>} nodes
  * @param {Array.<Edge>} edges
@@ -124,7 +124,7 @@ const addMissingNodes = ({nodes, edges}) => {
  */
 const removeDuplicates = ({nodes, edges}) => ({
   nodes: uniqBy(nodes),
-  edges: uniqBy(edges, ({src, dst, deepLink}) => `${src}-${dst}-${deepLink}`),
+  edges: uniqBy(edges, ({src, dst, deepLink, bidirectionalLink}) => `${src}-${dst}-${deepLink}-${bidirectionalLink}`),
 });
 
 /**
@@ -139,11 +139,12 @@ const explodeEdges = ({nodes, edges}) => {
   return {
     nodes,
     edges: edges
-      .map(({src, dst, deepLink, attributes = {}}) =>
-        !deepLink || !isGroupElement(nodesMap[dst]) || !hasLinkableElements(nodesMap[dst])
+      .map(({src, dst, deepLink, bidirectionalLink, attributes = {}}) => {
+        attributes = merge(attributes, {bidirectional: bidirectionalLink});
+        return !deepLink || !isGroupElement(nodesMap[dst]) || !hasLinkableElements(nodesMap[dst])
           ? {src, dst, attributes}
           : nodesMap[dst]['elements'].filter(el => !isLinkElement(el)).map(({id}) => ({src, dst: id, attributes}))
-      )
+      })
       .flat(),
   };
 };

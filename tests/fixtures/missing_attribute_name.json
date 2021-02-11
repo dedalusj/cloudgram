@@ -21,7 +21,7 @@
         "end": 6,
         "start": 6
       },
-      "message": "Expecting: expecting at least one iteration which starts with one of these possible Token sequences::\n  <['->'] ,['=>']>\nbut found: ']'"
+      "message": "Expecting: expecting at least one iteration which starts with one of these possible Token sequences::\n  <['->'] ,['<->'] ,['=>'] ,['<=>']>\nbut found: ']'"
     },
     {
       "column": {

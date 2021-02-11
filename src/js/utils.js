@@ -39,3 +39,5 @@ export const inSetOrDefault = (set, defaultValue) => o => (o && set.has(o) ? o :
 export const pipe = (...fns) => x => fns.reduce((y, f) => f(y), x);
 
 export const toLowerCase = x => (!x ? x : x.toLowerCase());
+
+export const merge = (a, b) => ({...a, ...b});

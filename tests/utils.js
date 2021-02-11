@@ -13,11 +13,12 @@ export const inputGroup = (id, elements, {attributes = {}, parent = null}) => ({
   elements: elements.map(({type, ...rest}) => (type === 'link' ? {type, ...rest} : {type, ...rest, parent: id})),
   parent,
 });
-export const inputEdge = (src, dst, deepLink = false, attributes = {}) => ({
+export const inputEdge = (src, dst, deepLink = false, bidirectionalLink = false, attributes = {}) => ({
   type: 'edge',
   src,
   dst,
   deepLink,
+  bidirectionalLink,
   attributes,
 });
 export const expectedNode = ({
@@ -36,4 +37,4 @@ export const expectedNode = ({
   grabbable: true,
   classes,
 });
-export const expectedEdge = ({source, target, id, attributes = {}}) => ({data: {source, target, id, attributes}});
+export const expectedEdge = ({source, target, id, attributes = {bidirectional: false}}) => ({data: {source, target, id, attributes}});

@@ -16,8 +16,10 @@ import {
   attrNameLabel,
   attrValueLabel,
   attrListLabel,
-  arrowLabel,
+  directedArrowLabel,
+  bidirectionalArrowLabel,
   deepArrowLabel,
+  bidirectionalDeepArrowLabel,
 } from './labels.js';
 
 import {
@@ -35,8 +37,10 @@ import {
   semicolon,
   comma,
   equal,
-  arrow,
+  directedArrow,
+  bidirectionalArrow,
   deepArrow,
+  bidirectionalDeepArrow,
 } from './lexer.js';
 
 class DiagramParser extends CstParser {
@@ -128,8 +132,10 @@ class DiagramParser extends CstParser {
 
     $.RULE('link', () => {
       $.OR([
-        {ALT: () => $.CONSUME(arrow, {LABEL: arrowLabel})},
+        {ALT: () => $.CONSUME(directedArrow, {LABEL: directedArrowLabel})},
+        {ALT: () => $.CONSUME(bidirectionalArrow, {LABEL: bidirectionalArrowLabel})},
         {ALT: () => $.CONSUME(deepArrow, {LABEL: deepArrowLabel})},
+        {ALT: () => $.CONSUME(bidirectionalDeepArrow, {LABEL: bidirectionalDeepArrowLabel})},
       ]);
     });
 

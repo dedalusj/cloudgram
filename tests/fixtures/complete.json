@@ -70,6 +70,7 @@
         "src": "dns",
         "dst": "cf",
         "deepLink": false,
+        "bidirectionalLink": false,
         "attributes": {
           "color": "blue",
           "style": "dashed"
@@ -80,6 +81,7 @@
         "src": "cf",
         "dst": "load_balancer",
         "deepLink": false,
+        "bidirectionalLink": false,
         "attributes": {
           "color": "blue",
           "style": "dashed"
@@ -90,6 +92,7 @@
         "src": "load_balancer",
         "dst": "servers",
         "deepLink": true,
+        "bidirectionalLink": false,
         "attributes": {}
       }
     ]

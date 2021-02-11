@@ -12,6 +12,7 @@ import {
   getDirection,
   getHPosForNode,
   getVPosForNode,
+  getSourceArrowStyle,
 } from '../src/js/renderer';
 
 import {inputNode, inputGroup, inputEdge, expectedNode, expectedEdge} from './utils';
@@ -39,7 +40,7 @@ describe('renderer', () => {
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false, false,{stroke: 'blue', style: 'dashed'}),
         inputEdge('cf', 'load_balancer', false),
       ],
     };
@@ -62,7 +63,7 @@ describe('renderer', () => {
           source: 'dns',
           target: 'cf',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
         expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
       ],
@@ -92,7 +93,7 @@ describe('renderer', () => {
           [
             inputNode('load_balancer', 'elasticLoadBalancing', {}),
             inputGroup('servers', [inputNode('server1', 'ec2', {}), inputNode('server2', 'ec2', {})], {}),
-            inputEdge('load_balancer', 'servers', true, {stroke: 'blue', style: 'dashed'}),
+            inputEdge('load_balancer', 'servers', true, false,{stroke: 'blue', style: 'dashed'}),
           ],
           {attributes: {fill: 'green'}}
         ),
@@ -118,13 +119,13 @@ describe('renderer', () => {
           source: 'load_balancer',
           target: 'server1',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
         expectedEdge({
           source: 'load_balancer',
           target: 'server2',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
         expectedEdge({source: 'dns', target: 'cf', id: expect.any(String)}),
         expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
@@ -159,7 +160,7 @@ describe('renderer', () => {
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false, false, {stroke: 'blue', style: 'dashed'}),
         inputEdge('cf', 'load_balancer', false),
       ],
     };
@@ -180,7 +181,7 @@ describe('renderer', () => {
           source: 'dns',
           target: 'cf',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
         expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
       ],
@@ -207,7 +208,7 @@ describe('renderer', () => {
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
         inputEdge('dns', 'cf', false),
-        inputEdge('unknown', 'load_balancer', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('unknown', 'load_balancer', false, false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -227,7 +228,7 @@ describe('renderer', () => {
           source: 'unknown',
           target: 'load_balancer',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
       ],
     };
@@ -253,7 +254,7 @@ describe('renderer', () => {
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
         inputEdge('dns', 'cf', false),
-        inputEdge('cf', 'unknown', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('cf', 'unknown', false, false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -273,7 +274,7 @@ describe('renderer', () => {
           source: 'cf',
           target: 'unknown',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
       ],
     };
@@ -299,7 +300,7 @@ describe('renderer', () => {
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
         inputEdge('dns', 'cf', false),
-        inputEdge('unknown1', 'unknown2', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('unknown1', 'unknown2', false, false, {stroke: 'blue', style: 'dashed'}),
       ],
     };
 
@@ -320,7 +321,7 @@ describe('renderer', () => {
           source: 'unknown1',
           target: 'unknown2',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
       ],
     };
@@ -346,7 +347,7 @@ describe('renderer', () => {
         inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {})], {attributes: {fill: 'green'}}),
         inputNode('load_balancer', 'elasticLoadBalancing', {}),
-        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false, false, {stroke: 'blue', style: 'dashed'}),
         inputEdge('cf', 'load_balancer', false),
       ],
     };
@@ -365,7 +366,7 @@ describe('renderer', () => {
           source: 'dns',
           target: 'cf',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
         expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
       ],
@@ -393,7 +394,7 @@ describe('renderer', () => {
         inputGroup('vpc', [inputNode('load_balancer', 'elasticLoadBalancing', {}), inputEdge('cf', 'load_balancer')], {
           attributes: {fill: 'green'},
         }),
-        inputEdge('dns', 'cf', false, {stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false, false, {stroke: 'blue', style: 'dashed'}),
         inputEdge('cf', 'load_balancer', false),
       ],
     };
@@ -413,7 +414,7 @@ describe('renderer', () => {
           source: 'dns',
           target: 'cf',
           id: expect.any(String),
-          attributes: {stroke: 'blue', style: 'dashed'},
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false},
         }),
       ],
     };
@@ -581,6 +582,8 @@ describe('style properties', () => {
     [getVPosForNode, {labelPosition: 'se'}, 'bottom'],
     [getVPosForNode, {labelPosition: 'sw'}, 'bottom'],
     [getVPosForNode, {}, 'top'],
+    [getSourceArrowStyle, {bidirectional: false}, 'none'],
+    [getSourceArrowStyle, {bidirectional: true}, 'triangle'],
   ])(`%#`, (fn, attr, expected) => {
     const e = element(attr);
     expect(fn(e)).toEqual(expected);
