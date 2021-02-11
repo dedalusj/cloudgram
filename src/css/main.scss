@@ -50,6 +50,11 @@ header {
   align-items: center;
 }
 
+.nav-icon {
+  max-height: 0.7 * $header_height;
+  margin-top: 3px;
+}
+
 .nav-item {
   margin-right: $nav_item_margin;
   margin-left: $nav_item_margin;

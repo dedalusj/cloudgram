@@ -9,12 +9,12 @@
 </style>
 
 
-<link rel='stylesheet' href='https://unpkg.com/chevrotain@7.0.3/diagrams/diagrams.css'>
+<link rel='stylesheet' href='https://unpkg.com/chevrotain@7.1.1/diagrams/diagrams.css'>
 
-<script src='https://unpkg.com/chevrotain@7.0.3/diagrams/vendor/railroad-diagrams.js'></script>
-<script src='https://unpkg.com/chevrotain@7.0.3/diagrams/src/diagrams_builder.js'></script>
-<script src='https://unpkg.com/chevrotain@7.0.3/diagrams/src/diagrams_behavior.js'></script>
-<script src='https://unpkg.com/chevrotain@7.0.3/diagrams/src/main.js'></script>
+<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/vendor/railroad-diagrams.js'></script>
+<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/diagrams_builder.js'></script>
+<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/diagrams_behavior.js'></script>
+<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/main.js'></script>
 
 <div id="diagrams" align="center"></div>    
 
@@ -84,7 +84,7 @@
                 "name": "quotedId",
                 "label": "quotedId",
                 "idx": 0,
-                "pattern": "\"[a-zA-Z0-9_\\- ,().]*\""
+                "pattern": "\"[a-zA-Z0-9_\\- ,().\\/]*\""
               }
             ]
           }
@@ -378,10 +378,22 @@
             "definition": [
               {
                 "type": "Terminal",
-                "name": "arrow",
+                "name": "directedArrow",
                 "label": "'->'",
                 "idx": 0,
                 "pattern": "->"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "bidirectionalArrow",
+                "label": "'<->'",
+                "idx": 0,
+                "pattern": "<->"
               }
             ]
           },
@@ -394,6 +406,18 @@
                 "label": "'=>'",
                 "idx": 0,
                 "pattern": "=>"
+              }
+            ]
+          },
+          {
+            "type": "Alternative",
+            "definition": [
+              {
+                "type": "Terminal",
+                "name": "bidirectionalDeepArrow",
+                "label": "'<=>'",
+                "idx": 0,
+                "pattern": "<=>"
               }
             ]
           }
