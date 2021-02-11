@@ -4,14 +4,14 @@
     <include src="analytics.html"></include>
     <meta charset="utf-8" />
     <title>CloudGram - Documentation</title>
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href='css/main.scss' />
   </head>
   <body>
-    <div class="fixed-nav-bar">
+    <header>
       <include src="nav_items.html"></include>
-    </div>
+    </header>
     <main>
-      <div class="nav-column">
+      <div class="column side-bar side-bar-narrow overflow-y">
         <ul>
           <li>
             <a title="Diagram" href="#diagram">Diagram</a>
@@ -38,8 +38,8 @@
           </li>
         </ul>
       </div>
-      <div class="column content">
-        <article class="column">
+      <div class="column overflow-y">
+        <article>
           <h1 id="diagram">The diagram file</h1>
           <p>Here is an example diagram file:</p>
 
@@ -61,8 +61,7 @@ diagram "example" [direction=lr] {
   // creating the edges
   DNS -> cf -> load_balancer [stroke=blue,style=dashed];
   load_balancer => servers;
-}</pre
-          >
+}</pre>
 
           <h2 id="diagram_diagram">Diagram</h2>
           <p>
@@ -113,7 +112,7 @@ diagram "example" [direction=lr] {
 
           <p>
             A link is a directed connection between nodes and groups. Link are declared with the
-            <code>-></code>, <code><-></code>, <code>=></code>, <code><=></code> symbols. The second denotes a bidirectional link, the is a convenience notation to link a node with
+            <code>-></code>, <code><-></code>, <code>=></code>, <code><=></code> symbols. The second denotes a bidirectional link, the <code>=></code> is a convenience notation to link a node with
             all the children of a group, see below. For convenience a chain of links can be declared with
             <code>DNS -> cf -> load_balancer</code>.
           </p>

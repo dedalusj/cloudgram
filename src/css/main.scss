@@ -1,0 +1,277 @@
+$white: #fff;
+$black: #000;
+$gray50: #eee;
+$gray100: #ddd;
+$gray200: #ccc;
+$gray300: #bbb;
+$gray400: #aaa;
+$gray500: #999;
+$gray600: #888;
+$gray700: #777;
+$gray800: #666;
+$gray900: #555;
+$gray1000: #444;
+$gray1100: #333;
+$gray1200: #222;
+$gray1300: #111;
+
+$blue50: #f5f3ff;
+
+$blue: #2376ae;
+$pink: #c16ecf;
+
+$header_height: 40px;
+$left_spacing: 40px;
+$nav_item_margin: 10px;
+
+$input_border: 1px solid #ddd;
+
+$sidebar_width: 300px;
+$sidebar_narrow_factor: 0.6;
+$sidebar_section_color: $gray900;
+$sidebar_subsection_color: $gray400;
+$sidebar_subsection_hover_color: #004c7a;
+
+body {
+  font-family: Segoe UI, Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+// navigation bar
+header {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header_height;
+  background-image: linear-gradient(260deg, $blue 0%, $pink 100%);
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin-right: $nav_item_margin;
+  margin-left: $nav_item_margin;
+  text-decoration: none;
+  color: rgba($white, 0.7);
+  font-weight: 100;
+}
+
+.nav-item:first-of-type {
+  margin-left: $left_spacing;
+}
+
+.nav-controls {
+  flex: 2;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.input-group {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: table;
+}
+
+.input-element {
+  border-radius: 10px;
+  font-size: 11px;
+  padding: 5px 10px;
+  background-color: $white;
+  border: $input_border;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 115%;
+  background-position-y: center;
+  background-color: $white;
+  color: $black;
+  border: $input_border;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.button {
+  display: inline-block;
+  cursor: pointer;
+  color: $black;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: $white;
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+}
+
+.right-element {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.left-element {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+// content
+main {
+  display: flex;
+  position: fixed;
+  top: $header_height;
+  left: 0;
+  height: calc(100vh - #{$header_height});
+  width: 100%;
+}
+
+.column {
+  flex: 1;
+  height: 100%;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.overflow-y {
+  overflow-y: auto;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+ul {
+  padding-inline-start: 30px;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+// side bar
+.side-bar {
+  flex: 0 0 $sidebar_width;
+  font-size: 1.2em;
+  line-height: 1.7em;
+  padding-left: $left_spacing;
+}
+
+.side-bar-narrow {
+  flex-basis: $sidebar_narrow_factor * $sidebar_width;
+}
+
+.side-bar ul {
+  padding-inline-start: 0;
+}
+
+.side-bar li {
+  padding-inline-start: 0;
+}
+
+.side-bar a {
+  text-decoration: none;
+  color: $sidebar_section_color;
+}
+
+.sub-section li {
+  font-size: 0.8em;
+  line-height: 1.8em;
+}
+
+.sub-section:last-child {
+  margin-bottom: 15px;
+}
+
+.sub-section li a {
+  color: $sidebar_subsection_color;
+}
+
+.sub-section li:hover a {
+  color: $sidebar_subsection_hover_color;
+}
+
+// version number
+#version {
+  font-size: 0.8em;
+  font-weight: lighter;
+  text-align: right;
+  color: $gray500;
+  width: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+}
+
+// article content
+article {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  color: $gray1100;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-weight: 100;
+}
+
+article > h1 {
+  font-size: 2.3em;
+  font-weight: normal;
+  color: $blue;
+}
+
+article > h2 {
+  font-weight: normal;
+  border-bottom: 1px solid $gray500;
+}
+
+article > h3 {
+  font-weight: normal;
+}
+
+article > pre {
+  padding: 15px;
+  border: 1px solid $gray200;
+  border-radius: 10px;
+  background-color: $gray50;
+}
+
+article code {
+  background-color: $blue50;
+}
+
+article > table {
+  margin-top: 30px;
+}
+
+article > img {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}

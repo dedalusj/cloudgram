@@ -1,4 +1,4 @@
-<div class="nav-column">
+<div class="column side-bar overflow-y">
     <ul class="section">
     {%- for provider in providers %}
         <li>
@@ -14,7 +14,7 @@
     {%- endfor %}
     </ul>
 </div>
-<div class="column content">
+<div class="column overflow-y">
 {%- for provider in providers %}
     <h1 id="{{provider.name | lower}}">{{provider.name | upper}}</h1>
     {%- for group in provider.groups %}
