@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg width="80px" height="80px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>flat-24/cloud-artifacts</title>
+  <desc>Created with Sketch.</desc>
+  <g id="flat-24/cloud-artifacts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, 0.000000)">
+    <rect id="Container" x="0" y="0" width="24" height="24"/>
+    <g id="Group" transform="translate(1.000000, 1.000000)" fill="#000000">
+      <path d="M5.0004,0.806000048 L5.0004,3.26400005 L1.9994,5.00300005 L1.9994,17.013 L5.0004,18.744 L5.0004,21.2 L0.0004,18.313 L0.0004,3.69200005 L5.0004,0.806000048 Z M17.0001,0.806000048 L21.9991,3.69200005 L21.9991,18.313 L17.0001,21.2 L17.0001,18.744 L20.0001,17.013 L20.0001,5.00300005 L17.0001,3.26400005 L17.0001,0.806000048 Z" id="Shape"/>
+    </g>
+    <g id="Group-6" transform="translate(5.250000, 4.500000)" fill="#000000">
+      <g id="Group-5" transform="translate(3.345263, 0.000000)">
+        <polygon id="Fill-2" transform="translate(3.389474, 2.333333) rotate(-90.000000) translate(-3.389474, -2.333333) " points="5.03574452 2.33333333 3.38960563 -0.614035088 1.74320285 2.33333333 3.38960563 5.28070175"/>
+        <polygon id="Fill-3" transform="translate(5.221789, 5.365017) rotate(-90.000000) translate(-5.221789, -5.365017) " points="2.73933774 3.92970954 4.4148653 6.80032357 7.7042403 6.80032357 6.02588056 3.92970954"/>
+        <polygon id="Fill-4" transform="translate(1.614333, 5.364546) rotate(-90.000000) translate(-1.614333, -5.364546) " points="2.41736227 6.79985284 4.0961287 3.9292388 0.807017588 3.9292388 -0.867462938 6.79985284"/>
+      </g>
+      <g id="Group-3" transform="translate(0.000000, 6.203704)">
+        <polygon id="Fill-2" transform="translate(3.310605, 2.198600) rotate(-90.000000) translate(-3.310605, -2.198600) " points="4.95687564 2.19859954 3.31073675 -0.62112634 1.66433398 2.19859954 3.31073675 5.01832541"/>
+        <polygon id="Fill-3" transform="translate(5.006877, 5.230283) rotate(-90.000000) translate(-5.006877, -5.230283) " points="2.52442546 3.79497574 4.19995302 6.66558978 7.48932802 6.66558978 5.81096828 3.79497574"/>
+        <polygon id="Fill-4" transform="translate(1.614333, 5.229812) rotate(-90.000000) translate(-1.614333, -5.229812) " points="2.41736227 6.66511904 4.0961287 3.794505 0.807017588 3.794505 -0.867462938 6.66511904"/>
+      </g>
+      <g id="Group-4" transform="translate(6.896842, 6.203704)">
+        <polygon id="Fill-2" transform="translate(3.310605, 2.198600) rotate(-90.000000) translate(-3.310605, -2.198600) " points="4.95687564 2.19859954 3.31073675 -0.62112634 1.66433398 2.19859954 3.31073675 5.01832541"/>
+        <polygon id="Fill-3" transform="translate(5.006877, 5.230283) rotate(-90.000000) translate(-5.006877, -5.230283) " points="2.52442546 3.79497574 4.19995302 6.66558978 7.48932802 6.66558978 5.81096828 3.79497574"/>
+        <polygon id="Fill-4" transform="translate(1.614333, 5.229812) rotate(-90.000000) translate(-1.614333, -5.229812) " points="2.41736227 6.66511904 4.0961287 3.794505 0.807017588 3.794505 -0.867462938 6.66511904"/>
+      </g>
+    </g>
+  </g>
+</svg>

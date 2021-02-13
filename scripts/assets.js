@@ -36,6 +36,7 @@ const docsTemplate = fs.readFileSync(path.join(__dirname, 'resources_content.htm
 const imagesDir = provider => path.join(__dirname, '..', 'src', 'images', provider);
 const renderJSFile = provider => path.join(__dirname, '..', 'src', 'js', 'icons', `${provider}.js`);
 const resourceDocsFile = path.join(__dirname, '..', 'src', 'resources_content.html');
+const assetsOverrideDir = path.join(__dirname, 'assets_override');
 
 const tap = fn => data => {
   fn(data);
@@ -84,6 +85,8 @@ const unzipFile = async (sourceFile, outputDir) => {
 };
 
 const copyFromDir = async (sourceDir, destDir) => fs.copy(sourceDir, destDir);
+const fromRemoteZip = async (sourceUrl, destDir) => downloadFile(sourceUrl)
+  .then(downloadedFile => unzipFile(downloadedFile, destDir));
 
 // utils for the assets generation pipeline
 const extractFilename = ({source, ...rest}) => ({...rest, source, filename: path.basename(source).toLowerCase()});
@@ -147,6 +150,7 @@ const renderJS = provider => async assets => {
 const AWS = 'aws';
 const Azure = 'azure';
 const K8s = 'k8s';
+const GCP = 'gcp';
 const Generic = 'generic';
 
 // the following patterns in the form [regex, string replacement] allow for
@@ -204,6 +208,14 @@ const azurePatterns = [
   [/machinesazurearc/, 'machines-azure-arc'],
 ];
 const k8sPatterns = [];
+const gcpPatterns = [
+  [/-521/, ''],
+  [/-512/, ''],
+  [/-color.*\./, '.'],
+  [/^cloud-?/, ''],
+  [/debugger/, 'cloud-debugger'],
+  [/GKEOn/i, 'gke-on'],
+];
 const genericPatterns = [];
 
 // custom provider functions to compute the name of the group a
@@ -238,6 +250,13 @@ const k8sComputeGroup = ({source, ...rest}) => ({
   source,
   group: 'Generic', // no group information available in k8s
 });
+const gcpComputeGroup = ({source, ...rest}) => ({
+  ...rest,
+  source,
+  group: getParentDir(source, 1)
+    .toLowerCase()
+    .trim(),
+});
 const genericComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
@@ -254,10 +273,7 @@ const genericComputeGroup = ({source, ...rest}) => ({
 //            e.g. source path, the svg content, the group name etc.
 const config = {
   [AWS]: {
-    fetch: targetDir =>
-      downloadFile(
-        'https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip'
-      ).then(downloadedFile => unzipFile(downloadedFile, targetDir)),
+    fetch: targetDir => fromRemoteZip('https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip', targetDir),
     filter: filepath => filepath.match(/(64.*|Dark)\.svg$/i),
     prepare: filepath =>
       Promise.resolve({provider: AWS, source: filepath})
@@ -270,10 +286,7 @@ const config = {
         .then(resizeContent),
   },
   [Azure]: {
-    fetch: targetDir =>
-      downloadFile('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip').then(downloadedFile =>
-        unzipFile(downloadedFile, targetDir)
-      ),
+    fetch: targetDir => fromRemoteZip('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip', targetDir),
     filter: () => true, // keep all svg in downloaded assets
     prepare: filepath =>
       Promise.resolve({provider: Azure, source: filepath})
@@ -286,10 +299,7 @@ const config = {
         .then(resizeContent),
   },
   [K8s]: {
-    fetch: targetDir =>
-      downloadFile('https://github.com/kubernetes/community/archive/master.zip').then(downloadedFile =>
-        unzipFile(downloadedFile, targetDir)
-      ),
+    fetch: targetDir => fromRemoteZip('https://github.com/kubernetes/community/archive/master.zip', targetDir),
     filter: filepath => filepath.match(/.*unlabeled\/.*\.svg$/i),
     prepare: filepath =>
       Promise.resolve({provider: K8s, source: filepath})
@@ -301,8 +311,22 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+  [GCP]: {
+    fetch: targetDir => fromRemoteZip('https://cloud.google.com/icons/files/google-cloud-icons.zip', targetDir)
+      .then(() => copyFromDir(path.join(assetsOverrideDir, 'gcp'), targetDir)),
+    filter: filepath => filepath.match(/.*color\.svg$/i) && !filepath.includes('modifiers'),
+    prepare: filepath =>
+      Promise.resolve({provider: GCP, source: filepath})
+        .then(extractFilename)
+        .then(gcpComputeGroup)
+        .then(replacePatterns(gcpPatterns))
+        .then(addTarget)
+        .then(addImportName)
+        .then(readContent)
+        .then(resizeContent),
+  },
   [Generic]: {
-    fetch: targetDir => copyFromDir(path.join(__dirname, 'generic'), targetDir),
+    fetch: targetDir => copyFromDir(path.join(assetsOverrideDir, 'generic'), targetDir),
     filter: () => true, // keep all svg
     prepare: filepath =>
       Promise.resolve({provider: Generic, source: filepath})
@@ -345,7 +369,7 @@ const processProvider = ([provider, options]) => {
     .then(sortAssets)
     .then(saveAssets)
     .then(renderJS(provider))
-    .then(tap(removeProviderDir))
+    // .then(tap(removeProviderDir))
     .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
     .catch(err => logger.error(err));
 };

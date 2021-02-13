@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg id="Product_Icons" data-name="Product Icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="80px" height="80px">
+  <defs>
+    <style>.cls-1{fill:#669df6;}.cls-2{fill:#4285f4;}.cls-3{fill:#aecbfa;}</style>
+  </defs>
+  <title>Icon_24px_Color_NaturalLanguage</title>
+  <polygon class="cls-1" points="20 4 17 4 17 6 20 6 20 18 17 18 17 20 20 20 22 20 22 18 22 6 22 4 20 4"/>
+  <polygon class="cls-1" points="4 20 7 20 7 18 4 18 4 6 7 6 7 4 4 4 2 4 2 6 2 18 2 20 4 20"/>
+  <g id="Shape">
+    <polygon class="cls-2" points="20 7 22 6 20 6 20 7"/>
+    <polygon class="cls-2" points="22 17 20 18 22 18 22 17"/>
+  </g>
+  <g id="Shape-2" data-name="Shape">
+    <polygon class="cls-2" points="2 17 4 18 2 18 2 17"/>
+    <polygon class="cls-2" points="4 7 2 6 4 6 4 7"/>
+  </g>
+  <rect id="Rectangle-7-Copy" class="cls-3" x="7" y="11" width="10" height="2"/>
+  <rect id="Rectangle-7-Copy-2" data-name="Rectangle-7-Copy" class="cls-3" x="7" y="14" width="10" height="2"/>
+  <rect id="Rectangle-7-Copy-3" data-name="Rectangle-7-Copy" class="cls-3" x="7" y="8" width="10" height="2"/>
+</svg>

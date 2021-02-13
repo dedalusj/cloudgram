@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="80px" height="80px">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="512" height="512" style="fill:none"/>
+    </clipPath>
+  </defs>
+  <g id="Artwork">
+    <g id="Artwork_3" data-name="Artwork 3">
+      <g style="clip-path:url(#clip-path)">
+        <g style="clip-path:url(#clip-path)">
+          <line x1="288.74" y1="48.52" x2="288.74" y2="98.7" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        </g>
+        <g style="clip-path:url(#clip-path)">
+          <line x1="464.07" y1="223.85" x2="413.9" y2="223.85" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        </g>
+        <g style="clip-path:url(#clip-path)">
+          <polyline points="204.88 294.59 90.09 409.32 131.26 450.51" style="fill:none;stroke:#abc9f8;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+          <polyline points="227.74 227.9 265.54 267.17 349.75 180.52" style="fill:none;stroke:#4283f2;stroke-miterlimit:10;stroke-width:21.3333333333338px"/>
+          <path d="M376.32,311.46a123.87,123.87,0,1,1,.07-175.21A123.92,123.92,0,0,1,376.32,311.46Z" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        </g>
+        <line x1="164.76" y1="99.88" x2="200.24" y2="135.35" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        <line x1="113.41" y1="223.85" x2="163.58" y2="223.85" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        <line x1="288.74" y1="399.19" x2="288.74" y2="349.01" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        <line x1="412.72" y1="347.83" x2="377.24" y2="312.36" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        <line x1="412.72" y1="99.88" x2="377.24" y2="135.35" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+        <line x1="149.14" y1="366.92" x2="181.99" y2="399.79" style="fill:none;stroke:#579bfb;stroke-miterlimit:10;stroke-width:42.6666666666676px"/>
+      </g>
+    </g>
+  </g>
+</svg>

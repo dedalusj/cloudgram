@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg id="Product_Icons" data-name="Product Icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="80px" height="80px">
+  <defs>
+    <style>.cls-1{fill:#aecbfa;}.cls-2{fill:#669df6;}.cls-3{fill:#4285f4;}.cls-4{fill:#fff;}</style>
+  </defs>
+  <title>Icon_36px_DataStore_Color</title>
+  <polygon class="cls-1" points="10.5 9 12 7.5 3 7.5 4.5 9 10.5 9"/>
+  <polygon class="cls-2" points="10.5 9 10.5 15 12 16.5 12 7.5 10.5 9"/>
+  <polygon class="cls-1" points="4.5 9 3 7.5 3 16.5 4.5 15 4.5 9"/>
+  <polygon class="cls-3" points="4.5 15 3 16.5 12 16.5 10.5 15 4.5 15"/>
+  <polygon class="cls-3" points="21 9 22.5 7.5 13.5 7.5 15 9 21 9"/>
+  <polygon class="cls-2" points="21 9 21 15 22.5 16.5 22.5 7.5 21 9"/>
+  <polygon class="cls-3" points="15 9 13.5 7.5 13.5 16.5 15 15 15 9"/>
+  <polygon class="cls-2" points="15 15 13.5 16.5 22.5 16.5 21 15 15 15"/>
+  <polygon class="cls-3" points="31.5 9 33 7.5 24 7.5 25.5 9 31.5 9"/>
+  <polygon class="cls-2" points="31.5 9 31.5 15 33 16.5 33 7.5 31.5 9"/>
+  <polygon class="cls-3" points="25.5 9 24 7.5 24 16.5 25.5 15 25.5 9"/>
+  <polygon class="cls-2" points="25.5 15 24 16.5 33 16.5 31.5 15 25.5 15"/>
+  <polygon class="cls-3" points="10.5 21 12 19.5 3 19.5 4.5 21 10.5 21"/>
+  <polygon class="cls-2" points="10.5 21 10.5 27 12 28.5 12 19.5 10.5 21"/>
+  <polygon class="cls-3" points="4.5 21 3 19.5 3 28.5 4.5 27 4.5 21"/>
+  <polygon class="cls-2" points="4.5 27 3 28.5 12 28.5 10.5 27 4.5 27"/>
+  <polygon class="cls-1" points="21 21 22.5 19.5 13.5 19.5 15 21 21 21"/>
+  <polygon class="cls-2" points="21 21 21 27 22.5 28.5 22.5 19.5 21 21"/>
+  <polygon class="cls-1" points="15 21 13.5 19.5 13.5 28.5 15 27 15 21"/>
+  <polygon class="cls-3" points="15 27 13.5 28.5 22.5 28.5 21 27 15 27"/>
+  <polygon class="cls-1" points="31.5 21 33 19.5 24 19.5 25.5 21 31.5 21"/>
+  <polygon class="cls-2" points="31.5 21 31.5 27 33 28.5 33 19.5 31.5 21"/>
+  <polygon class="cls-1" points="25.5 21 24 19.5 24 28.5 25.5 27 25.5 21"/>
+  <polygon class="cls-3" points="25.5 27 24 28.5 33 28.5 31.5 27 25.5 27"/>
+  <rect class="cls-1" x="4.5" y="9" width="6" height="6"/>
+  <rect class="cls-4" x="15" y="9" width="6" height="6"/>
+  <rect class="cls-4" x="25.5" y="9" width="6" height="6"/>
+  <rect class="cls-4" x="4.5" y="21" width="6" height="6"/>
+  <rect class="cls-1" x="15" y="21" width="6" height="6"/>
+  <rect class="cls-1" x="25.5" y="21" width="6" height="6"/>
+</svg>
