@@ -29,21 +29,23 @@
 <pre id="editor" class="column m-0">
 diagram "example" [direction=lr] {
   // creating the nodes
+  generic.users Users;
   aws.route53 DNS;
   aws.cloudfront cf [label="CDN"];
+  aws.s3 s3 [label="Static assets"];
 
-  group vpc [label="VPC"] {
+  group vpc [label="VPC",style=solid,stroke=black,opacity=0] {
       aws.elb load_balancer [label="Load balancer"];
 
-      group servers [label="Servers"] {
+      group asg [label="Auto scaling group",style=solid,fill="rgb(128,200,128)"] {
           aws.ec2 server1 [label="Server 1"];
           aws.ec2 server2 [label="Server 2"];
       }
   }
 
   // creating the edges
-  DNS -> cf -> load_balancer;
-  load_balancer <=> servers;
+  Users -> DNS -> cf -> load_balancer <=> asg;
+  cf -> s3;
 }</pre>
   <div id="cy" class="column m-0"></div>
 </main>
