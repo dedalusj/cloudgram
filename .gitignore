@@ -8,3 +8,5 @@ public/bundle*
 .cache
 dist
 dev
+
+.parcel-cache
