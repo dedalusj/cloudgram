@@ -375,7 +375,7 @@ const processProvider = ([provider, options]) => {
       .then(sortAssets)
       .then(saveAssets)
       .then(renderJS(provider))
-      // .then(tap(removeProviderDir))
+      .then(tap(removeProviderDir))
       .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
       .catch(err => logger.error(err))
   );
