@@ -85,8 +85,8 @@ const unzipFile = async (sourceFile, outputDir) => {
 };
 
 const copyFromDir = async (sourceDir, destDir) => fs.copy(sourceDir, destDir);
-const fromRemoteZip = async (sourceUrl, destDir) => downloadFile(sourceUrl)
-  .then(downloadedFile => unzipFile(downloadedFile, destDir));
+const fromRemoteZip = async (sourceUrl, destDir) =>
+  downloadFile(sourceUrl).then(downloadedFile => unzipFile(downloadedFile, destDir));
 
 // utils for the assets generation pipeline
 const extractFilename = ({source, ...rest}) => ({...rest, source, filename: path.basename(source).toLowerCase()});
@@ -253,9 +253,7 @@ const k8sComputeGroup = ({source, ...rest}) => ({
 const gcpComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
-  group: getParentDir(source, 1)
-    .toLowerCase()
-    .trim(),
+  group: getParentDir(source, 1).toLowerCase().trim(),
 });
 const genericComputeGroup = ({source, ...rest}) => ({
   ...rest,
@@ -273,7 +271,11 @@ const genericComputeGroup = ({source, ...rest}) => ({
 //            e.g. source path, the svg content, the group name etc.
 const config = {
   [AWS]: {
-    fetch: targetDir => fromRemoteZip('https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip', targetDir),
+    fetch: targetDir =>
+      fromRemoteZip(
+        'https://d1.awsstatic.com/webteam/architecture-icons/Q32020/AWS-Architecture-Assets-For-Light-and-Dark-BG_20200911.478ff05b80f909792f7853b1a28de8e28eac67f4.zip',
+        targetDir
+      ),
     filter: filepath => filepath.match(/(64.*|Dark)\.svg$/i),
     prepare: filepath =>
       Promise.resolve({provider: AWS, source: filepath})
@@ -286,7 +288,8 @@ const config = {
         .then(resizeContent),
   },
   [Azure]: {
-    fetch: targetDir => fromRemoteZip('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip', targetDir),
+    fetch: targetDir =>
+      fromRemoteZip('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip', targetDir),
     filter: () => true, // keep all svg in downloaded assets
     prepare: filepath =>
       Promise.resolve({provider: Azure, source: filepath})
@@ -312,8 +315,10 @@ const config = {
         .then(resizeContent),
   },
   [GCP]: {
-    fetch: targetDir => fromRemoteZip('https://cloud.google.com/icons/files/google-cloud-icons.zip', targetDir)
-      .then(() => copyFromDir(path.join(assetsOverrideDir, 'gcp'), targetDir)),
+    fetch: targetDir =>
+      fromRemoteZip('https://cloud.google.com/icons/files/google-cloud-icons.zip', targetDir).then(() =>
+        copyFromDir(path.join(assetsOverrideDir, 'gcp'), targetDir)
+      ),
     filter: filepath => filepath.match(/.*color\.svg$/i) && !filepath.includes('modifiers'),
     prepare: filepath =>
       Promise.resolve({provider: GCP, source: filepath})
@@ -358,20 +363,22 @@ const processProvider = ([provider, options]) => {
   const removeImagesDir = () => rmdir(imagesDir(provider));
 
   logger.info(`Producing assets for ${provider}`);
-  return removeProviderDir()
-    .then(createProviderDir)
-    .then(fetchAssets)
-    .then(removeImagesDir)
-    .then(selectSVGs)
-    .then(filterRelevantFiles)
-    .then(prepareAssets)
-    .then(removeDuplicateAssets)
-    .then(sortAssets)
-    .then(saveAssets)
-    .then(renderJS(provider))
-    // .then(tap(removeProviderDir))
-    .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
-    .catch(err => logger.error(err));
+  return (
+    removeProviderDir()
+      .then(createProviderDir)
+      .then(fetchAssets)
+      .then(removeImagesDir)
+      .then(selectSVGs)
+      .then(filterRelevantFiles)
+      .then(prepareAssets)
+      .then(removeDuplicateAssets)
+      .then(sortAssets)
+      .then(saveAssets)
+      .then(renderJS(provider))
+      // .then(tap(removeProviderDir))
+      .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
+      .catch(err => logger.error(err))
+  );
 };
 
 // utility functions to render the documentation (src/resources_content.html) listing the

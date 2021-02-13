@@ -143,7 +143,7 @@ const explodeEdges = ({nodes, edges}) => {
         attributes = merge(attributes, {bidirectional: bidirectionalLink});
         return !deepLink || !isGroupElement(nodesMap[dst]) || !hasLinkableElements(nodesMap[dst])
           ? {src, dst, attributes}
-          : nodesMap[dst]['elements'].filter(el => !isLinkElement(el)).map(({id}) => ({src, dst: id, attributes}))
+          : nodesMap[dst]['elements'].filter(el => !isLinkElement(el)).map(({id}) => ({src, dst: id, attributes}));
       })
       .flat(),
   };

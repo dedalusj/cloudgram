@@ -40,7 +40,7 @@ describe('renderer', () => {
           ],
           {attributes: {fill: 'green'}}
         ),
-        inputEdge('dns', 'cf', false, false,{stroke: 'blue', style: 'dashed'}),
+        inputEdge('dns', 'cf', false, false, {stroke: 'blue', style: 'dashed'}),
         inputEdge('cf', 'load_balancer', false),
       ],
     };
@@ -93,7 +93,7 @@ describe('renderer', () => {
           [
             inputNode('load_balancer', 'elasticLoadBalancing', {}),
             inputGroup('servers', [inputNode('server1', 'ec2', {}), inputNode('server2', 'ec2', {})], {}),
-            inputEdge('load_balancer', 'servers', true, false,{stroke: 'blue', style: 'dashed'}),
+            inputEdge('load_balancer', 'servers', true, false, {stroke: 'blue', style: 'dashed'}),
           ],
           {attributes: {fill: 'green'}}
         ),
