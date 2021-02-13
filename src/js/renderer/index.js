@@ -37,7 +37,7 @@ export const getColor = pipe(getData, getOrDefault(['attributes', 'stroke'], '#c
 export const getEdgeStyle = pipe(getData, getOrDefault(['attributes', 'style'], 'solid'));
 export const getEdgeWidth = pipe(getData, getOrDefault(['attributes', 'width'], 2));
 
-const arrowStyle = arrow => arrow ? 'triangle' : 'none';
+const arrowStyle = arrow => (arrow ? 'triangle' : 'none');
 export const getSourceArrowStyle = pipe(getData, getOrDefault(['attributes', 'bidirectional'], false), arrowStyle);
 
 const getIcon = ({provider, service}) => iconMap[provider][service];
