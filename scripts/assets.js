@@ -363,22 +363,20 @@ const processProvider = ([provider, options]) => {
   const removeImagesDir = () => rmdir(imagesDir(provider));
 
   logger.info(`Producing assets for ${provider}`);
-  return (
-    removeProviderDir()
-      .then(createProviderDir)
-      .then(fetchAssets)
-      .then(removeImagesDir)
-      .then(selectSVGs)
-      .then(filterRelevantFiles)
-      .then(prepareAssets)
-      .then(removeDuplicateAssets)
-      .then(sortAssets)
-      .then(saveAssets)
-      .then(renderJS(provider))
-      .then(tap(removeProviderDir))
-      .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
-      .catch(err => logger.error(err))
-  );
+  return removeProviderDir()
+    .then(createProviderDir)
+    .then(fetchAssets)
+    .then(removeImagesDir)
+    .then(selectSVGs)
+    .then(filterRelevantFiles)
+    .then(prepareAssets)
+    .then(removeDuplicateAssets)
+    .then(sortAssets)
+    .then(saveAssets)
+    .then(renderJS(provider))
+    .then(tap(removeProviderDir))
+    .then(tap(() => logger.info(`Finished producing assets for ${provider}`)))
+    .catch(err => logger.error(err));
 };
 
 // utility functions to render the documentation (src/resources_content.html) listing the
