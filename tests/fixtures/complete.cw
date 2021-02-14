@@ -1,14 +1,14 @@
 diagram "complete" [direction=lr] {
   // creating the nodes
   aws.route53 "dns";
-  aws.cloudfront cf [label="CDN"];
+  generic.component cf [label="CDN"];
 
   group vpc [fill=green] {
-      aws.alb load_balancer;
+      gcp.loadBalancing load_balancer;
 
       group servers {
-          aws.ec2 server1;
-          aws.ec2 server2;
+          k8s.node server1;
+          azure.virtualMachine server2;
       }
   }
 

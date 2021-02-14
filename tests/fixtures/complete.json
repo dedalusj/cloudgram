@@ -16,8 +16,8 @@
       {
         "type": "node",
         "id": "cf",
-        "service": "cloudfront",
-        "provider": "aws",
+        "service": "component",
+        "provider": "generic",
         "attributes": {
           "label": "CDN"
         },
@@ -34,8 +34,8 @@
           {
             "type": "node",
             "id": "load_balancer",
-            "service": "alb",
-            "provider": "aws",
+            "service": "loadBalancing",
+            "provider": "gcp",
             "attributes": {},
             "parent": "vpc"
           },
@@ -48,16 +48,16 @@
               {
                 "type": "node",
                 "id": "server1",
-                "service": "ec2",
-                "provider": "aws",
+                "service": "node",
+                "provider": "k8s",
                 "attributes": {},
                 "parent": "servers"
               },
               {
                 "type": "node",
                 "id": "server2",
-                "service": "ec2",
-                "provider": "aws",
+                "service": "virtualMachine",
+                "provider": "azure",
                 "attributes": {},
                 "parent": "servers"
               }
