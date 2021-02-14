@@ -1,0 +1,45 @@
+{
+  "parsed": {
+    "id": "complete",
+    "attributes": {
+      "direction": "lr"
+    },
+    "elements": [
+      {
+        "type": "node",
+        "id": "dns",
+        "service": "route53",
+        "provider": "aws",
+        "attributes": {},
+        "parent": null
+      },
+      {
+        "type": "group",
+        "id": "vpc",
+        "attributes": {
+          "fill": "#666"
+        },
+        "parent": null,
+        "elements": [
+          {
+            "type": "node",
+            "id": "load_balancer",
+            "service": "alb",
+            "provider": "aws",
+            "attributes": {},
+            "parent": "vpc"
+          }
+        ]
+      },
+      {
+        "type": "edge",
+        "src": "dns",
+        "dst": "load_balancer",
+        "deepLink": false,
+        "bidirectionalLink": false,
+        "attributes": {}
+      }
+    ]
+  },
+  "errors": []
+}

@@ -37,7 +37,7 @@ diagram "example" [direction=lr] {
   group vpc [label="VPC",style=solid,stroke=black,opacity=0] {
       aws.elb load_balancer [label="Load balancer"];
 
-      group asg [label="Auto scaling group",style=solid,fill="rgb(128,200,128)"] {
+      group asg [label="Auto scaling group",style=solid,fill="#80c880"] {
           aws.ec2 server1 [label="Server 1"];
           aws.ec2 server2 [label="Server 2"];
       }
