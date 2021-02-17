@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>cloud-run</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="cloud-run" transform="translate(2.250000, 1.125000)" fill-rule="nonzero">
+      <polygon id="Path" fill="#669DF6" points="23.4570479 0 36.3861702 38.8962766 75.1994681 38.8962766"/>
+      <polygon id="Path" fill="#669DF6" points="0.803856383 0 10.5019947 38.8962766 23.4570479 38.8962766 13.7537234 6.49049202"/>
+      <path d="M75.1994681,38.8962766 L36.3861702,38.8962766 L23.4570479,77.7925532 L75.1994681,38.8962766 Z M0.803856383,77.7925532 L13.7537234,71.3020612 L23.4570479,38.8962766 L10.5019947,38.8962766 L0.803856383,77.7925532 Z" id="Shape" fill="#4285F4"/>
+    </g>
+  </g>
+</svg>

@@ -16,9 +16,11 @@ import bigtable from 'url:../../images/gcp/bigtable.svg';
 import build from 'url:../../images/gcp/build.svg';
 import cdn from 'url:../../images/gcp/cdn.svg';
 import cloudDebugger from 'url:../../images/gcp/cloud-debugger.svg';
+import cloudRun from 'url:../../images/gcp/cloud-run.svg';
 import composer from 'url:../../images/gcp/composer.svg';
 import computeEngine from 'url:../../images/gcp/compute-engine.svg';
 import containerOptimizedOs from 'url:../../images/gcp/container-optimized-os.svg';
+import dataCatalog from 'url:../../images/gcp/data-catalog.svg';
 import dataLab from 'url:../../images/gcp/data-lab.svg';
 import dataLossPreventionApi from 'url:../../images/gcp/data-loss-prevention-api.svg';
 import dataStudio from 'url:../../images/gcp/data-studio.svg';
@@ -94,9 +96,11 @@ export {
   build,
   cdn,
   cloudDebugger,
+  cloudRun,
   composer,
   computeEngine,
   containerOptimizedOs,
+  dataCatalog,
   dataLab,
   dataLossPreventionApi,
   dataStudio,

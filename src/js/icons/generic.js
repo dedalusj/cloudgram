@@ -5,6 +5,7 @@ import cassandra from 'url:../../images/generic/cassandra.svg';
 import component from 'url:../../images/generic/component.svg';
 import consul from 'url:../../images/generic/consul.svg';
 import elasticsearch from 'url:../../images/generic/elasticsearch.svg';
+import firebase from 'url:../../images/generic/firebase.svg';
 import kafka from 'url:../../images/generic/kafka.svg';
 import mariadb from 'url:../../images/generic/mariadb.svg';
 import mongodb from 'url:../../images/generic/mongodb.svg';
@@ -21,6 +22,7 @@ export {
   component,
   consul,
   elasticsearch,
+  firebase,
   kafka,
   mariadb,
   mongodb,

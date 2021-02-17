@@ -96,6 +96,7 @@ import eventHubs from 'url:../../images/azure/event-hubs.svg';
 import extensions from 'url:../../images/azure/extensions.svg';
 import file from 'url:../../images/azure/file.svg';
 import files from 'url:../../images/azure/files.svg';
+import firewallManager from 'url:../../images/azure/firewall-manager.svg';
 import folderBlank from 'url:../../images/azure/folder-blank.svg';
 import folderWebsite from 'url:../../images/azure/folder-website.svg';
 import ftp from 'url:../../images/azure/ftp.svg';
@@ -325,6 +326,7 @@ export {
   extensions,
   file,
   files,
+  firewallManager,
   folderBlank,
   folderWebsite,
   ftp,
