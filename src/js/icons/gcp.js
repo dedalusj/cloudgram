@@ -37,6 +37,7 @@ import endpoints from 'url:../../images/gcp/endpoints.svg';
 import errorReporting from 'url:../../images/gcp/error-reporting.svg';
 import externalIpAddresses from 'url:../../images/gcp/external-ip-addresses.svg';
 import filestore from 'url:../../images/gcp/filestore.svg';
+import firestore from 'url:../../images/gcp/firestore.svg';
 import firewallRules from 'url:../../images/gcp/firewall-rules.svg';
 import functions from 'url:../../images/gcp/functions.svg';
 import generic from 'url:../../images/gcp/generic.svg';
@@ -117,6 +118,7 @@ export {
   errorReporting,
   externalIpAddresses,
   filestore,
+  firestore,
   firewallRules,
   functions,
   generic,
