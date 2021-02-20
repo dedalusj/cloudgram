@@ -544,6 +544,64 @@ describe('renderer', () => {
       style: expect.any(Array),
     });
   });
+
+  it('uses labels for edges if present', () => {
+    const diagram = {
+      id: 'complete',
+      attributes: {direction: 'lr'},
+      elements: [
+        inputNode('dns', 'route53', {}),
+        inputNode('cf', 'cloudfront', {attributes: {label: 'CDN'}}),
+        inputGroup(
+          'vpc',
+          [
+            inputNode('load_balancer', 'elasticLoadBalancing', {}),
+            inputGroup('servers', [inputNode('server1', 'ec2', {}), inputNode('server2', 'ec2', {})], {}),
+            inputEdge('load_balancer', 'servers'),
+          ],
+          {attributes: {fill: 'green'}}
+        ),
+        inputEdge('dns', 'cf', false, false, {stroke: 'blue', style: 'dashed', label: 'edge'}),
+        inputEdge('cf', 'load_balancer', false),
+      ],
+    };
+
+    render(diagram);
+
+    const expectedElements = {
+      nodes: [
+        expectedNode({id: 'dns', service: 'route53'}),
+        expectedNode({id: 'cf', label: 'CDN', service: 'cloudfront', attributes: {label: 'CDN'}}),
+        expectedNode({id: 'vpc', provider: null, service: null, attributes: {fill: 'green'}, classes: []}),
+        expectedNode({id: 'load_balancer', service: 'elasticLoadBalancing', parent: 'vpc'}),
+        expectedNode({id: 'servers', provider: null, service: null, parent: 'vpc', classes: []}),
+        expectedNode({id: 'server1', service: 'ec2', parent: 'servers'}),
+        expectedNode({id: 'server2', service: 'ec2', parent: 'servers'}),
+      ],
+      edges: [
+        expectedEdge({source: 'load_balancer', target: 'servers', id: expect.any(String)}),
+        expectedEdge({
+          source: 'dns',
+          target: 'cf',
+          id: expect.any(String),
+          label: 'edge',
+          attributes: {stroke: 'blue', style: 'dashed', bidirectional: false, label: 'edge'},
+        }),
+        expectedEdge({source: 'cf', target: 'load_balancer', id: expect.any(String)}),
+      ],
+    };
+
+    expect(cytoscape).toHaveBeenCalledWith({
+      boxSelectionEnabled: expect.any(Boolean),
+      container: null, // null for testing since the DOM is not present
+      elements: expectedElements,
+      layout: expect.objectContaining({
+        name: 'dagre',
+        rankDir: 'lr',
+      }),
+      style: expect.any(Array),
+    });
+  });
 });
 
 describe('style properties', () => {

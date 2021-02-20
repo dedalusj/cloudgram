@@ -5,7 +5,7 @@
     <include src="meta.html"></include>
     <meta charset="utf-8" />
     <title>CloudGram - Documentation</title>
-    <link rel="stylesheet" href='css/main.scss' />
+    <link rel="stylesheet" href="css/main.scss" />
   </head>
   <body>
     <header>
@@ -62,7 +62,8 @@ diagram "example" [direction=lr] {
   // creating the edges
   DNS -> cf -> load_balancer [stroke=blue,style=dashed];
   load_balancer => servers;
-}</pre>
+}</pre
+          >
 
           <h2 id="diagram_diagram">Diagram</h2>
           <p>
@@ -113,8 +114,9 @@ diagram "example" [direction=lr] {
 
           <p>
             A link is a directed connection between nodes and groups. Link are declared with the
-            <code>-></code>, <code><-></code>, <code>=></code>, <code><=></code> symbols. The second denotes a bidirectional link, the <code>=></code> is a convenience notation to link a node with
-            all the children of a group, see below. For convenience a chain of links can be declared with
+            <code>-></code>, <code><-></code>, <code>=></code>, <code><=></code> symbols. The second denotes a
+            bidirectional link, the <code>=></code> is a convenience notation to link a node with all the children of a
+            group, see below. For convenience a chain of links can be declared with
             <code>DNS -> cf -> load_balancer</code>.
           </p>
 
@@ -129,6 +131,7 @@ diagram "example" [direction=lr] {
               <code>solid</code>
             </li>
             <li><code>width</code>: the width for the link line</li>
+            <li><code>label</code>: the label to show for the link</li>
           </ul>
 
           <p>

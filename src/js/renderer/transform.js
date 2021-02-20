@@ -9,7 +9,7 @@ const isNodeElement = el => el['type'] === 'node';
 const isLinkElement = el => el['type'] === 'link';
 const hasLinkableElements = el => el['elements'] && el['elements'].filter(e => !isLinkElement(e)).length;
 
-const getNodeLabel = get(['attributes', 'label']);
+const getLabel = get(['attributes', 'label']);
 const getNodeClasses = el => (isNodeElement(el) ? ['service'] : []);
 
 /**
@@ -21,7 +21,7 @@ const getNodeClasses = el => (isNodeElement(el) ? ['service'] : []);
 const processNode = node => ({
   data: {
     id: node['id'],
-    label: getNodeLabel(node) !== null ? getNodeLabel(node) : node['id'],
+    label: getLabel(node) !== null ? getLabel(node) : node['id'],
     parent: node['parent'],
     provider: node['provider'] || null,
     service: node['service'] || null,
@@ -40,12 +40,13 @@ const processNode = node => ({
  * @typedef {{data: {attributes, source, id: string, target}}} CytoscapeEdge
  * @returns {CytoscapeEdge}
  */
-const processEdge = ({src, dst, attributes}) => ({
+const processEdge = edge => ({
   data: {
-    source: src,
-    target: dst,
-    id: `${src}-${dst}`,
-    attributes,
+    source: edge['src'],
+    target: edge['dst'],
+    id: `${edge['src']}-${edge['dst']}`,
+    label: getLabel(edge), // unlike nodes edges don't have a default label unless explicitly set
+    attributes: edge['attributes'],
   },
 });
 

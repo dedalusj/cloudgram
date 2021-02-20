@@ -37,6 +37,6 @@ export const expectedNode = ({
   grabbable: true,
   classes,
 });
-export const expectedEdge = ({source, target, id, attributes = {bidirectional: false}}) => ({
-  data: {source, target, id, attributes},
+export const expectedEdge = ({source, target, id, attributes = {bidirectional: false}, label = null}) => ({
+  data: {source, target, id, attributes, label},
 });

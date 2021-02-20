@@ -134,6 +134,15 @@ export const render = ({elements, attributes}) =>
         },
       },
       {
+        selector: 'edge[label]',
+        style: {
+          label: 'data(label)',
+          'text-rotation': 'autorotate',
+          'text-margin-x': 0,
+          'text-margin-y': -15,
+        },
+      },
+      {
         selector: 'node:parent',
         style: {
           'background-color': getBackgroundColor,
