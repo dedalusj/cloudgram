@@ -28,6 +28,10 @@ export const HighlightRules = function () {
         regex: /}/,
       },
       {
+        token: 'text',
+        regex: /"(?:[^"]|"")*"/,
+      },
+      {
         token: () => ['entity.name.type', 'punctuation.operator', 'entity.name.type'],
         regex: /([a-zA-Z][a-zA-Z0-9_\-]+)(\.)([a-zA-Z][a-zA-Z0-9_\-]+)/,
       },
