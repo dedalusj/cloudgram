@@ -73,10 +73,10 @@ export const saveGraph = () => {
       imgBlob = new Blob([svgContent], {type: 'image/svg+xml;charset=utf-8'});
       break;
     case 'jpeg':
-      imgBlob = cy.jpg({output: 'blob'});
+      imgBlob = cy.jpg({output: 'blob', scale: 1, full: true});
       break;
     case 'png':
-      imgBlob = cy.png({output: 'blob'});
+      imgBlob = cy.png({output: 'blob', scale: 1, full: true});
       break;
   }
 

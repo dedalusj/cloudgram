@@ -204,7 +204,7 @@ describe('save graph', () => {
     `;
     require('../src/js/index').saveGraph();
 
-    expect(cy.png).toHaveBeenCalledWith({output: 'blob'});
+    expect(cy.png).toHaveBeenCalledWith({output: 'blob', scale: 1, full: true});
     expect(saveAs).toHaveBeenCalledWith(blob, expect.stringMatching(/\.png$/));
   });
 
@@ -219,7 +219,7 @@ describe('save graph', () => {
     `;
     require('../src/js/index').saveGraph();
 
-    expect(cy.jpg).toHaveBeenCalledWith({output: 'blob'});
+    expect(cy.jpg).toHaveBeenCalledWith({output: 'blob', scale: 1, full: true});
     expect(saveAs).toHaveBeenCalledWith(blob, expect.stringMatching(/\.jpeg$/));
   });
 
