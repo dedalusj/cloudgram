@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <include src="analytics.html"></include>
-  <include src="meta.html"></include>
-  <meta charset="utf-8" />
-  <title>CloudGram</title>
-  <link rel="stylesheet" href='css/main.scss' />
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="alternate icon" href="images/favicon.ico">
-</head>
-<body>
-<header>
-  <include src="nav_items.html"></include>
-  <div class="nav-item nav-controls">
-    <div class="input-group">
-      <select id="format" class="input-element left-element">
-        <option selected="">png</option>
-        <option>jpeg</option>
-      </select>
-      <a id="save" href="#" class="input-element button right-element">Save</a>
-    </div>
-    <div class="input-group">
-      <a id="copy-link" href="#" class="input-element button">Copy link</a>
-    </div>
-  </div>
-</header>
-<main>
-<pre id="editor" class="column m-0">
+  <head>
+    <include src="analytics.html"></include>
+    <include src="meta.html"></include>
+    <meta charset="utf-8" />
+    <title>CloudGram</title>
+    <link rel="stylesheet" href="css/main.scss" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="alternate icon" href="images/favicon.ico" />
+  </head>
+  <body>
+    <header>
+      <include src="nav_items.html"></include>
+      <div class="nav-item nav-controls">
+        <div class="input-group">
+          <select id="format" class="input-element left-element">
+            <option selected="">png</option>
+            <option>jpeg</option>
+            <option>svg</option>
+          </select>
+          <a id="save" href="#" class="input-element button right-element">Save</a>
+        </div>
+        <div class="input-group">
+          <a id="copy-link" href="#" class="input-element button">Copy link</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <pre id="editor" class="column m-0">
 diagram "example" [direction=lr] {
   // creating the nodes
   generic.users Users;
@@ -46,10 +47,11 @@ diagram "example" [direction=lr] {
   // creating the edges
   Users -> DNS -> cf -> load_balancer <=> asg;
   cf -> s3;
-}</pre>
-  <div id="cy" class="column m-0"></div>
-</main>
-<div id="version"></div>
-<script src="js/index.js"></script>
-</body>
+}</pre
+      >
+      <div id="cy" class="column m-0"></div>
+    </main>
+    <div id="version"></div>
+    <script src="js/index.js"></script>
+  </body>
 </html>

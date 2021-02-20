@@ -14,6 +14,8 @@ import ace from 'ace-builds';
 import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import {saveAs} from 'file-saver';
+import cytoscape from 'cytoscape';
+import svg from 'cytoscape-svg';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
 
@@ -29,6 +31,8 @@ import {parse} from './parser';
 import {render} from './renderer';
 import {Mode} from './editor';
 import {staticWordCompleter, textCompleter} from './editor/completion';
+
+cytoscape.use(svg);
 
 // exported to be mocked by tests
 export const editor = ace.edit('editor', {
@@ -64,6 +68,10 @@ export const saveGraph = () => {
 
   let imgBlob;
   switch (format) {
+    case 'svg':
+      const svgContent = cy.svg({scale: 1, full: true});
+      imgBlob = new Blob([svgContent], {type: 'image/svg+xml;charset=utf-8'});
+      break;
     case 'jpeg':
       imgBlob = cy.jpg({output: 'blob'});
       break;

@@ -29,12 +29,15 @@ diagram "complete" {
 }
 `;
 
+const svgContent = '<svg></svg>';
 const blob = new Blob();
+const svgBlob = new Blob([svgContent], {type: 'image/svg+xml;charset=utf-8'});
 
 const mockCy = () => {
   const cy = {
     png: jest.fn().mockReturnValue(blob),
     jpg: jest.fn().mockReturnValue(blob),
+    svg: jest.fn().mockReturnValue(svgContent),
   };
 
   const originalWindow = {...window};
@@ -195,6 +198,7 @@ describe('save graph', () => {
       <select id="format">
         <option selected="">png</option>
         <option>jpeg</option>
+        <option>svg</option>
       </select>
       <div id="editor"></div>
     `;
@@ -209,6 +213,7 @@ describe('save graph', () => {
       <select id="format">
         <option>png</option>
         <option selected="">jpeg</option>
+        <option>svg</option>
       </select>
       <div id="editor"></div>
     `;
@@ -216,5 +221,20 @@ describe('save graph', () => {
 
     expect(cy.jpg).toHaveBeenCalledWith({output: 'blob'});
     expect(saveAs).toHaveBeenCalledWith(blob, expect.stringMatching(/\.jpeg$/));
+  });
+
+  it('saves the graph as svg', () => {
+    document.body.innerHTML = `
+      <select id="format">
+        <option>png</option>
+        <option>jpeg</option>
+        <option selected="">svg</option>
+      </select>
+      <div id="editor"></div>
+    `;
+    require('../src/js/index').saveGraph();
+
+    expect(cy.svg).toHaveBeenCalledWith({scale: 1, full: true});
+    expect(saveAs).toHaveBeenCalledWith(svgBlob, expect.stringMatching(/\.svg$/));
   });
 });
