@@ -187,6 +187,41 @@ describe('refresh', () => {
   });
 });
 
+describe('link', () => {
+  let copyLink;
+  let editor;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    document.body.innerHTML = '<div id="editor"></div>';
+
+    // we require the index after mocking the document
+    // body so that ace can find the editor div
+    const index = require('../src/js/index');
+    copyLink = index.copyLink;
+    editor = index.editor;
+  });
+
+  it('copy the link to the diagram', () => {
+    jest.spyOn(editor, 'getSession').mockImplementation(() => ({
+      getDocument: jest.fn().mockImplementation(() => ({
+        getValue: jest.fn().mockImplementation(() => validDocument),
+      })),
+    }));
+    document.execCommand = jest.fn();
+
+    const url = copyLink();
+
+    expect(document.execCommand).toHaveBeenCalledWith('copy');
+    // we cannot test the actual clipboard copy so the next best
+    // thing is testing that the url returned is correct
+    expect(url).toEqual(
+      'http://localhost/?document=%0Adiagram%20%22complete%22%20%7B%0A%20%20%2F%2F%20creating%20the%20nodes%0A%20%20aws.route53%20dns%3B%0A%20%20aws.cloudfront%20cf%3B%0A%20%20aws.lambda%20edge%3B%0A%0A%20%20%2F%2F%20creating%20the%20edges%0A%20%20dns%20-%3E%20cf%3B%0A%20%20cf%20-%3E%20edge%3B%0A%7D%0A'
+    );
+  });
+});
+
 describe('save graph', () => {
   let cy;
 

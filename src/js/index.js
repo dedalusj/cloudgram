@@ -99,6 +99,7 @@ export const copyLink = () => {
   const src = getDocument();
   const url = `${location.protocol}//${location.host}${location.pathname}?document=${encodeURIComponent(src)}`;
   copyToClipboard(url);
+  return url;
 };
 
 const initDocument = () => {
