@@ -41,3 +41,6 @@ export const pipe = (...fns) => x => fns.reduce((y, f) => f(y), x);
 export const toLowerCase = x => (!x ? x : x.toLowerCase());
 
 export const merge = (a, b) => ({...a, ...b});
+
+// Grab the document definition for the query parameters
+export const getDocumentFromUrl = () => new URLSearchParams(window.location.search).get('document');

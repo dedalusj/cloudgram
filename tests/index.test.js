@@ -217,7 +217,7 @@ describe('link', () => {
     // we cannot test the actual clipboard copy so the next best
     // thing is testing that the url returned is correct
     expect(url).toEqual(
-      'http://localhost/?document=%0Adiagram%20%22complete%22%20%7B%0A%20%20%2F%2F%20creating%20the%20nodes%0A%20%20aws.route53%20dns%3B%0A%20%20aws.cloudfront%20cf%3B%0A%20%20aws.lambda%20edge%3B%0A%0A%20%20%2F%2F%20creating%20the%20edges%0A%20%20dns%20-%3E%20cf%3B%0A%20%20cf%20-%3E%20edge%3B%0A%7D%0A'
+      'http://localhost/index.html?document=%0Adiagram%20%22complete%22%20%7B%0A%20%20%2F%2F%20creating%20the%20nodes%0A%20%20aws.route53%20dns%3B%0A%20%20aws.cloudfront%20cf%3B%0A%20%20aws.lambda%20edge%3B%0A%0A%20%20%2F%2F%20creating%20the%20edges%0A%20%20dns%20-%3E%20cf%3B%0A%20%20cf%20-%3E%20edge%3B%0A%7D%0A'
     );
   });
 });
@@ -273,5 +273,54 @@ describe('save graph', () => {
 
     expect(cy.svg).toHaveBeenCalledWith({scale: 1, full: true});
     expect(saveAs).toHaveBeenCalledWith(svgBlob, expect.stringMatching(/\.svg$/));
+  });
+});
+
+describe('draw version', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('draws the version number', () => {
+    document.body.innerHTML = `
+      <div id="version"></div>
+    `;
+    require('../src/js/index').drawVersion();
+
+    const versionEl = document.getElementById('version');
+    expect(versionEl.innerText).toContain(process.env.npm_package_version);
+  });
+});
+
+describe('init document', () => {
+  let editor;
+  let initDocument;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    document.body.innerHTML = '<div id="editor"></div>';
+
+    const index = require('../src/js/index');
+    editor = index.editor;
+    initDocument = index.initDocument;
+  });
+
+  it('sets the editor content from the document query parameter', () => {
+    history.replaceState({}, 'Index', '/index.html?document=diagram');
+    const spy = jest.spyOn(editor, 'setValue').mockImplementation(() => ({}));
+
+    initDocument();
+
+    expect(spy).toHaveBeenCalledWith('diagram', -1);
+  });
+
+  it('uses the code in the html is no document defined', () => {
+    history.replaceState({}, 'Index', '/index.html');
+    const spy = jest.spyOn(editor, 'setValue').mockImplementation(() => ({}));
+
+    initDocument();
+
+    expect(spy).not.toHaveBeenCalled();
   });
 });

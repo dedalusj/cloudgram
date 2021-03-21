@@ -27,8 +27,8 @@ Sentry.init({
   environment: process.env.NODE_ENV,
 });
 
-import {parse} from './parser';
-import {render} from './renderer';
+import {drawDocument} from './draw';
+import {getDocumentFromUrl} from './utils';
 import {Mode} from './editor';
 import {staticWordCompleter, textCompleter} from './editor/completion';
 
@@ -43,23 +43,40 @@ export const editor = ace.edit('editor', {
 });
 editor.completers = [staticWordCompleter, textCompleter];
 
-const displayErrors = errors => {
-  if (!errors || errors.length === 0) {
-    editor.getSession().setAnnotations([]);
-  } else {
-    editor.getSession().setAnnotations(
-      errors.map(e => ({
-        row: e.line.start - 1,
-        column: e.column.start,
-        text: e.message,
-        type: 'error',
-      }))
-    );
-  }
-};
+const displayErrors = errors =>
+  editor.getSession().setAnnotations(
+    errors.map(e => ({
+      row: e.line.start - 1,
+      column: e.column.start,
+      text: e.message,
+      type: 'error',
+    }))
+  );
 
 const getDocument = () => editor.getSession().getDocument().getValue();
 const setDocument = document => editor.setValue(document, -1);
+const documentUrl = (path = 'index.html') =>
+  `${location.protocol}//${location.host}/${path}?document=${encodeURIComponent(getDocument())}`;
+
+const referenceWidth = 400;
+const getGraphAspectRatio = () =>
+  window.cy.elements().renderedBoundingBox().w / window.cy.elements().renderedBoundingBox().h;
+const getIFrameHeight = () => Math.round(referenceWidth / getGraphAspectRatio());
+
+const displayModal = () => {
+  console.log(getGraphAspectRatio());
+  document.querySelector(
+    '#embed-modal pre'
+  ).innerText = `<iframe width="${referenceWidth}px" height="${getIFrameHeight()}px" src="${documentUrl(
+    'embed.html'
+  )}"></iframe>`;
+  document.getElementById('embed-modal').style.display = 'block';
+  document.getElementById('embed').onclick = null;
+};
+const closeModal = () => {
+  document.getElementById('embed-modal').style.display = 'none';
+  document.getElementById('embed').onclick = displayModal;
+};
 
 export const saveGraph = () => {
   const cy = window.cy;
@@ -96,40 +113,45 @@ export const copyToClipboard = text => {
 };
 
 export const copyLink = () => {
-  const src = getDocument();
-  const url = `${location.protocol}//${location.host}${location.pathname}?document=${encodeURIComponent(src)}`;
+  const url = documentUrl();
   copyToClipboard(url);
   return url;
 };
 
-const initDocument = () => {
-  const params = new URLSearchParams(window.location.search);
-  if (params.has('document')) setDocument(params.get('document'));
+export const initDocument = () => {
+  const doc = getDocumentFromUrl();
+  if (doc) setDocument(doc);
 };
 
-const drawVersion = () => {
+export const drawVersion = () => {
   document.getElementById('version').innerText = `v${process.env.npm_package_version}`;
 };
 
-// main method that parses the document
-// from the editor and renders it
 export const draw = () => {
   const src = getDocument();
-  const {parsed, errors} = parse(src);
+  editor.getSession().setAnnotations([]);
+  drawDocument(src, displayErrors);
+};
 
-  displayErrors(errors);
-  if (errors && errors.length > 0) return;
+export const setup = () => {
+  // redraw on editor changes
+  editor.getSession().on('change', draw);
 
-  window.cy = render(parsed);
+  // hook up navbar actions
+  document.getElementById('save').onclick = saveGraph;
+  document.getElementById('copy-link').onclick = copyLink;
+  document.getElementById('embed').onclick = displayModal;
+
+  // modal dismissal
+  document.getElementsByClassName('close')[0].onclick = closeModal;
+  window.onclick = event => {
+    if (event.target === document.getElementById('embed-modal')) closeModal();
+  };
 };
 
 document.addEventListener('DOMContentLoaded', function () {
   initDocument();
   drawVersion();
-
-  editor.getSession().on('change', draw);
   draw();
-
-  document.getElementById('save').addEventListener('click', saveGraph);
-  document.getElementById('copy-link').addEventListener('click', copyLink);
+  setup();
 });

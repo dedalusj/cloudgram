@@ -24,6 +24,9 @@
         <div class="input-group">
           <a id="copy-link" href="#" class="input-element button">Copy link</a>
         </div>
+        <div class="input-group">
+          <a id="embed" href="#" class="input-element button">Embed</a>
+        </div>
       </div>
     </header>
     <main>
@@ -52,6 +55,16 @@ diagram "example" [direction=lr] {
       <div id="cy" class="column m-0"></div>
     </main>
     <div id="version"></div>
+    <div id="embed-modal" class="modal">
+      <div class="modal-content">
+        <h1>
+          Embed diagram
+          <span class="close"></span>
+        </h1>
+        <h2>Add the following to your HTML page</h2>
+        <pre></pre>
+      </div>
+    </div>
     <script src="js/index.js"></script>
   </body>
 </html>

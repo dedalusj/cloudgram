@@ -5,8 +5,8 @@
   "scripts": {
     "test": "nyc jest",
     "lint": "node_modules/.bin/prettier --write \"{src,tests,scripts}/**/*.js\"",
-    "dev": "rm -fr dev && parcel serve src/index.html --dist-dir dev",
-    "build": "rm -fr dist && NODE_ENV=production parcel build src/index.html --dist-dir dist",
+    "dev": "rm -fr dev && parcel serve src/index.html src/embed.html --no-cache --dist-dir dev",
+    "build": "rm -fr dist && NODE_ENV=production parcel build src/index.html src/embed.html --no-cache --dist-dir dist",
     "assets": "scripts/assets.js",
     "diagram": "scripts/generate_grammar_diagram.js",
     "patch": "yarn version --patch",
