@@ -43,7 +43,7 @@
     "@parcel/transformer-posthtml": "2.0.0-nightly.592",
     "@parcel/transformer-sass": "2.0.0-nightly.592",
     "@types/jest": "^26.0.14",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "babel-core": "^6.26.3",
     "babel-jest": "^26.5.2",
     "camelcase": "^6.1.0",
