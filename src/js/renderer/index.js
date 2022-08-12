@@ -65,14 +65,14 @@ const getHorizontalPosition = p => {
     case NE:
     case E:
     case SE:
-      return 'left';
+      return 'right';
     case N:
     case S:
       return 'center';
     case NW:
     case W:
     case SW:
-      return 'right';
+      return 'left';
   }
 };
 const getLabelPosition = pipe(
