@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "module": "es2020",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
+  }
+}

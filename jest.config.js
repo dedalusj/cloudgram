@@ -1,10 +1,13 @@
 export default {
   collectCoverage: true,
   collectCoverageFrom: [
-    `src/**/*.js`,
+    `src/**/*.(js|ts)`,
     '!**/(node_modules|dist|local)/**',
-    '!src/js/icons/**/*.js',
-    '!src/js/editor/**/*.js',
+    '!src/ts/icons/**/*.(js|ts)',
+    '!src/ts/editor/**/*.(js|ts)',
+    // there is no actual code despite
+    // coverage reporting a line
+    '!src/ts/parser/contexts.ts',
   ],
   coverageThreshold: {
     global: {
@@ -15,11 +18,9 @@ export default {
     },
   },
   coverageReporters: ['json-summary', 'text', 'lcov'],
-  moduleNameMapper: {
-    "^url:(.*)+$": "$1",
-  },
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '^.+\\.[t|j]s$': 'babel-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2|svg)$': 'jest-transform-stub',
   },
+  testEnvironment: 'jsdom',
 };

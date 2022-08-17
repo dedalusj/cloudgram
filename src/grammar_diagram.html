@@ -9,12 +9,12 @@
 </style>
 
 
-<link rel='stylesheet' href='https://unpkg.com/chevrotain@7.1.1/diagrams/diagrams.css'>
+<link rel='stylesheet' href='https://unpkg.com/chevrotain@10.1.2/diagrams/diagrams.css'>
 
-<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/vendor/railroad-diagrams.js'></script>
-<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/diagrams_builder.js'></script>
-<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/diagrams_behavior.js'></script>
-<script src='https://unpkg.com/chevrotain@7.1.1/diagrams/src/main.js'></script>
+<script src='https://unpkg.com/chevrotain@10.1.2/diagrams/vendor/railroad-diagrams.js'></script>
+<script src='https://unpkg.com/chevrotain@10.1.2/diagrams/src/diagrams_builder.js'></script>
+<script src='https://unpkg.com/chevrotain@10.1.2/diagrams/src/diagrams_behavior.js'></script>
+<script src='https://unpkg.com/chevrotain@10.1.2/diagrams/src/main.js'></script>
 
 <div id="diagrams" align="center"></div>    
 
@@ -35,7 +35,8 @@
       {
         "type": "NonTerminal",
         "name": "identifier",
-        "idx": 0
+        "idx": 0,
+        "label": "id"
       },
       {
         "type": "Option",
@@ -44,14 +45,16 @@
           {
             "type": "NonTerminal",
             "name": "attrList",
-            "idx": 0
+            "idx": 0,
+            "label": "attrList"
           }
         ]
       },
       {
         "type": "NonTerminal",
         "name": "elements",
-        "idx": 0
+        "idx": 0,
+        "label": "elements"
       }
     ]
   },
@@ -72,6 +75,7 @@
                 "name": "id",
                 "label": "id",
                 "idx": 0,
+                "terminalLabel": "normal",
                 "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
               }
             ]
@@ -84,6 +88,7 @@
                 "name": "quotedId",
                 "label": "quotedId",
                 "idx": 0,
+                "terminalLabel": "quoted",
                 "pattern": "\"[a-zA-Z0-9_\\- ,().\\/#]*\""
               }
             ]
@@ -111,7 +116,8 @@
           {
             "type": "NonTerminal",
             "name": "element",
-            "idx": 0
+            "idx": 0,
+            "label": "element"
           }
         ]
       },
@@ -139,7 +145,8 @@
               {
                 "type": "NonTerminal",
                 "name": "node",
-                "idx": 0
+                "idx": 0,
+                "label": "node"
               }
             ]
           },
@@ -149,7 +156,8 @@
               {
                 "type": "NonTerminal",
                 "name": "edge",
-                "idx": 0
+                "idx": 0,
+                "label": "edge"
               }
             ]
           },
@@ -159,7 +167,8 @@
               {
                 "type": "NonTerminal",
                 "name": "group",
-                "idx": 0
+                "idx": 0,
+                "label": "group"
               }
             ]
           }
@@ -177,6 +186,7 @@
         "name": "provider",
         "label": "provider",
         "idx": 0,
+        "terminalLabel": "provider",
         "pattern": "(aws|k8s|azure|gcp|generic)"
       },
       {
@@ -184,6 +194,7 @@
         "name": "dot",
         "label": "'.'",
         "idx": 0,
+        "terminalLabel": "dot",
         "pattern": "\\."
       },
       {
@@ -191,12 +202,14 @@
         "name": "id",
         "label": "id",
         "idx": 0,
+        "terminalLabel": "service",
         "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
       },
       {
         "type": "NonTerminal",
         "name": "identifier",
-        "idx": 2
+        "idx": 2,
+        "label": "id"
       },
       {
         "type": "Option",
@@ -205,7 +218,8 @@
           {
             "type": "NonTerminal",
             "name": "attrList",
-            "idx": 0
+            "idx": 0,
+            "label": "attrList"
           }
         ]
       },
@@ -214,6 +228,7 @@
         "name": "semicolon",
         "label": "';'",
         "idx": 0,
+        "terminalLabel": "semicolon",
         "pattern": ";"
       }
     ]
@@ -226,7 +241,8 @@
       {
         "type": "NonTerminal",
         "name": "identifier",
-        "idx": 0
+        "idx": 0,
+        "label": "id"
       },
       {
         "type": "RepetitionMandatory",
@@ -235,12 +251,14 @@
           {
             "type": "NonTerminal",
             "name": "link",
-            "idx": 0
+            "idx": 0,
+            "label": "link"
           },
           {
             "type": "NonTerminal",
             "name": "identifier",
-            "idx": 2
+            "idx": 2,
+            "label": "id"
           }
         ]
       },
@@ -251,7 +269,8 @@
           {
             "type": "NonTerminal",
             "name": "attrList",
-            "idx": 0
+            "idx": 0,
+            "label": "attrList"
           }
         ]
       },
@@ -279,7 +298,8 @@
       {
         "type": "NonTerminal",
         "name": "identifier",
-        "idx": 0
+        "idx": 0,
+        "label": "id"
       },
       {
         "type": "Option",
@@ -288,14 +308,16 @@
           {
             "type": "NonTerminal",
             "name": "attrList",
-            "idx": 0
+            "idx": 0,
+            "label": "attrList"
           }
         ]
       },
       {
         "type": "NonTerminal",
         "name": "elements",
-        "idx": 0
+        "idx": 0,
+        "label": "elements"
       }
     ]
   },
@@ -325,7 +347,8 @@
           {
             "type": "NonTerminal",
             "name": "attribute",
-            "idx": 0
+            "idx": 0,
+            "label": "attr"
           }
         ]
       },
@@ -348,6 +371,7 @@
         "name": "id",
         "label": "id",
         "idx": 0,
+        "terminalLabel": "attrName",
         "pattern": "([a-zA-Z][a-zA-Z0-9_\\-]*|[-]?[0-9]+(\\.[0-9]*)?)"
       },
       {
@@ -355,12 +379,14 @@
         "name": "equal",
         "label": "'='",
         "idx": 0,
+        "terminalLabel": "equal",
         "pattern": "="
       },
       {
         "type": "NonTerminal",
         "name": "identifier",
-        "idx": 0
+        "idx": 0,
+        "label": "attrValue"
       }
     ]
   },
@@ -381,6 +407,7 @@
                 "name": "directedArrow",
                 "label": "'->'",
                 "idx": 0,
+                "terminalLabel": "directedArrow",
                 "pattern": "->"
               }
             ]
@@ -393,6 +420,7 @@
                 "name": "bidirectionalArrow",
                 "label": "'<->'",
                 "idx": 0,
+                "terminalLabel": "bidirectionalArrow",
                 "pattern": "<->"
               }
             ]
@@ -405,6 +433,7 @@
                 "name": "deepArrow",
                 "label": "'=>'",
                 "idx": 0,
+                "terminalLabel": "deepArrow",
                 "pattern": "=>"
               }
             ]
@@ -417,6 +446,7 @@
                 "name": "bidirectionalDeepArrow",
                 "label": "'<=>'",
                 "idx": 0,
+                "terminalLabel": "bidirectionalDeepArrow",
                 "pattern": "<=>"
               }
             ]

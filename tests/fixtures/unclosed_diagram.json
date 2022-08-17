@@ -1,5 +1,4 @@
 {
-  "parsed": {},
   "errors": [
     {
       "message": "Expecting --> '}' <-- but found --> '' <--",

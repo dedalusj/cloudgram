@@ -10,7 +10,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '14'
+          node-version: '18'
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -20,6 +20,8 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-        run: yarn install
+        run: npm install
       - name: Run tests
-        run: npm test
+        run: npm run test
+      - name: Run checks
+        run: npm run check
