@@ -13,13 +13,8 @@
     "patch": "npm version patch",
     "minor": "npm version minor",
     "major": "npm version major",
-    "deploy": "scripts/deploy.sh"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "echo 'Pre-commit checks...' && exit 0",
-      "pre-commit": "pretty-quick --staged && npm run test && npm run check && npm run diagram"
-    }
+    "deploy": "scripts/deploy.sh",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=18"
@@ -48,7 +43,7 @@
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
-    "husky": "^8.0.1",
+    "husky": "^8.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
     "jest-transform-stub": "^2.0.0",
