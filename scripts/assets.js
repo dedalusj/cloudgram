@@ -55,7 +55,7 @@ const basename = filepath => path.basename(filepath, path.extname(filepath));
 const sanitizeName = s => s.replace(/[^a-zA-Z0-9_$-]/g, '').replace(/-+/, '-');
 
 const mkdir = async dir => fs.promises.mkdir(dir, {recursive: true});
-const rmdir = async dir => fs.promises.rmdir(dir, {recursive: true, maxRetries: 10});
+const rmdir = async dir => fs.promises.rm(dir, {recursive: true, force: true, maxRetries: 10});
 
 // download a file onto a temporary directory
 const downloadFile = async url => {
@@ -152,6 +152,7 @@ const Azure = 'azure';
 const K8s = 'k8s';
 const GCP = 'gcp';
 const Generic = 'generic';
+const DevIcon = 'devicon';
 
 // the following patterns in the form [regex, string replacement] allow for
 // customisation of asset names for each provider.
@@ -217,6 +218,7 @@ const gcpPatterns = [
   [/GKEOn/i, 'gke-on'],
 ];
 const genericPatterns = [];
+const devIconPatterns = [[/-original\./, '.']];
 
 // custom provider functions to compute the name of the group a
 // service should belong from the name of the SVG file
@@ -260,6 +262,11 @@ const genericComputeGroup = ({source, ...rest}) => ({
   source,
   group: 'Generic',
 });
+const devIconComputeGroup = ({source, ...rest}) => ({
+  ...rest,
+  source,
+  group: 'DevIcon',
+});
 
 // providers configs
 // each provider object contains the following:
@@ -287,6 +294,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [Azure]: {
     fetch: targetDir =>
       fromRemoteZip('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip', targetDir),
@@ -301,6 +309,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [K8s]: {
     fetch: targetDir => fromRemoteZip('https://github.com/kubernetes/community/archive/master.zip', targetDir),
     filter: filepath => filepath.match(/.*unlabeled\/.*\.svg$/i),
@@ -314,6 +323,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [GCP]: {
     fetch: targetDir =>
       fromRemoteZip('https://cloud.google.com/icons/files/google-cloud-icons.zip', targetDir).then(() =>
@@ -330,6 +340,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [Generic]: {
     fetch: targetDir => copyFromDir(path.join(assetsOverrideDir, 'generic'), targetDir),
     filter: () => true, // keep all svg
@@ -338,6 +349,20 @@ const config = {
         .then(extractFilename)
         .then(genericComputeGroup)
         .then(replacePatterns(genericPatterns))
+        .then(addTarget)
+        .then(addImportName)
+        .then(readContent)
+        .then(resizeContent),
+  },
+
+  [DevIcon]: {
+    fetch: targetDir => fromRemoteZip('https://github.com/devicons/devicon/archive/refs/tags/v2.15.1.zip', targetDir),
+    filter: filepath => filepath.match(/.*icons.*.svg$/i),
+    prepare: filepath =>
+      Promise.resolve({provider: DevIcon, source: filepath})
+        .then(extractFilename)
+        .then(devIconComputeGroup)
+        .then(replacePatterns(devIconPatterns))
         .then(addTarget)
         .then(addImportName)
         .then(readContent)
