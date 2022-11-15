@@ -287,6 +287,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [Azure]: {
     fetch: targetDir =>
       fromRemoteZip('https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V2.zip', targetDir),
@@ -301,6 +302,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [K8s]: {
     fetch: targetDir => fromRemoteZip('https://github.com/kubernetes/community/archive/master.zip', targetDir),
     filter: filepath => filepath.match(/.*unlabeled\/.*\.svg$/i),
@@ -314,6 +316,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [GCP]: {
     fetch: targetDir =>
       fromRemoteZip('https://cloud.google.com/icons/files/google-cloud-icons.zip', targetDir).then(() =>
@@ -330,6 +333,7 @@ const config = {
         .then(readContent)
         .then(resizeContent),
   },
+
   [Generic]: {
     fetch: targetDir => copyFromDir(path.join(assetsOverrideDir, 'generic'), targetDir),
     filter: () => true, // keep all svg
