@@ -10,6 +10,7 @@ import * as k8sIcons from './k8s.js';
 import * as azureIcons from './azure.js';
 import * as gcpIcons from './gcp.js';
 import * as genericIcons from './generic.js';
+import * as devIconIcons from './devicon.js';
 
 export default {
   aws: awsIcons,
@@ -17,4 +18,5 @@ export default {
   azure: azureIcons,
   gcp: gcpIcons,
   generic: genericIcons,
+  devicon: devIconIcons,
 };

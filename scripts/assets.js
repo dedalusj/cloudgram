@@ -152,6 +152,7 @@ const Azure = 'azure';
 const K8s = 'k8s';
 const GCP = 'gcp';
 const Generic = 'generic';
+const DevIcon = 'devicon';
 
 // the following patterns in the form [regex, string replacement] allow for
 // customisation of asset names for each provider.
@@ -217,6 +218,7 @@ const gcpPatterns = [
   [/GKEOn/i, 'gke-on'],
 ];
 const genericPatterns = [];
+const devIconPatterns = [];
 
 // custom provider functions to compute the name of the group a
 // service should belong from the name of the SVG file
@@ -259,6 +261,11 @@ const genericComputeGroup = ({source, ...rest}) => ({
   ...rest,
   source,
   group: 'Generic',
+});
+const devIconComputeGroup = ({source, ...rest}) => ({
+  ...rest,
+  source,
+  group: 'DevIcon',
 });
 
 // providers configs
@@ -342,6 +349,20 @@ const config = {
         .then(extractFilename)
         .then(genericComputeGroup)
         .then(replacePatterns(genericPatterns))
+        .then(addTarget)
+        .then(addImportName)
+        .then(readContent)
+        .then(resizeContent),
+  },
+
+  [DevIcon]: {
+    fetch: targetDir => fromRemoteZip('https://github.com/devicons/devicon/archive/refs/tags/v2.15.1.zip', targetDir),
+    filter: filepath => filepath.match(/.*icons.*.svg$/i),
+    prepare: filepath =>
+      Promise.resolve({provider: DevIcon, source: filepath})
+        .then(extractFilename)
+        .then(devIconComputeGroup)
+        .then(replacePatterns(devIconPatterns))
         .then(addTarget)
         .then(addImportName)
         .then(readContent)
