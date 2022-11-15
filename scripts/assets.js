@@ -55,7 +55,7 @@ const basename = filepath => path.basename(filepath, path.extname(filepath));
 const sanitizeName = s => s.replace(/[^a-zA-Z0-9_$-]/g, '').replace(/-+/, '-');
 
 const mkdir = async dir => fs.promises.mkdir(dir, {recursive: true});
-const rmdir = async dir => fs.promises.rmdir(dir, {recursive: true, maxRetries: 10});
+const rmdir = async dir => fs.promises.rm(dir, {recursive: true, force: true, maxRetries: 10});
 
 // download a file onto a temporary directory
 const downloadFile = async url => {
