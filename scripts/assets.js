@@ -218,7 +218,7 @@ const gcpPatterns = [
   [/GKEOn/i, 'gke-on'],
 ];
 const genericPatterns = [];
-const devIconPatterns = [];
+const devIconPatterns = [[/-original\./, '.']];
 
 // custom provider functions to compute the name of the group a
 // service should belong from the name of the SVG file
