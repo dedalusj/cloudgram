@@ -31,7 +31,7 @@
     "file-saver": "^2.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.11.5",
     "@parcel/optimizer-cssnano": "2.0.0-nightly.592",
     "@parcel/optimizer-htmlnano": "2.0.0-nightly.592",
